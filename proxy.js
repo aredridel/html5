@@ -2,6 +2,19 @@ sys = require('sys');
 HTTP = require('http');
 URL = require ('url');
 
+handlers = {
+	"text/html": function(inr, outr) {
+		outr.writeHead(inr.statusCode, inr.headers);
+		inr.addListener('data', function(chunk) { outr.write(chunk, 'binary'); });
+		inr.addListener('end', function() { outr.close(); });
+	},
+	'default': function(inr, outr) {
+		outr.writeHead(inr.statusCode, inr.headers);
+		inr.addListener('data', function(chunk) { outr.write(chunk, 'binary'); });
+		inr.addListener('end', function() { outr.close(); });
+	}
+}
+
 HTTP.createServer(function(inreq,outresp) {
 	var url = URL.parse(inreq.url);
 	sys.puts(inreq.method + " for " + url.hostname + " on port " + (url.port || 80) + " with path " + (url.pathname || '/'));
@@ -10,21 +23,20 @@ HTTP.createServer(function(inreq,outresp) {
 	sys.puts(JSON.stringify(inreq.headers));
 
 	outreq.addListener('response', function(inresp) {
-		outresp.writeHead(inresp.statusCode, inresp.headers);
-		sys.puts("" + inresp.statusCode);
-		sys.puts(JSON.stringify(inresp.headers));
-		inresp.addListener('data', function(chunk) {
-			outresp.write(chunk, 'binary');
-		});
-		inresp.addListener('end', function() {
-			outresp.close();
-		});
+		// Handle types here
+		if(handlers[inresp.headers['content-type']]) {
+			handlers[inresp.headers['content-type']](inresp, outresp);
+		} else {
+			handlers['default'](inresp, outresp);
+		}
 	});
 
+	// Set up relaying the incoming request to the remote server
 	inreq.addListener('data', function(chunk) { 
 		outreq.write(chunk); 
 	});
 
+	// Finish the client request when the request finishes
 	inreq.addListener('end', function() { 
 		outreq.close(); 
 	});
