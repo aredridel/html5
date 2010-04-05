@@ -93,14 +93,9 @@ exports.SPECIAL_ELEMENTS = [
 	'ul',
 	'wbr'
 ];
-exports.SPACE_CHARACTERS = [
-	"\t",
-	"\n",
-	"\x0B",
-	"\x0C",
-	"\x20",
-	"\r"
-];
+exports.SPACE_CHARACTERS = "\t\n\x0B\x0C\x20\r";
+exports.SPACE_CHARACTERS_R = /[\t\n\x0B\x0C \r]/;
+
 exports.TABLE_INSERT_MODE_ELEMENTS = [
 	'table',
 	'tbody',
@@ -109,13 +104,12 @@ exports.TABLE_INSERT_MODE_ELEMENTS = [
 	'tr'
 ];
 
-/*
-exports.ASCII_LOWERCASE = ('a'..'z').to_a.join('')
-exports.ASCII_UPPERCASE = ('A'..'Z').to_a.join('')
-exports.ASCII_LETTERS = ASCII_LOWERCASE + ASCII_UPPERCASE
-exports.DIGITS = '0'..'9'
-exports.HEX_DIGITS = DIGITS.to_a + ('a'..'f').to_a + ('A'..'F').to_a
-*/
+exports.ASCII_LOWERCASE = 'abcdefghijklmnopqrstuvwxyz';
+exports.ASCII_UPPERCASE = exports.ASCII_LOWERCASE.toUpperCase();
+exports.ASCII_LETTERS = exports.ASCII_LOWERCASE + exports.ASCII_UPPERCASE;
+exports.ASCII_LETTERS_R = /[a-zA-Z]/;
+exports.DIGITS = '0123456789';
+exports.HEX_DIGITS = exports.DIGITS + 'abcdefABCDEF';
 
 // Heading elements need to be ordered 
 exports.HEADING_ELEMENTS = [
@@ -923,7 +917,7 @@ exports.E = {
 		"Missing end tags (%(name)).",
 	"unexpected-start-tag-implies-end-tag":
 		"Unexpected start tag (%(startName) " +
-		"implies end tag (%(endName))."),
+		"implies end tag (%(endName)).",
 	"unexpected-start-tag-treated-as":
 		"Unexpected start tag (%(originalName)). Treated as %(newName).",
 	"deprecated-tag":
@@ -932,7 +926,7 @@ exports.E = {
 		"Unexpected start tag %(name). Ignored.",
 	"expected-one-end-tag-but-got-another":
 		"Unexpected end tag (%(gotName). " +
-		"Missing end tag (%(expectedName))."),
+		"Missing end tag (%(expectedName)).",
 	"end-tag-too-early":
 		"End tag (%(name)) seen too early. Expected other end tag.",
 	"end-tag-too-early-named":
@@ -941,13 +935,13 @@ exports.E = {
 		"End tag (%(name)) seen too early. Ignored.",
 	"adoption-agency-1.1":
 		"End tag (%(name) violates step 1, " +
-		"paragraph 1 of the adoption agency algorithm."),
+		"paragraph 1 of the adoption agency algorithm.",
 	"adoption-agency-1.2":
 		"End tag (%(name) violates step 1, " +
-	`"paragraph 2 of the adoption agency algorithm."),
+		"paragraph 2 of the adoption agency algorithm.",
 	"adoption-agency-1.3":
 		"End tag (%(name) violates step 1, " +
-		"paragraph 3 of the adoption agency algorithm."),
+		"paragraph 3 of the adoption agency algorithm.",
 	"unexpected-end-tag-treated-as":
 		"Unexpected end tag (%(originalName)). Treated as %(newName).",
 	"no-end-tag":
