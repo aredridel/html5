@@ -106,3 +106,33 @@ HTML5Parser.prototype._parse = function(stream, inner_html, encoding, container)
 		this.process_eof();
 	});
 }
+
+HTML5Parser.prototype.parse_error = function(code, data) {
+	this.errors.push([this.tokenizer.position, code, data]);
+	if(this.strict) throw(this.errors[this.errors.length]);
+}
+
+HTML5Parser.prototype.normalize_token = function(token) {
+	if(token.type == Tokens.EMPTY_TAG) {
+		if(VOID_ELEMENTS.indexOf(token.name) == -1) {
+			parse_error('incorrectly-placed-solidus');
+		}
+		token.type = Tokens.START_TAG;
+	}
+
+	if(token.type == Tokens.START_TAG) {
+		token.name = token.name.toLowercase();
+		if(token.data.length != 0) {
+			var data = {};
+			token.data.reverse().forEach(function(e) {
+				data[e[0].toLowercase()] = e[1];
+			});
+			token.data = data;
+		}
+	} else if(token.type = Tokens.END_TAG) {
+		if(token.data.length != 0) parse_error('attributes-in-end-tag');
+		token.name = token.name.toLowercase();
+	}
+
+	return token;
+}
