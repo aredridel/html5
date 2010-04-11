@@ -107,7 +107,7 @@ exports.TABLE_INSERT_MODE_ELEMENTS = [
 exports.ASCII_LOWERCASE = 'abcdefghijklmnopqrstuvwxyz';
 exports.ASCII_UPPERCASE = exports.ASCII_LOWERCASE.toUpperCase();
 exports.ASCII_LETTERS = exports.ASCII_LOWERCASE + exports.ASCII_UPPERCASE;
-exports.ASCII_LETTERS_R = /[a-zA-Z]/;
+exports.ASCII_LETTERS_R = /^[a-zA-Z]/;
 exports.DIGITS = '0123456789';
 exports.HEX_DIGITS = exports.DIGITS + 'abcdefABCDEF';
 
