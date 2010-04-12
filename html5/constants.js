@@ -1040,3 +1040,6 @@ exports.E = {
 	"unexpected-start-tag-in-table":
  		"Unexpected %(name. Expected table content."
 };
+
+exports.Models = {PCDATA: 1, RCDATA: 2, CDATA: 3};
+exports.Tokens = {SPACE: 1, CHARACTERS: 2, START_TAG: 3, END_TAG: 4, EMPTY_TAG: 5, PARSE_ERROR: 99};
