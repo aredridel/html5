@@ -2,7 +2,7 @@ var events = require('events');
 process.mixin(require('html5/constants'));
 var Buffer = require('html5/buffer').Buffer;
 
-exports.Tokenizer = t = function HTML5Tokenizer(input) {
+exports.Tokenizer = t = function HTML5Tokenizer(input, ready) {
 	this.content_model = Models.PCDATA;
 	this.state = this.data_state;
 	this.escapeFlag = false;
@@ -15,6 +15,8 @@ exports.Tokenizer = t = function HTML5Tokenizer(input) {
 	} else {
 		var source = input;
 	}
+
+	if(ready) ready(this);
 
 	var tokenizer = this;
 	source.addListener('data', function(data) {
