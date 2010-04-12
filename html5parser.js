@@ -152,3 +152,37 @@ HTML5Parser.prototype.normalize_token = function(token) {
 
 	return token;
 }
+
+HTML5Parser.prototype.reset_insert_mode = function() {
+	var last = false;
+	for(node in this.tee.open_elements.reverse()) {
+		var node_name = node.name;
+		if(node == this.tree.open_elements[0]) {
+			last = true;
+			if(node_name == 'th' || node_name == 'td') {
+				// XXX: assert this.inner_html
+				node_name = this.inner_html;
+			}
+		}
+
+		if(node_name == 'select' || node_name =='colgroup' || node_name == 'head' || node_name == 'frameset') {
+			// XXX: assert this.inner_html
+		}
+
+		if(TAGMODES[node_name]) {
+			this.phase = TAGMODES[node_name];
+		} else if(node_name == 'html') {
+			this.phase = PHASES[(this.tree.head_pointer == null ? 'beforeHead' : 'afterHead')];
+		} else if(last) {
+			this.phase = PHASES.inBody;
+		} else {
+			continue;
+		}
+
+		break;
+	}
+}
+
+HTML5Parser.prototype._ = function(str) { 
+	return(str);
+}
