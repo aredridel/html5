@@ -50,7 +50,6 @@ exports.Tokenizer = t = function HTML5Tokenizer(input) {
 	this.escapeFlag = false;
 	this.lastFourChars = '';
 	this.current_token = null;
-	this.token_queue = [];
 	var buffer = this.buffer = new Buffer();
 
 	if(typeof(input) == 'string') {
