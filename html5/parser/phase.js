@@ -1,3 +1,3 @@
-exports.HTMLParserPhase = function () {
+exports.Phase = function () {
 }
 
