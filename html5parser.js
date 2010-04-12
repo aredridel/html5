@@ -1,26 +1,26 @@
 process.mixin(require('html5/constants'));
 
 PHASES = {
-	initial: require('html5/parser/initial_phase'), 
-	beforeHTML: require('html5/parser/before_html_phase'),
+	initial: require('html5/parser/initial_phase').Phase, 
+	beforeHTML: require('html5/parser/before_html_phase').Phase,
 	beforeHead: require('html5/parser/before_head_phase'), 
-	inHead: require('html5/parser/in_head_phase'),
-	afterHead: require('html5/parser/after_head_phase'),
-	inBody: require('html5/parser/in_body_phase'),
-	inTable: require('html5/parser/in_table_phase'),
-	inCaption: require('html5/parser/in_caption_phase'),
-	inColumnGroup: require('html5/parser/in_column_group_phase'),
-	inTableBody: require('html5/parser/in_table_body_phase'),
-	inRow: require('html5/parser/in_row_phase'),
-	inCell: require('html5/parser/in_cell_phase'),
-	inSelect: require('html5/parser/in_select_phase'),
-	inSelectInTable: require('html5/parser/in_select_in_table_phase'),
-	afterBody: require('html5/parser/after_body_phase'),
-	inFrameset: require('html5/parser/in_frameset_phase'),
-	afterFrameset: require('html5/parser/after_frameset_phase'),
-	afterAfterBody: require('html5/parser/after_after_body_phase'),
-	afterAfterFrameset: require('html5/parser/after_after_frameset_phase'),
-	inForeignContent: require('html5/parser/in_foreign_content_phase')
+	inHead: require('html5/parser/in_head_phase').Phase,
+	afterHead: require('html5/parser/after_head_phase').Phase,
+	inBody: require('html5/parser/in_body_phase').Phase,
+	inTable: require('html5/parser/in_table_phase').Phase,
+	inCaption: require('html5/parser/in_caption_phase').Phase,
+	inColumnGroup: require('html5/parser/in_column_group_phase').Phase,
+	inTableBody: require('html5/parser/in_table_body_phase').Phase,
+	inRow: require('html5/parser/in_row_phase').Phase,
+	inCell: require('html5/parser/in_cell_phase').Phase,
+	inSelect: require('html5/parser/in_select_phase').Phase,
+	inSelectInTable: require('html5/parser/in_select_in_table_phase').Phase,
+	afterBody: require('html5/parser/after_body_phase').Phase,
+	inFrameset: require('html5/parser/in_frameset_phase').PhasePhase,
+	afterFrameset: require('html5/parser/after_frameset_phase').Phase,
+	afterAfterBody: require('html5/parser/after_after_body_phase').Phase,
+	afterAfterFrameset: require('html5/parser/after_after_frameset_phase').Phase,
+	inForeignContent: require('html5/parser/in_foreign_content_phase').Phase
 };
 
 TAGMODES = {
