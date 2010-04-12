@@ -97,7 +97,7 @@ Parser.prototype._parse = function(inner_html, encoding, container) {
 Parser.prototype.parse_error = function(code, data) {
 	// FIXME: this.errors.push([this.tokenizer.position, code, data]);
 	this.errors.push([code, data]);
-	if(this.strict) throw(this.errors[this.errors.length]);
+	if(this.strict) throw(this.errors[this.errors.length - 1]);
 }
 
 Parser.prototype.normalize_token = function(token) {

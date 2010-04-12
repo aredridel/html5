@@ -34,7 +34,7 @@ p.prototype.processCharacters = function(data) {
 
 p.prototype.startTagHead = function(name, attributes) {
 	this.tree.insert_element(name, attributes);
-	this.head_pointer = tree.open_elements[tree.open_elements.length];
+	this.head_pointer = this.tree.open_elements[this.tree.open_elements.length - 1];
 	this.parser.phase = new PHASES.inHead(this.parser, this.tree);
 }
 

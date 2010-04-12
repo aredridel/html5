@@ -12,7 +12,7 @@ p.prototype = new Phase;
 // FIXME handle_end title style script noscript
 
 p.prototype.process_eof = function() {
-	var name = this.tree.open_elements[this.tree.open_elements.length].name;
+	var name = this.tree.open_elements[this.tree.open_elements.length - 1].name;
 	if(['title', 'style', 'script'].indexOf(name) != -1) {
 		this.parse_error("expected-named-closing-tag-but-got-eof", {name: name});
 		this.tree.open_elements.pop();
@@ -24,7 +24,7 @@ p.prototype.process_eof = function() {
 }
 
 p.prototype.processCharacters = function(data) {
-	var name = this.tree.open_elements[this.tree.open_elements.length].name;
+	var name = this.tree.open_elements[this.tree.open_elements.length - 1].name;
 	if(['title', 'style', 'script', 'noscript'].indexOf(name) != -1) {
 		this.tree.insertText(data);
 	} else {
@@ -65,7 +65,7 @@ p.prototype.startTagNoscript = function(name, attributes) {
 	if(this.tree.head_pointer && this.parser.phase == new PHASES.inHead(this.parser, this.tree)) {
 		this.appendToHead(element);
 	} else {
-		this.tree.open_elements[this.tree.open_elements.length].appendChild(element);
+		this.tree.open_elements[this.tree.open_elements.length - 1].appendChild(element);
 	}
 	this.tree.open_elements.push(element);
 	this.parser.tokenizer.content_model = Models.CDATA;
@@ -78,7 +78,7 @@ p.prototype.startTagScript = function(name, attributes) {
 	if(this.tree.head_pointer && this.parser.phase == new PHASES.inHead(this.parser, this.tree)) {
 		this.appendToHead(element);
 	} else {
-		this.tree.open_elements[this.tree.open_elements.length].appendChild(element);
+		this.tree.open_elements[this.tree.open_elements.length - 1].appendChild(element);
 	}
 	this.tree.open_elements.push(element);
 	this.parser.tokenizer.content_model = Models.CDATA;
@@ -100,7 +100,7 @@ p.prototype.startTagOther = function(name, attributes) {
 }
 
 p.prototype.endTagHead = function(name) {
-	if(this.tree.open_elements[this.tree.open_elements.length].name == 'head') {
+	if(this.tree.open_elements[this.tree.open_elements.length - 1].name == 'head') {
 		this.tree.open_elements.pop();
 	} else {
 		this.parse_error('unexpected-end-tag', {name: 'head'});
@@ -114,7 +114,7 @@ p.prototype.endTagImplyAfterHead = function(name) {
 }
 
 p.prototype.endTagStyleScriptNoscript = function(name) {
-	if(this.tree.open_elements[this.tree.open_elements.length].name == name) {
+	if(this.tree.open_elements[this.tree.open_elements.length - 1].name == name) {
 		this.tree.open_elements.pop();
 	} else {
 		this.parse_error('unexpected-end-tag', {name: name});
@@ -126,7 +126,7 @@ p.prototype.endTagOther = function(name) {
 }
 
 p.prototype.anything_else = function() {
-	if(this.tree.open_elements[this.tree.open_elements.length].name == 'head') {
+	if(this.tree.open_elements[this.tree.open_elements.length - 1].name == 'head') {
 		endTagHead('head');
 	} else {
 		this.parser.phase = new PHASES.afterHead(this.parser, this.tree);
@@ -138,7 +138,7 @@ p.prototype.anything_else = function() {
 p.prototype.appendToHead = function(element) {
 	if(!tree.head_pointer) {
 		// FIXME assert(this.parser.inner_html)
-		this.tree.open_elements[this.tree.open_elements.length].appendChild(element);
+		this.tree.open_elements[this.tree.open_elements.length - 1].appendChild(element);
 	} else {
 		this.tree.head_pointer.appendChild(element);
 	}
