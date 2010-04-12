@@ -23,18 +23,18 @@ exports.Parser = Parser = function HTML5Parser(source, options) {
 			method = 'process' + token.type;
 
 			switch(token.type) {
-			case Tokens.CHARACTERS:
-			case Tokens.SPACE:
-			case Tokens.COMMENT:
+			case 'Characters':
+			case 'SpaceCharacters':
+			case 'Comment':
 				that.phase[method](token.data);
 				break;
-			case Tokens.START_TAG:
+			case 'StartTag':
 				that.phase[method](token.name, token.data, token.self_closing);
 				break;
-			case Tokens.END_TAG:
+			case 'EndTag':
 				that.phase[method](token.name);
 				break;
-			case Tokens.DOCTYPE:
+			case 'Doctype':
 				that.phase[method](token.name, token.publicId, token.systemId, token.correct);
 				break;
 			default:
@@ -99,14 +99,14 @@ Parser.prototype.parse_error = function(code, data) {
 }
 
 Parser.prototype.normalize_token = function(token) {
-	if(token.type == Tokens.EMPTY_TAG) {
+	if(token.type == 'EmptyTag') {
 		if(VOID_ELEMENTS.indexOf(token.name) == -1) {
 			parse_error('incorrectly-placed-solidus');
 		}
-		token.type = Tokens.START_TAG;
+		token.type = 'StartTag';
 	}
 
-	if(token.type == Tokens.START_TAG) {
+	if(token.type == 'StartTag') {
 		token.name = token.name.toLowerCase();
 		if(token.data.length != 0) {
 			var data = {};
@@ -115,7 +115,7 @@ Parser.prototype.normalize_token = function(token) {
 			});
 			token.data = data;
 		}
-	} else if(token.type = Tokens.END_TAG) {
+	} else if(token.type = 'EndTag') {
 		if(token.data.length != 0) parse_error('attributes-in-end-tag');
 		token.name = token.name.toLowerCase();
 	}

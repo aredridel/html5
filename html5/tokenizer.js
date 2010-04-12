@@ -51,16 +51,16 @@ t.prototype.data_state = function(buffer) {
 		this.state = this.entity_data_state;
 	} else if(c == '-' && (this.content_model == Models.PCDATA || this.content_model == Models.RCDATA) && !this.escapeFlag && this.lastFourChars.join('') == '<!--') {
 		this.escapeFlag = true;
-		this.emit('token', {type: Tokens.CHARACTERS, data: c});
+		this.emit('token', {type: 'Characters', data: c});
 	} else if(c == '<' && !this.ecapeFlag && (this.content_model == Models.PCDATA || this.content_model == Models.RCDATA || this.content_model == Models.CDATA)) {
 		this.state = this.tag_open_state;
 	} else if(c == '>' && this.escapeFlag && (this.content_model == Models.CDATA || this.content_model == Models.RCDATA) && this.lastFourChars.slice(1, 3).join('') == '-->') {
 		this.escapeFlag = false;
-		this.emit('token', {type: Tokens.CHARACTERS, data: c});
+		this.emit('token', {type: 'Characters', data: c});
 	} else if(SPACE_CHARACTERS_R.test(c)) {
-		this.emit('token', {type: Tokens.SPACE, data: c + buffer.matchWhile(SPACE_CHARACTERS)});
+		this.emit('token', {type: 'SpaceCharacters', data: c + buffer.matchWhile(SPACE_CHARACTERS)});
 	} else {
-		this.emit('token', {type: Tokens.SPACE, data: c + buffer.matchUntil(/[&<>-]/)});
+		this.emit('token', {type: 'SpaceCharacters', data: c + buffer.matchUntil(/[&<>-]/)});
 	}
 	return true;
 }
@@ -68,9 +68,9 @@ t.prototype.data_state = function(buffer) {
 t.prototype.entity_data_state = function(buffer) {
 	var entity = consume_entity(buffer);
 	if(entity) {
-		this.emit('token', {type: Tokens.CHARACTERS, data: entity});
+		this.emit('token', {type: 'Characters', data: entity});
 	} else {
-		this.emit('token', {type: Tokens.CHARACTERS, data: '&'});
+		this.emit('token', {type: 'Characters', data: '&'});
 	}
 	this.state = this.data_state;
 	return true;
@@ -84,13 +84,13 @@ t.prototype.tag_open_state = function(buffer) {
 		} else if (data == '/') {
 			this.state = this.close_tag_open_state;
 		} else if (data != 'EOF' && ASCII_LETTERS_R.test(data)) {
-			this.current_token = {type: Tokens.START_TAG, name: data, data: []};
+			this.current_token = {type: 'StartTag', name: data, data: []};
 			this.state = this.tag_name_state;
 		} else if (data == '>') {
 			// XXX In theory it could be something besides a tag name. But
 			// do we really care?
 			this.parse_error("expected-tag-name-but-got-right-bracket");
-			this.emit('token', {type: Tokens.CHARACTERS, data: "<>"});
+			this.emit('token', {type: 'Characters', data: "<>"});
 			this.state = this.data_state;
 		} else if (data == '?') {
 			// XXX In theory it could be something besides a tag name. But
@@ -101,7 +101,7 @@ t.prototype.tag_open_state = function(buffer) {
 		} else {
 			// XXX
 			this.parse_error("expected-tag-name");
-			this.emit('token', {type: Tokens.CHARACTERS, data: "<"});
+			this.emit('token', {type: 'Characters', data: "<"});
 			buffer.unget(data);
 			this.state = this.data_state;
 		}
@@ -112,7 +112,7 @@ t.prototype.tag_open_state = function(buffer) {
 		if (data == '/') {
 			this.state = this.close_tag_open_state;
 		} else {
-			this.emit('token', {type: Tokens.CHARACTERS, data: "<"});
+			this.emit('token', {type: 'Characters', data: "<"});
 			buffer.unget(data);
 			this.state = this.data_state;
 		}
@@ -131,7 +131,7 @@ t.prototype.close_tag_open_state = function(buffer) {
 		if(this.current_token && this.current_token.name.toLowerCase() == chars.substr(0, -2).toLowerCase() && new RegExp('[' + SPACE_CHARACTERS + '></]').test(chars.substr(-1))) {
 			this.content_model = Models.PCDATA;
 		} else {
-			this.emit('token', {type: Tokens.CHARACTERS, data: '</'});
+			this.emit('token', {type: 'Characters', data: '</'});
 			return true;
 		}
 	}
@@ -139,10 +139,10 @@ t.prototype.close_tag_open_state = function(buffer) {
 	data = buffer.shift(1);
 	if (data == 'EOF') { 
 		this.parse_error("expected-closing-tag-but-got-eof");
-		this.emit('token', {type: Tokens.CHARACTERS, data: '</'});
+		this.emit('token', {type: 'Characters', data: '</'});
 		this.state = this.data_state
 	} else if (ASCII_LETTERS_R.test(data)) {
-		this.current_token = {type: Tokens.END_TAG, name: data, data: []};
+		this.current_token = {type: 'EndTag', name: data, data: []};
 		this.state = this.tag_name_state;
 	} else if (data == '>') {
 		this.parse_error("expected-closing-tag-but-got-right-bracket");
@@ -364,7 +364,7 @@ t.prototype.after_attribute_value_state = function(buffer) {
 		buffer.unget(data);
 		this.state = this.data_state;
 	} else {
-		this.emit('token', {type: Tokens.PARSE_ERROR, data: "unexpected-character-after-attribute-value"});
+		this.emit('token', {type: 'ParseError', data: "unexpected-character-after-attribute-value"});
 		buffer.unget(data);
 		this.state = this.before_attribute_name_state;
 	}
@@ -391,7 +391,7 @@ t.prototype.self_closing_tag_state = function(buffer) {
 
 t.prototype.bogus_comment_state = function(buffer) {
 	var data = buffer.shift(1);
-	this.emit('token', {type: Tokens.COMMENT, data: buffer.matchUntil('>')});
+	this.emit('token', {type: 'Comment', data: buffer.matchUntil('>')});
 	buffer.shift(1);
 	this.state = this.data_state;
 	return true;
@@ -400,13 +400,13 @@ t.prototype.bogus_comment_state = function(buffer) {
 t.prototype.markup_declaration_open_state = function(buffer) {
 	var chars = buffer.shift(2);
 	if(chars == '--') {
-		this.current_token = {type: Tokens.COMMENT, data: ''};
+		this.current_token = {type: 'Comment', data: ''};
 		this.state = this.comment_start_state;
 	} else {
 		chars += buffer.shift(5);
 		// Check for EOF -- FIXME
 		if(chars.toUpper() == 'DOCTYPE') {
-			this.current_token = {type: Tokens.DOCTYPE, name: '', publicId: null, systemId: null, correct: true};
+			this.current_token = {type: 'Doctype', name: '', publicId: null, systemId: null, correct: true};
 			this.state = this.doctype_state;
 		} else {
 			this.parse_error("expected-dashes-or-doctype");
@@ -502,16 +502,16 @@ t.prototype.doctype_state = function(buffer) {
 }
 
 t.prototype.parse_error = function(message) {
-	this.emit('token', {type: Tokens.PARSE_ERROR, data: message});
+	this.emit('token', {type: 'ParseError', data: message});
 }
 
 t.prototype.emit_current_token = function() {
 	var tok = this.current_token;
 	switch(tok.type) {
-	case Tokens.START_TAG:
-	case Tokens.END_TAG:
-	case Tokens.EMPTY_TAG:
-		if(tok.type == Tokens.END_TAG && tok.self_closing) {
+	case 'StartTag':
+	case 'EndTag':
+	case 'EmptyTag':
+		if(tok.type == 'EndTag' && tok.self_closing) {
 			this.parse_error('self-closing-end-tag');
 		}
 		break;
