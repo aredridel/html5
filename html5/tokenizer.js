@@ -518,16 +518,3 @@ t.prototype.emit_current_token = function() {
 	this.current_token = null;
 	this.state = this.data_state;
 }
-
-/*
-
-i = new events.EventEmitter();
-t = new t(i);
-sys = require('sys');
-t.addListener('token', function(token) {
-	sys.puts(sys.inspect(token));
-});
-
-i.emit('data', '<html><head><title><p class="fun">Hi</p></title></head></html>');
-
-*/
