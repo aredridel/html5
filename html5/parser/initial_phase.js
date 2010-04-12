@@ -1,19 +1,19 @@
-exports.InitialPhase = InitialPhase = function() {
+exports.Phase = p = function() {
 }
 
-InitialPhase.prototype = new require('html5/parser/phase').Phase;
+p.prototype = new require('html5/parser/phase').Phase;
 
-InitialPhase.prototype.process_eof = function() {
+p.prototype.process_eof = function() {
 	parse_error("expected-doctype-but-got-eof");
 	parser.phase = PHASES.beforeHTML;
 	parser.phase.process_eof();
 }
 
-InitialPhase.prototype.processComment = function(data) {
+p.prototype.processComment = function(data) {
 	this.tree.insert_comment(data, this.tree.document);
 }
 
-InitialPhase.prototype.processDoctype = function(name, publicId, systemId, correct) {
+p.prototype.processDoctype = function(name, publicId, systemId, correct) {
 	if(name.toLowercase() != 'html' || publicId || systemId) {
 		this.parse_error("unknown-doctype");
 	}
