@@ -117,8 +117,8 @@ Parser.prototype.normalize_token = function(token) {
 			});
 			token.data = data;
 		}
-	} else if(token.type = 'EndTag') {
-		if(token.data.length != 0) parse_error('attributes-in-end-tag');
+	} else if(token.type == 'EndTag') {
+		if(token.data.length != 0) this.parse_error('attributes-in-end-tag');
 		token.name = token.name.toLowerCase();
 	}
 
