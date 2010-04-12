@@ -1046,7 +1046,7 @@ exports.Models = {PCDATA: 1, RCDATA: 2, CDATA: 3};
 exports.PHASES = PHASES = {
 	initial: require('html5/parser/initial_phase').Phase, 
 	beforeHTML: require('html5/parser/before_html_phase').Phase,
-	beforeHead: require('html5/parser/before_head_phase'), 
+	beforeHead: require('html5/parser/before_head_phase').Phase, 
 	inHead: require('html5/parser/in_head_phase').Phase,
 	afterHead: require('html5/parser/after_head_phase').Phase,
 	inBody: require('html5/parser/in_body_phase').Phase,
