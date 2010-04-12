@@ -41,24 +41,19 @@ TAGMODES = {
 
 var TreeBuilder = require('html5/treebuilder').TreeBuilder;
 
-exports.Parser = Parser = function HTML5Parser(options) {
+exports.Parser = Parser = function HTML5Parser(source, options) {
 	this.strict = false;
 	this.errors = [];
-	this.tokenizer = require('html5/tokenizer').HTMLTokenizer;
+
 	this.tree = TreeBuilder;
 	
 	for(o in options) {
 		this[o] = options[o];
 	}
 
+	this.tokenizer = new require('html5/tokenizer').Tokenizer(source);
 	this.tree = new this.tree;
 
-}
-
-Parser.prototype.parse_string = function(string) {
-	i = new require('events').EventEmitter();
-	this._parse(i);
-	i.emit('data', string);
 }
 
 Parser.prototype._parse = function(stream, inner_html, encoding, container) {
@@ -102,7 +97,7 @@ Parser.prototype._parse = function(stream, inner_html, encoding, container) {
 
 	this.last_phase = null;
 
-	tokenizer.addListener('token', function(token) {
+	this.tokenizer.addListener('token', function(token) {
 		token = normalize_token(token);
 		method = 'process' + token.type;
 
