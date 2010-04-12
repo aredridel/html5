@@ -1,6 +1,6 @@
 var events = require('events');
-process.mixin(require('./constants'));
-var Buffer = require('./buffer').Buffer;
+process.mixin(require('html5/constants'));
+var Buffer = require('html5/buffer').Buffer;
 
 exports.Tokenizer = t = function HTML5Tokenizer(input) {
 	this.content_model = Models.PCDATA;
