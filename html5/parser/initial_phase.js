@@ -106,5 +106,27 @@ p.prototype.processDoctype = function(name, publicId, systemId, correct) {
 		}
 	}
 
-	parser.phase = PHASES.beforeHTML;
+	parser.phase = new PHASES.beforeHTML(this.parser, this.tree);
+}
+
+p.prototype.processSpaceCharacters = function(data) {
+
+}
+
+p.prototype.processCharacters = function(data) {
+	this.parse_error('expected-doctype-but-got-chars');
+	this.parser.phase = new PHASES.beforeHTML(this.parser, this.tree);
+	this.parser.phase.processCharacters(data);
+}
+
+p.prototype.processStartTag = function(name, attributes, self_closing) {
+	this.parse_error('expected-doctype-but-got-start-tag', {name: name});
+	this.parser.phase = new PHASES.beforeHTML(this.parser, this.tree);
+	this.parser.phase.processStartTag(name, attributes);
+}
+
+p.prototype.processEndTag = function(name) {
+	this.parse_error('expected-doctype-but-got-end-tag', {name: name});
+	this.parser.phase = new PHASES.beforeHTML(this.parser, this.tree);
+	this.parser.phase.processEndTag(name);
 }
