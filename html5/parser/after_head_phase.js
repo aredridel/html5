@@ -1,8 +1,9 @@
-exports.Phase = p = function() {
-
+var Phase = require('html5/parser/phase').Phase;
+exports.Phase = p = function AfterHeadPhase(parser, tree) {
+	Phase.call(this, parser, tree);
 }
 
-p.prototype = new require('html5/parser/phase').Phase;
+p.prototype = new Phase;
 
 // FIXME handle-start html body frameset ( base link meta script style title) => fromHead
 // FIXME handle_end body html br => BodyHtmlBr
@@ -19,17 +20,17 @@ p.prototype.processCharacters = function(data) {
 
 p.prototype.startTagBody = function(name, attributes) {
 	this.tree.insert_element(name, attributes);
-	this.parser.phase = PHASES.inBody;
+	this.parser.phase = new PHASES.inBody(this.parser, this.tree);
 }
 
 p.prototype.startTagFrameset = function(name, attributes) {
 	this.tree.insert_element(name, attributes);
-	this.parser.phase = PHASES.inFrameset;
+	this.parser.phase = new PHASES.inFrameset(this.parser, this.tree);
 }
 
 p.prototype.startTagFromHead = function(name, attributes) {
 	this.parse_error("unexpected-start-tag-out-of-my-head", {name: name});
-	this.parser.phase = PHASES.inHead;
+	this.parser.phase = new PHASES.inHead(this.parser, this.tree);
 	this.parser.phase.processStartTag(hame, attributes);
 }
 
@@ -49,5 +50,5 @@ p.prototype.endTagOther = function(name) {
 
 p.prototype.anything_else = function() {
 	this.tree.insert_element('body', {});
-	this.parser.phase = PHASES.inBody;
+	this.parser.phase = new PHASES.inBody(this.parser, this.tree);
 }

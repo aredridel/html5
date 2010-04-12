@@ -1,11 +1,14 @@
-exports.Phase = p = function() {
+var Phase = require('html5/parser/phase').Phase;
+
+exports.Phase = p = function InitialPhase(parser, tree) {
+	Phase.call(this, parser, tree);
 }
 
-p.prototype = new require('html5/parser/phase').Phase;
+p.prototype = new Phase;
 
 p.prototype.process_eof = function() {
 	parse_error("expected-doctype-but-got-eof");
-	parser.phase = PHASES.beforeHTML;
+	parser.phase = new PHASES.beforeHTML(this.parser, this.tree);
 	parser.phase.process_eof();
 }
 

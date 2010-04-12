@@ -1,8 +1,9 @@
-exports.Phase = p = function() {
-
+var Phase = require('html5/parser/phase').Phase;
+exports.Phase = p = function InHeadPhase(parser, tree) {
+	Phase.call(this, parser, tree);
 }
 
-p.prototype = new require('html5/parser/phase').Phase;
+p.prototype = new Phase;
 
 // FIXME handle_start html head title type script noscript
 // FIXME handle_start base link meta
@@ -37,7 +38,7 @@ p.prototype.startTagHead = function(name, attributes) {
 }
 
 p.prototype.startTagTitle = function(name, attributes) {
-	if(this.tree.head_pointer && this.parser.phase == PHASES.inHead) {
+	if(this.tree.head_pointer && this.parser.phase == new PHASES.inHead(this.parser, this.tree)) {
 		var element = this.tree.createElement(name, attributes);
 		this.appendToHead(element);
 		this.tree.open_elements.push(element);
@@ -48,7 +49,7 @@ p.prototype.startTagTitle = function(name, attributes) {
 }
 
 p.prototype.startTagStyle = function(name, attributes) {
-	if(this.tree.head_pointer && this.parser.phase == PHASES.inHead) {
+	if(this.tree.head_pointer && this.parser.phase == new PHASES.inHead(this.parser, this.tree)) {
 		var element = this.tree.createElement(name, attributes);
 		this.appendToHead(element);
 		this.tree.open_elements.push(name, attributes);
@@ -61,7 +62,7 @@ p.prototype.startTagStyle = function(name, attributes) {
 p.prototype.startTagNoscript = function(name, attributes) {
 	// XXX Need to decide whether to implement the scripting disabled case
 	var element = this.tree.createElement(name, attributes);
-	if(this.tree.head_pointer && this.parser.phase == PHASES.inHead) {
+	if(this.tree.head_pointer && this.parser.phase == new PHASES.inHead(this.parser, this.tree)) {
 		this.appendToHead(element);
 	} else {
 		this.tree.open_elements[this.tree.open_elements.length].appendChild(element);
@@ -74,7 +75,7 @@ p.prototype.startTagScript = function(name, attributes) {
 	// XXX Innre HTML case may be wrong
 	var element = this.tree.createElement(name, attribute);
 	element.flags.push('parser-inserted');
-	if(this.tree.head_pointer && this.parser.phase == PHASES.inHead) {
+	if(this.tree.head_pointer && this.parser.phase == new PHASES.inHead(this.parser, this.tree)) {
 		this.appendToHead(element);
 	} else {
 		this.tree.open_elements[this.tree.open_elements.length].appendChild(element);
@@ -84,7 +85,7 @@ p.prototype.startTagScript = function(name, attributes) {
 }
 
 p.prototype.startTagBaseLinkMeta = function(name, attributes) {
-	if(this.tree.head_pointer && this.parser.phase == PHASES.inHead) {
+	if(this.tree.head_pointer && this.parser.phase == new PHASES.inHead(this.parser, this.tree)) {
 		this.createElement(name, attributes);
 		this.appendToHead(element);
 	} else {
@@ -104,7 +105,7 @@ p.prototype.endTagHead = function(name) {
 	} else {
 		this.parse_error('unexpected-end-tag', {name: 'head'});
 	}
-	this.parser.phase = PHASES.afterHead;
+	this.parser.phase = new PHASES.afterHead(this.parser, this.tree);
 }
 
 p.prototype.endTagImplyAfterHead = function(name) {
@@ -128,7 +129,7 @@ p.prototype.anything_else = function() {
 	if(this.tree.open_elements[this.tree.open_elements.length].name == 'head') {
 		endTagHead('head');
 	} else {
-		this.parser.phase = PHASES.afterHead;
+		this.parser.phase = new PHASES.afterHead(this.parser, this.tree);
 	}
 }
 

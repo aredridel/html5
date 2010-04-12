@@ -81,12 +81,12 @@ Parser.prototype._parse = function(inner_html, encoding, container) {
 		default:
 			this.tokenizer.content_model = Models.PCDATA;
 		}
-		this.phase = PHASES.beforeHTML;
+		this.phase = new PHASES.beforeHTML(this, this.tree);
 		this.phase.insert_html_element();
 		this.reset_insertion_mode();
 	} else {
 		this.inner_html = false;
-		this.phase = PHASES.initial;
+		this.phase = new PHASES.initial(this, this.tree);
 	}
 
 	this.last_phase = null;
@@ -140,11 +140,11 @@ Parser.prototype.reset_insert_mode = function() {
 		}
 
 		if(TAGMODES[node_name]) {
-			this.phase = TAGMODES[node_name];
+			this.phase = new TAGMODES[node_name](this, this.tree);
 		} else if(node_name == 'html') {
-			this.phase = PHASES[(this.tree.head_pointer == null ? 'beforeHead' : 'afterHead')];
+			this.phase = new PHASES[(this.tree.head_pointer == null ? 'beforeHead' : 'afterHead')](this, this.tree);
 		} else if(last) {
-			this.phase = PHASES.inBody;
+			this.phase = new PHASES.inBody(this, this.tree);
 		} else {
 			continue;
 		}

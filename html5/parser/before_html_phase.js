@@ -1,8 +1,10 @@
-exports.Phase = p = function() {
+var Phase = require('html5/parser/phase').Phase;
 
+exports.Phase = p = function(parser, tree) {
+	Phase.call(this, parser, tree);
 }
 
-p.prototype = new require('html5/parser/phase').Phase;
+p.prototype = new Phase;
 
 p.prototype.process_eof = function() {
 	this.insert_html_element();
@@ -36,5 +38,5 @@ p.prototype.insert_html_element = function() {
 	var element = this.tree.createElement('html', {});
 	this.tree.open_elements.push(element);
 	this.document.appendChild(element);
-	this.parser.phase = PHASES.beforeHead;
+	this.parser.phase = new PHASES.beforeHead(this.parser, this.tree);
 }

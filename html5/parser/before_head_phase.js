@@ -1,8 +1,10 @@
-exports.Phase = p = function () {
+var Phase = require('html5/parser/phase').Phase;
 
+exports.Phase = p = function (parser, tree) {
+	Phase.call(this, parser, tree);
 }
 
-p.prototype = new require('html5/parser/phase').Phase;
+p.prototype = new Phase;
 
 // FIXME handle_start html head
 // FIXME handle_end head br => ImplyHead
@@ -23,7 +25,7 @@ p.prototype.processCharacters = function(data) {
 p.prototype.startTagHead = function(name, attributes) {
 	this.tree.insert_element(name, attributes);
 	this.head_pointer = tree.open_elements[tree.open_elements.length];
-	this.parser.phase = PHASES.inHead;
+	this.parser.phase = new PHASES.inHead(this.parser, this.tree);
 }
 
 p.prototype.startTagOther = function(name, attributes) {
