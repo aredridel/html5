@@ -39,11 +39,13 @@ TAGMODES = {
 	frameset: PHASES.inFrameset
 };
 
-exports.HTML5Parser = HTML5Parser = function(options) {
+var TreeBuilder = require('html5/treebuilder').TreeBuilder;
+
+exports.Parser = Parser = function HTML5Parser(options) {
 	this.strict = false;
 	this.errors = [];
 	this.tokenizer = require('html5/tokenizer').HTMLTokenizer;
-	this.tree = 'FIXME: TreeBuilder';
+	this.tree = TreeBuilder;
 	
 	for(o in options) {
 		this[o] = options[o];
@@ -53,7 +55,13 @@ exports.HTML5Parser = HTML5Parser = function(options) {
 
 }
 
-HTML5Parser.prototype._parse = function(stream, inner_html, encoding, container) {
+Parser.prototype.parse_string = function(string) {
+	i = new require('events').EventEmitter();
+	this._parse(i);
+	i.emit('data', string);
+}
+
+Parser.prototype._parse = function(stream, inner_html, encoding, container) {
 	container = container || 'div';
 
 	this.tree.reset();
@@ -123,12 +131,12 @@ HTML5Parser.prototype._parse = function(stream, inner_html, encoding, container)
 	});
 }
 
-HTML5Parser.prototype.parse_error = function(code, data) {
+Parser.prototype.parse_error = function(code, data) {
 	this.errors.push([this.tokenizer.position, code, data]);
 	if(this.strict) throw(this.errors[this.errors.length]);
 }
 
-HTML5Parser.prototype.normalize_token = function(token) {
+Parser.prototype.normalize_token = function(token) {
 	if(token.type == Tokens.EMPTY_TAG) {
 		if(VOID_ELEMENTS.indexOf(token.name) == -1) {
 			parse_error('incorrectly-placed-solidus');
@@ -153,7 +161,7 @@ HTML5Parser.prototype.normalize_token = function(token) {
 	return token;
 }
 
-HTML5Parser.prototype.reset_insert_mode = function() {
+Parser.prototype.reset_insert_mode = function() {
 	var last = false;
 	for(node in this.tee.open_elements.reverse()) {
 		var node_name = node.name;
@@ -183,6 +191,6 @@ HTML5Parser.prototype.reset_insert_mode = function() {
 	}
 }
 
-HTML5Parser.prototype._ = function(str) { 
+Parser.prototype._ = function(str) { 
 	return(str);
 }
