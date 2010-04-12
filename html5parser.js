@@ -18,9 +18,10 @@ exports.Parser = Parser = function HTML5Parser(source, options) {
 	var that = this;
 
 	this.tokenizer = new Tokenizer(source, function(tokenizer) {
+		that._parse();
 		tokenizer.addListener('token', function(token) {
 			token = that.normalize_token(token);
-			method = 'process' + token.type;
+			var method = 'process' + token.type;
 
 			switch(token.type) {
 			case 'Characters':
@@ -94,7 +95,8 @@ Parser.prototype._parse = function(inner_html, encoding, container) {
 }
 
 Parser.prototype.parse_error = function(code, data) {
-	this.errors.push([this.tokenizer.position, code, data]);
+	// FIXME: this.errors.push([this.tokenizer.position, code, data]);
+	this.errors.push([code, data]);
 	if(this.strict) throw(this.errors[this.errors.length]);
 }
 
