@@ -60,7 +60,7 @@ Parser.prototype._parse = function(inner_html, encoding, container) {
 	// FIXME: instantiate tokenizer and plumb. Pass lowercasing options.
 
 	if(inner_html) {
-		this.inner_html = container.toLowercase();
+		this.inner_html = container.toLowerCase();
 		switch(this.inner_html) {
 		case 'title':
 		case 'textarea':
@@ -107,17 +107,17 @@ Parser.prototype.normalize_token = function(token) {
 	}
 
 	if(token.type == Tokens.START_TAG) {
-		token.name = token.name.toLowercase();
+		token.name = token.name.toLowerCase();
 		if(token.data.length != 0) {
 			var data = {};
 			token.data.reverse().forEach(function(e) {
-				data[e[0].toLowercase()] = e[1];
+				data[e[0].toLowerCase()] = e[1];
 			});
 			token.data = data;
 		}
 	} else if(token.type = Tokens.END_TAG) {
 		if(token.data.length != 0) parse_error('attributes-in-end-tag');
-		token.name = token.name.toLowercase();
+		token.name = token.name.toLowerCase();
 	}
 
 	return token;
