@@ -551,6 +551,8 @@ exports.HTMLTokenizer.prototype.emit_current_token = function() {
 	this.state = this.data_state;
 }
 
+/*
+
 i = new events.EventEmitter();
 t = new exports.HTMLTokenizer(i);
 sys = require('sys');
@@ -560,3 +562,4 @@ t.addListener('token', function(token) {
 
 i.emit('data', '<html><head><title><p class="fun">Hi</p></title></head></html>');
 
+*/
