@@ -8,17 +8,49 @@ exports.Parser = Parser = function HTML5Parser(source, options) {
 	this.errors = [];
 
 	this.tree = TreeBuilder;
-	
-	for(o in options) {
+
+	if(options) for(o in options) {
 		this[o] = options[o];
 	}
 
-	this.tokenizer = new Tokenizer(source);
-	this.tree = new this.tree;
+	this.tree = new this.tree();
+
+	var that = this;
+
+	this.tokenizer = new Tokenizer(source, function(tokenizer) {
+		tokenizer.addListener('token', function(token) {
+			token = that.normalize_token(token);
+			method = 'process' + token.type;
+
+			switch(token.type) {
+			case Tokens.CHARACTERS:
+			case Tokens.SPACE:
+			case Tokens.COMMENT:
+				that.phase[method](token.data);
+				break;
+			case Tokens.START_TAG:
+				that.phase[method](token.name, token.data, token.self_closing);
+				break;
+			case Tokens.END_TAG:
+				that.phase[method](token.name);
+				break;
+			case Tokens.DOCTYPE:
+				that.phase[method](token.name, token.publicId, token.systemId, token.correct);
+				break;
+			default:
+				that.parse_error(token.data, token.datavars)
+			}
+		});
+
+		tokenizer.addListener('eof', function() {
+			that.process_eof();
+		});
+	});
+
 
 }
 
-Parser.prototype._parse = function(stream, inner_html, encoding, container) {
+Parser.prototype._parse = function(inner_html, encoding, container) {
 	container = container || 'div';
 
 	this.tree.reset();
@@ -59,33 +91,6 @@ Parser.prototype._parse = function(stream, inner_html, encoding, container) {
 
 	this.last_phase = null;
 
-	this.tokenizer.addListener('token', function(token) {
-		token = normalize_token(token);
-		method = 'process' + token.type;
-
-		switch(token.type) {
-		case Tokens.CHARACTERS:
-		case Tokens.SPACE:
-		case Tokens.COMMENT:
-			this.phase[method](token.data);
-			break;
-		case Tokens.START_TAG:
-			this.phase[method](token.name, token.data, token.self_closing);
-			break;
-		case Tokens.END_TAG:
-			this.phase[method](token.name);
-			break;
-		case Tokens.DOCTYPE:
-			this.phase[method](token.name, token.publicId, token.systemId, token.correct);
-			break;
-		default:
-			this.parse_error(token.data, token.datavars)
-		}
-	});
-
-	this.tokenizer.addListener('eof', function() {
-		this.process_eof();
-	});
 }
 
 Parser.prototype.parse_error = function(code, data) {
