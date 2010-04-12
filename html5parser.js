@@ -13,7 +13,7 @@ exports.Parser = Parser = function HTML5Parser(source, options) {
 		this[o] = options[o];
 	}
 
-	this.tokenizer = new require('html5/tokenizer').Tokenizer(source);
+	this.tokenizer = new Tokenizer(source);
 	this.tree = new this.tree;
 
 }
