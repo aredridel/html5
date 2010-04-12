@@ -23,6 +23,22 @@ PHASES = {
 	inForeignContent: require('html5/parser/in_foreign_content_phase')
 };
 
+TAGMODES = {
+	select: PHASES.inSelect,
+	td: PHASES.inCell,
+	th: PHASES.inCell,
+	tr: PHASES.inRow,
+	tbody: PHASES.inTableBody,
+	thead: PHASES.inTableBody,
+	tfoot: PHASES.inTableBody,
+	caption: PHASES.inCaption,
+	colgroup: PHASES.inColumnGroup,
+	table: PHASES.inTable,
+	head: PHASES.inBody,
+	body: PHASES.inBody,
+	frameset: PHASES.inFrameset
+};
+
 exports.HTML5Parser = HTML5Parser = function(options) {
 	this.strict = false;
 	this.errors = [];
