@@ -32,7 +32,7 @@ Parser.prototype._parse = function(stream, inner_html, encoding, container) {
 		switch(this.inner_html) {
 		case 'title':
 		case 'textarea':
-			this.tokenizer.content_model = HTML5Tokenizer.Models.RCDATA;
+			this.tokenizer.content_model = Models.RCDATA;
 			break;
 		case 'style':
 		case 'script':
@@ -41,13 +41,13 @@ Parser.prototype._parse = function(stream, inner_html, encoding, container) {
 		case 'noembed':
 		case 'noframes':
 		case 'noscript':
-			this.tokenizer.content_model = HTML5Tokenizer.Models.CDATA;
+			this.tokenizer.content_model = Models.CDATA;
 			break;
 		case 'plaintext':
-			this.tokenizer.content_model = HTML5Tokenizer.Models.PLAINTEXT;
+			this.tokenizer.content_model = Models.PLAINTEXT;
 			break;
 		default:
-			this.tokenizer.content_model = HTML5Tokenizer.Models.PCDATA;
+			this.tokenizer.content_model = Models.PCDATA;
 		}
 		this.phase = PHASES.beforeHTML;
 		this.phase.insert_html_element();
