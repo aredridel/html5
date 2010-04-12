@@ -1,3 +1,7 @@
-exports.TreeBuilder = function() {
+exports.TreeBuilder = b = function TreeBuilder() {
+
+}
+
+b.prototype.reset = function() {
 
 }
