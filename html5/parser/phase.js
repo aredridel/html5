@@ -1,10 +1,34 @@
+var sys = require('sys');
 exports.Phase = function Phase(parser, tree) {
 	this.tree = tree;
 	this.parser = parser;
+	this.end_tag_handlers = {};
+	this.start_tag_handlers = {};
 }
 
 exports.Phase.prototype = {
 	parse_error: function(code, options) {
 		this.parser.parse_error(code, options);
+	},
+	processStartTag: function(name, attributes, self_closing) {
+		if(this.start_tag_handlers[name]) 
+			this[this.start_tag_handlers[name]](name, attributes, self_closing);
+	},
+	processEndTag: function(name) {
+		if(this.end_tag_handlers[name]) 
+			this[this.end_tag_handlers[name]](name);
+	},
+	startTagHtml: function(name, attributes) {
+		if(this.parser.first_start_tag == false && name == 'html') {
+			this.parse_error('non-html-root')
+		}
+		// XXX Need a check here to see if the first start tag token emitted is this token. . . if it's not, invoke parse_error.
+		for(k in attributes) {
+			if(!this.tree.open_elements[0].attributes[k]) {
+				this.tre.open_elements[0].attributes[k] = attributes[k];
+			}
+		}
+		this.parser.first_start_tag = false;
 	}
 }
+

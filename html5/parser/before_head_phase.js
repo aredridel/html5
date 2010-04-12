@@ -1,13 +1,23 @@
 var Phase = require('html5/parser/phase').Phase;
 
+var start_tag_handlers = {
+	html: 'startTagHtml',
+	head: 'startTagHead'
+}
+
+var end_tag_handlers = {
+	head: 'endTagImplyHead',
+	br: 'endTagImplyHead'
+}
+
 exports.Phase = p = function (parser, tree) {
 	Phase.call(this, parser, tree);
+	this.start_tag_handlers = start_tag_handlers;
+	this.end_tag_handlers = end_tag_handlers;
+	this.name = 'before_head_phase';
 }
 
 p.prototype = new Phase;
-
-// FIXME handle_start html head
-// FIXME handle_end head br => ImplyHead
 
 p.prototype.process_eof = function() {
 	this.startTagHead('head', {});
