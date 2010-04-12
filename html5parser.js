@@ -83,7 +83,7 @@ Parser.prototype._parse = function(stream, inner_html, encoding, container) {
 		}
 	});
 
-	tokenizer.addListener('eof', function() {
+	this.tokenizer.addListener('eof', function() {
 		this.process_eof();
 	});
 }
