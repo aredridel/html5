@@ -44,30 +44,41 @@ Buffer.prototype = {
 
 }
 
-exports.HTMLTokenizer = function(input) {
+exports.Tokenizer = t = function HTML5Tokenizer(input) {
 	this.content_model = Models.PCDATA;
 	this.state = this.data_state;
 	this.escapeFlag = false;
 	this.lastFourChars = '';
 	this.current_token = null;
 	this.token_queue = [];
-	this.buffer = buffer = new Buffer();
+	var buffer = this.buffer = new Buffer();
 
-	tokenizer = this;
-	input.addListener('data', function(data) {
+	if(typeof(input) == 'string') {
+		var source = new events.EventEmitter();
+	} else {
+		var source = input;
+	}
+
+	var tokenizer = this;
+	source.addListener('data', function(data) {
 		buffer.append(data);
 		while(buffer.length() > 0) {
 			tokenizer.state(buffer);
 		}
 	});
-	input.addListener('end', function() {
+	source.addListener('end', function() {
 
 	});
+
+	if(source != input) {
+		source.emit('data', input);
+		source.emit('end');
+	}
 }
 
-exports.HTMLTokenizer.prototype = new events.EventEmitter;
+t.prototype = new events.EventEmitter;
 
-exports.HTMLTokenizer.prototype.data_state = function(buffer) {
+t.prototype.data_state = function(buffer) {
 	var c = buffer.shift(1);
 	if(this.content_model == Models.CDATA || this.content_model == Models.RCDATA) {
 		if(this.lastFourChars.length >= 4) {
@@ -95,7 +106,7 @@ exports.HTMLTokenizer.prototype.data_state = function(buffer) {
 	return true;
 }
 
-exports.HTMLTokenizer.prototype.entity_data_state = function(buffer) {
+t.prototype.entity_data_state = function(buffer) {
 	var entity = consume_entity(buffer);
 	if(entity) {
 		this.emit('token', {type: Tokens.CHARACTERS, data: entity});
@@ -106,7 +117,7 @@ exports.HTMLTokenizer.prototype.entity_data_state = function(buffer) {
 	return true;
 }
 
-exports.HTMLTokenizer.prototype.tag_open_state = function(buffer) {
+t.prototype.tag_open_state = function(buffer) {
 	var data = buffer.shift(1);
 	if(this.content_model == Models.PCDATA) {
 		if(data == '!') {
@@ -150,7 +161,7 @@ exports.HTMLTokenizer.prototype.tag_open_state = function(buffer) {
 	return(true);
 }
 
-exports.HTMLTokenizer.prototype.close_tag_open_state = function(buffer) {
+t.prototype.close_tag_open_state = function(buffer) {
 	if(this.content_model == Models.RCDATA || this.content_model == Models.CDATA) {
 		var chars = '';
 		if(this.current_token) {
@@ -185,7 +196,7 @@ exports.HTMLTokenizer.prototype.close_tag_open_state = function(buffer) {
 	return true;
 }
 
-exports.HTMLTokenizer.prototype.tag_name_state = function(buffer) {
+t.prototype.tag_name_state = function(buffer) {
 	data = buffer.shift(1);
 	if(SPACE_CHARACTERS_R.test(data)) {
 		this.state = this.before_attribute_name_state;
@@ -204,7 +215,7 @@ exports.HTMLTokenizer.prototype.tag_name_state = function(buffer) {
 	return true;
 }
 
-exports.HTMLTokenizer.prototype.before_attribute_name_state = function(buffer) {
+t.prototype.before_attribute_name_state = function(buffer) {
 	var data = buffer.shift(1);
 	if(new RegExp('[' + SPACE_CHARACTERS +']').test(data)) {
 		buffer.matchWhile(SPACE_CHARACTERS);
@@ -229,7 +240,7 @@ exports.HTMLTokenizer.prototype.before_attribute_name_state = function(buffer) {
 	return true;
 }
 
-exports.HTMLTokenizer.prototype.attribute_name_state = function(buffer) {
+t.prototype.attribute_name_state = function(buffer) {
 	var data = buffer.shift(1);
 	var leavingThisState = true;
 	var emitToken = false;
@@ -281,7 +292,7 @@ exports.HTMLTokenizer.prototype.attribute_name_state = function(buffer) {
 	return true;
 }
 
-exports.HTMLTokenizer.prototype.after_attribute_name_state = function(buffer) {
+t.prototype.after_attribute_name_state = function(buffer) {
 	var data = buffer.shift(1);
 	if(SPACE_CHARACTERS_R.test(data)) {
 		buffer.matchWhile(SPACE_CHARACTERS);
@@ -304,7 +315,7 @@ exports.HTMLTokenizer.prototype.after_attribute_name_state = function(buffer) {
 	return true;
 }
 
-exports.HTMLTokenizer.prototype.before_attribute_value_state = function(buffer) {
+t.prototype.before_attribute_value_state = function(buffer) {
 	var data = buffer.shift(1);
 	if(SPACE_CHARACTERS_R.test(data)) {
 		buffer.matchWhile(SPACE_CHARACTERS);
@@ -329,7 +340,7 @@ exports.HTMLTokenizer.prototype.before_attribute_value_state = function(buffer) 
 	return true;
 }
 
-exports.HTMLTokenizer.prototype.attribute_value_double_quoted_state = function(buffer) {
+t.prototype.attribute_value_double_quoted_state = function(buffer) {
 	var data = buffer.shift(1);
 	if(data == '"') {
 		this.state = this.after_attribute_value_state;
@@ -344,7 +355,7 @@ exports.HTMLTokenizer.prototype.attribute_value_double_quoted_state = function(b
 	return true;
 }
 
-exports.HTMLTokenizer.prototype.attribute_value_single_quoted_state = function(buffer) {
+t.prototype.attribute_value_single_quoted_state = function(buffer) {
 	var data = buffer.shift(1);
 	if(data == "'") {
 		this.state = this.after_attribute_value_state;
@@ -359,7 +370,7 @@ exports.HTMLTokenizer.prototype.attribute_value_single_quoted_state = function(b
 	return true;
 }
 
-exports.HTMLTokenizer.prototype.attribute_value_unquoted_state = function(buffer) {
+t.prototype.attribute_value_unquoted_state = function(buffer) {
 	var data = buffer.shift(1);
 	if(SPACE_CHARACTERS_R.test(data)) {
 		this.state = this.before_attribute_name_state;
@@ -379,7 +390,7 @@ exports.HTMLTokenizer.prototype.attribute_value_unquoted_state = function(buffer
 	return true;
 }
 
-exports.HTMLTokenizer.prototype.after_attribute_value_state = function(buffer) {
+t.prototype.after_attribute_value_state = function(buffer) {
 	var data = buffer.shift(1);
 	if(SPACE_CHARACTERS_R.test(data)) {
 		this.state = this.before_attribute_value_state;
@@ -401,7 +412,7 @@ exports.HTMLTokenizer.prototype.after_attribute_value_state = function(buffer) {
 	return true;
 }
 
-exports.HTMLTokenizer.prototype.self_closing_tag_state = function(buffer) {
+t.prototype.self_closing_tag_state = function(buffer) {
 	var c = buffer.shift(1);
 	if(c == '>') {
 		this.current_token.self_closing = true; 
@@ -419,7 +430,7 @@ exports.HTMLTokenizer.prototype.self_closing_tag_state = function(buffer) {
 	return true;
 }
 
-exports.HTMLTokenizer.prototype.bogus_comment_state = function(buffer) {
+t.prototype.bogus_comment_state = function(buffer) {
 	var data = buffer.shift(1);
 	this.emit('token', {type: Tokens.COMMENT, data: buffer.matchUntil('>')});
 	buffer.shift(1);
@@ -427,7 +438,7 @@ exports.HTMLTokenizer.prototype.bogus_comment_state = function(buffer) {
 	return true;
 }
 
-exports.HTMLTokenizer.prototype.markup_declaration_open_state = function(buffer) {
+t.prototype.markup_declaration_open_state = function(buffer) {
 	var chars = buffer.shift(2);
 	if(chars == '--') {
 		this.current_token = {type: Tokens.COMMENT, data: ''};
@@ -447,7 +458,7 @@ exports.HTMLTokenizer.prototype.markup_declaration_open_state = function(buffer)
 	return true;
 }
 
-exports.HTMLTokenizer.prototype.comment_start_state = function(buffer) {
+t.prototype.comment_start_state = function(buffer) {
 	var data = buffer.shift(1);
 	if(data == '-') {
 		this.state = this.comment_end_state;
@@ -466,7 +477,7 @@ exports.HTMLTokenizer.prototype.comment_start_state = function(buffer) {
 	return true;
 }
 
-exports.HTMLTokenizer.prototype.comment_state = function(buffer) {
+t.prototype.comment_state = function(buffer) {
 	var data = buffer.shift(1);
 	if(data == '-') {
 		this.state = this.comment_end_dash_state;
@@ -480,7 +491,7 @@ exports.HTMLTokenizer.prototype.comment_state = function(buffer) {
 	return true;
 }
 
-exports.HTMLTokenizer.prototype.comment_end_dash_state = function(buffer) {
+t.prototype.comment_end_dash_state = function(buffer) {
 	var data = buffer.shift(1);
 	if(data == '-') {
 		this.state = this.comment_end_state;
@@ -498,7 +509,7 @@ exports.HTMLTokenizer.prototype.comment_end_dash_state = function(buffer) {
 	return true;
 }
 
-exports.HTMLTokenizer.prototype.comment_end_state = function(buffer) {
+t.prototype.comment_end_state = function(buffer) {
 	var data = buffer.shift(1);
 	if(data == '>') {
 		this.emit('token', this.current_token);
@@ -519,7 +530,7 @@ exports.HTMLTokenizer.prototype.comment_end_state = function(buffer) {
 	return true;
 }
 
-exports.HTMLTokenizer.prototype.doctype_state = function(buffer) {
+t.prototype.doctype_state = function(buffer) {
 	var data = buffer.shift(1);
 	if(SPACE_CHARACTERS_R.test(data)) {
 		this.state = this.before_doctype_name_state;
@@ -531,11 +542,11 @@ exports.HTMLTokenizer.prototype.doctype_state = function(buffer) {
 	return true;
 }
 
-exports.HTMLTokenizer.prototype.parse_error = function(message) {
+t.prototype.parse_error = function(message) {
 	this.emit('token', {type: Tokens.PARSE_ERROR, data: message});
 }
 
-exports.HTMLTokenizer.prototype.emit_current_token = function() {
+t.prototype.emit_current_token = function() {
 	var tok = this.current_token;
 	switch(tok.type) {
 	case Tokens.START_TAG:
@@ -554,7 +565,7 @@ exports.HTMLTokenizer.prototype.emit_current_token = function() {
 /*
 
 i = new events.EventEmitter();
-t = new exports.HTMLTokenizer(i);
+t = new t(i);
 sys = require('sys');
 t.addListener('token', function(token) {
 	sys.puts(sys.inspect(token));
