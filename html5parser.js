@@ -1,11 +1,24 @@
 process.mixin(require('html5/constants'));
+var sys = require('sys');
 
 var TreeBuilder = require('html5/treebuilder').TreeBuilder;
 var Tokenizer = require('html5/tokenizer').Tokenizer;
+var Phase = require('html5/parser/phase').Phase;
 
 exports.Parser = Parser = function HTML5Parser(source, options) {
 	this.strict = false;
 	this.errors = [];
+	var phase;
+
+	this.__defineSetter__('phase', function(p) {
+		phase = p;
+		if(!p) throw("Holy hell");
+		if(!p instanceof Phase) throw("Not a function");
+	});
+
+	this.__defineGetter__('phase', function() {
+		return phase;
+	});
 
 	this.tree = TreeBuilder;
 
