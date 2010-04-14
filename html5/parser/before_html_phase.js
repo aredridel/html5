@@ -1,7 +1,8 @@
 var Phase = require('html5/parser/phase').Phase;
 
-exports.Phase = p = function(parser, tree) {
+exports.Phase = p = function BeforeHtmlPhase(parser, tree) {
 	Phase.call(this, parser, tree);
+	this.name = 'before_html_phase'
 }
 
 p.prototype = new Phase;

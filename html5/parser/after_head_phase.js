@@ -1,6 +1,7 @@
 var Phase = require('html5/parser/phase').Phase;
 exports.Phase = p = function AfterHeadPhase(parser, tree) {
 	Phase.call(this, parser, tree);
+	this.name = 'after_head_phase';
 }
 
 p.prototype = new Phase;

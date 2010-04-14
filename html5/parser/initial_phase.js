@@ -2,6 +2,7 @@ var Phase = require('html5/parser/phase').Phase;
 
 exports.Phase = p = function InitialPhase(parser, tree) {
 	Phase.call(this, parser, tree);
+	this.name = 'initial_phase';
 }
 
 p.prototype = new Phase;

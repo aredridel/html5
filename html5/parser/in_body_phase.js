@@ -191,7 +191,7 @@ exports.Phase = p = function InBodyPhase(parser, tree) {
 	Phase.call(this, parser, tree);
 	this.start_tag_handlers = start_tag_handlers;
 	this.end_tag_handlers = end_tag_handlers;
-	this.name = 'InBodyPhase';
+	this.name = 'in_body_phase';
 }
 
 p.prototype = new Phase;
