@@ -10,6 +10,30 @@ exports.Phase.prototype = {
 	parse_error: function(code, options) {
 		this.parser.parse_error(code, options);
 	},
+	processEof: function() {
+		this.tree.generageImpliedEndTags();
+		if(this.tree.open_elements.length > 2) {
+			this.parse_error('expected-closing-tag-but-got-eof');
+		} else if(this.tree.open_elements.length == 2
+			&& this.tree.open_elements[1].name != 'body') {
+			// This happens for framesets or something?
+			this.parse_error('expected-closing-tag-but-got-eof');
+		} else if(this.parser.inner_html && this.tree.open_elements.length > 1) {
+			// XXX This is not what the specification says. Not sure what to do here.
+			this.parse_error('eof-in-innerhtml');
+		}
+	},
+	processComment: function(data) {
+		// For most phases the following is correct. Where it's not it will be 
+		// overridden.
+		this.tree.insert_comment(data, this.tree.open_elements[this.tree.open_elements.length - 1]);
+	},
+	processDoctype: function(name, publicId, systemId, correct) {
+		this.parse_error('unexpected-doctype');
+	},
+	processSpaceCharacters: function(data) {
+		this.tree.insert_text(data);
+	},
 	processStartTag: function(name, attributes, self_closing) {
 		if(this.start_tag_handlers[name]) 
 			this[this.start_tag_handlers[name]](name, attributes, self_closing);
