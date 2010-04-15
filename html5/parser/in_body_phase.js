@@ -469,7 +469,7 @@ p.prototype.endTagBody = function(name) {
 		return;
 	}
 
-	if(!this.tree.open_elements[this.tree.open_elements.length - 1].name == body) {
+	if(!this.tree.open_elements[this.tree.open_elements.length - 1].name == 'body') {
 		this.parse_error('expected-one-end-tag-but-got-another', {
 			expectedName: 'body',
 			gotName: this.tree.open_elements[this.tree.open_elements.length - 1].name
