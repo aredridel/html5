@@ -1,16 +1,33 @@
 var Phase = require('html5/parser/phase').Phase;
+
+var start_tag_handlers = {
+	html: 'startTagHtml',
+	head: 'startTagHead',
+	title: 'startTagTitle',
+	type: 'startTagType',
+	script: 'startTagScript',
+	noscript: 'startTagNoScript',
+	base: 'startTagBase',
+	link: 'startTagLink',
+	meta: 'startTagMeta'
+}
+
+var end_tag_handlers = {
+	head: 'endTagHead',
+	html: 'endTagImplyAfterHead',
+	body: 'endTagImplyAfterHead',
+	br: 'endTagImplyAfterHead',
+	title: 'endTagTitleStyleScriptNoscript',
+}
+
 exports.Phase = p = function InHeadPhase(parser, tree) {
 	Phase.call(this, parser, tree);
 	this.name = 'in_head_phase';
+	this.start_tag_handlers = start_tag_handlers;
+	this.end_tag_handlers = end_tag_handlers;
 }
 
 p.prototype = new Phase;
-
-// FIXME handle_start html head title type script noscript
-// FIXME handle_start base link meta
-// FIXME handle_end head
-// FIXME handle_end html body br => ImplyAfterHead
-// FIXME handle_end title style script noscript
 
 p.prototype.process_eof = function() {
 	var name = this.tree.open_elements[this.tree.open_elements.length - 1].name;
@@ -114,7 +131,7 @@ p.prototype.endTagImplyAfterHead = function(name) {
 	this.parser.phase.processEndTag(name);
 }
 
-p.prototype.endTagStyleScriptNoscript = function(name) {
+p.prototype.endTagTitleStyleScriptNoscript = function(name) {
 	if(this.tree.open_elements[this.tree.open_elements.length - 1].name == name) {
 		this.tree.open_elements.pop();
 	} else {
