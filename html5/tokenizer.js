@@ -124,15 +124,16 @@ t.prototype.close_tag_open_state = function(buffer) {
 	if(this.content_model == Models.RCDATA || this.content_model == Models.CDATA) {
 		var chars = '';
 		if(this.current_token) {
-			chars = buffer.peek(current_token.name.length);
+			chars = buffer.peek(this.current_token.name.length + 1);
 			// FIXME: EOF can occur here, and this is really to peek and see if we have it.
 		}
 
-		if(this.current_token && this.current_token.name.toLowerCase() == chars.substr(0, -2).toLowerCase() && new RegExp('[' + SPACE_CHARACTERS + '></]').test(chars.substr(-1))) {
+		if(this.current_token && this.current_token.name.toLowerCase() == chars.substr(0, chars.length - 1).toLowerCase() && new RegExp('[' + SPACE_CHARACTERS_IN + '></]').test(chars.substr(-1))) {
 			this.content_model = Models.PCDATA;
 		} else {
 			this.emit('token', {type: 'Characters', data: '</'});
-			return true;
+			this.state = this.data_state;
+			return;
 		}
 	}
 
@@ -517,6 +518,5 @@ t.prototype.emit_current_token = function() {
 		break;
 	}
 	this.emit('token', tok);
-	this.current_token = null;
 	this.state = this.data_state;
 }

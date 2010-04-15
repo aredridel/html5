@@ -93,6 +93,7 @@ exports.SPECIAL_ELEMENTS = [
 	'ul',
 	'wbr'
 ];
+exports.SPACE_CHARACTERS_IN = "\t\n\x0B\x0C\x20\r";
 exports.SPACE_CHARACTERS = "[\t\n\x0B\x0C\x20\r]";
 exports.SPACE_CHARACTERS_R = /^[\t\n\x0B\x0C \r]/;
 
