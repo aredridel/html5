@@ -93,8 +93,8 @@ exports.SPECIAL_ELEMENTS = [
 	'ul',
 	'wbr'
 ];
-exports.SPACE_CHARACTERS = "\t\n\x0B\x0C\x20\r";
-exports.SPACE_CHARACTERS_R = /[\t\n\x0B\x0C \r]/;
+exports.SPACE_CHARACTERS = "[\t\n\x0B\x0C\x20\r]";
+exports.SPACE_CHARACTERS_R = /^[\t\n\x0B\x0C \r]/;
 
 exports.TABLE_INSERT_MODE_ELEMENTS = [
 	'table',
@@ -106,7 +106,7 @@ exports.TABLE_INSERT_MODE_ELEMENTS = [
 
 exports.ASCII_LOWERCASE = 'abcdefghijklmnopqrstuvwxyz';
 exports.ASCII_UPPERCASE = exports.ASCII_LOWERCASE.toUpperCase();
-exports.ASCII_LETTERS = exports.ASCII_LOWERCASE + exports.ASCII_UPPERCASE;
+exports.ASCII_LETTERS = "[a-zA-Z]";
 exports.ASCII_LETTERS_R = /^[a-zA-Z]/;
 exports.DIGITS = '0123456789';
 exports.HEX_DIGITS = exports.DIGITS + 'abcdefABCDEF';

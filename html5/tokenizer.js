@@ -163,7 +163,7 @@ t.prototype.tag_name_state = function(buffer) {
 		this.parse_error('eof-in-tag-name');
 		this.emit_current_token();
 	} else if(ASCII_LETTERS_R.test(data)) {
-		this.current_token.name += data + buffer.matchWhile(ASCII_LETTERS);
+		this.current_token.name += data + buffer.matchWhile(ASCII_LETTERS_R);
 	} else if(data == '>') {
 		this.emit_current_token();
 	} else if(data == '/') {
@@ -176,8 +176,8 @@ t.prototype.tag_name_state = function(buffer) {
 
 t.prototype.before_attribute_name_state = function(buffer) {
 	var data = buffer.shift(1);
-	if(new RegExp('[' + SPACE_CHARACTERS +']').test(data)) {
-		buffer.matchWhile(SPACE_CHARACTERS);
+	if(SPACE_CHARACTERS_R.test(data)) {
+		buffer.matchWhile(SPACE_CHARACTERS_R);
 	} else if (data == 'EOF') {
 		this.parse_error("expected-attribute-name-but-got-eof");
 		this.emit_current_token();
@@ -210,7 +210,7 @@ t.prototype.attribute_name_state = function(buffer) {
 		this.state = this.data_state;
 		emitToken = true;
 	} else if(ASCII_LETTERS_R.test(data)) {
-		this.current_token.data[this.current_token.data.length - 1][0] += data + buffer.matchWhile(ASCII_LETTERS);
+		this.current_token.data[this.current_token.data.length - 1][0] += data + buffer.matchWhile(ASCII_LETTERS_R);
 		leavingThisState = false;
 	} else if(data == '>') {
 		// XXX If we emit here the attributes are converted to a dict
@@ -254,7 +254,7 @@ t.prototype.attribute_name_state = function(buffer) {
 t.prototype.after_attribute_name_state = function(buffer) {
 	var data = buffer.shift(1);
 	if(SPACE_CHARACTERS_R.test(data)) {
-		buffer.matchWhile(SPACE_CHARACTERS);
+		buffer.matchWhile(SPACE_CHARACTERS_R);
 	} else if(data == '=') {
 		this.state = this.before_attribute_value_state;
 	} else if(data == '>') {
@@ -277,7 +277,7 @@ t.prototype.after_attribute_name_state = function(buffer) {
 t.prototype.before_attribute_value_state = function(buffer) {
 	var data = buffer.shift(1);
 	if(SPACE_CHARACTERS_R.test(data)) {
-		buffer.matchWhile(SPACE_CHARACTERS);
+		buffer.matchWhile(SPACE_CHARACTERS_R);
 	} else if(data == '"') {
 		this.state = this.attribute_value_double_quoted_state;
 	} else if(data == '&') {

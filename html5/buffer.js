@@ -5,18 +5,19 @@ function Buffer() {
 exports.Buffer = Buffer;
 
 Buffer.prototype = {
-	matchWhile: function(chars) {
-		if(m = new RegExp('^[' + chars + ']+').exec(this.data)) {
+	matchWhile: function(re) {
+		if(m = new RegExp("^"+re).exec(this.data)) {
 			this.data = this.data.substr(m[0].length);
 			return m[0];
 		} else {
 			return '';
 		}
 	},
-	matchUntil: function(chars) {
-		if(m = new RegExp('^[^'+chars+']+').exec(this.data)) {
-			this.data = this.data.substr(m[0].length);
-			return m[0];
+	matchUntil: function(re) {
+		if(m = new RegExp(re).exec(this.data)) {
+			var t = this.data.substr(0, m.index);
+			this.data = this.data.substr(m.index);
+			return t;
 		} else {
 			return '';
 		}
