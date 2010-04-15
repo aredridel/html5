@@ -90,13 +90,13 @@ b.prototype.reconstructActiveFormattingElements = function() {
 }
 
 function FakeDomDocument() {
-	this.child = null;
+	this.root = null;
 }
 
 FakeDomDocument.prototype = {
 	appendChild: function(element)  {
 		if(this.child) throw('Already have a root element');
-		this.child = element;
+		this.root = element;
 	}
 }
 
