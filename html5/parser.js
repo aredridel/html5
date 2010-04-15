@@ -1,5 +1,4 @@
 process.mixin(require('html5/constants'));
-var sys = require('sys');
 
 var TreeBuilder = require('html5/treebuilder').TreeBuilder;
 var Tokenizer = require('html5/tokenizer').Tokenizer;
@@ -65,8 +64,6 @@ exports.Parser = Parser = function HTML5Parser(source, options) {
 }
 
 Parser.prototype.newPhase = function(name) {
-	sys.debug('new phase: '+name);
-	sys.debug('Buffer: ' +this.tokenizer.buffer.data);
 	this.phase = new PHASES[name](this, this.tree);
 }
 

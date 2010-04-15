@@ -1,4 +1,3 @@
-var sys = require('sys');
 exports.Phase = function Phase(parser, tree) {
 	this.tree = tree;
 	this.parser = parser;
@@ -35,12 +34,10 @@ exports.Phase.prototype = {
 		this.tree.insert_text(data);
 	},
 	processStartTag: function(name, attributes, self_closing) {
-sys.debug("<"+name+">");
 		if(this.start_tag_handlers[name]) 
 			this[this.start_tag_handlers[name]](name, attributes, self_closing);
 	},
 	processEndTag: function(name) {
-sys.debug("</"+name+">");
 		if(this.end_tag_handlers[name]) 
 			this[this.end_tag_handlers[name]](name);
 	},

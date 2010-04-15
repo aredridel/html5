@@ -1,4 +1,3 @@
-var sys = require('sys');
 exports.TreeBuilder = b = function TreeBuilder() {
 	this.open_elements = [];
 	this.document = new FakeDomDocument();
@@ -11,7 +10,6 @@ b.prototype.reset = function() {
 }
 
 b.prototype.createElement = function (name, attributes) {
-	sys.puts("createElement " + name + " with attributes " + sys.inspect(attributes));
 	return new FakeDomElement(name, attributes);
 }
 
