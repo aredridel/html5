@@ -1060,7 +1060,7 @@ exports.PHASES = PHASES = {
 	inSelect: require('html5/parser/in_select_phase').Phase,
 	inSelectInTable: require('html5/parser/in_select_in_table_phase').Phase,
 	afterBody: require('html5/parser/after_body_phase').Phase,
-	inFrameset: require('html5/parser/in_frameset_phase').PhasePhase,
+	inFrameset: require('html5/parser/in_frameset_phase').Phase,
 	afterFrameset: require('html5/parser/after_frameset_phase').Phase,
 	afterAfterBody: require('html5/parser/after_after_body_phase').Phase,
 	afterAfterFrameset: require('html5/parser/after_after_frameset_phase').Phase,
