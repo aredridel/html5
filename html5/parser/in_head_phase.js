@@ -146,7 +146,7 @@ p.prototype.endTagOther = function(name) {
 
 p.prototype.anything_else = function() {
 	if(this.tree.open_elements[this.tree.open_elements.length - 1].name == 'head') {
-		endTagHead('head');
+		this.endTagHead('head');
 	} else {
 		this.parser.newPhase('afterHead');
 	}
