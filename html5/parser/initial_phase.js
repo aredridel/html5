@@ -8,9 +8,9 @@ exports.Phase = p = function InitialPhase(parser, tree) {
 p.prototype = new Phase;
 
 p.prototype.process_eof = function() {
-	parse_error("expected-doctype-but-got-eof");
-	parser.phase = new PHASES.beforeHTML(this.parser, this.tree);
-	parser.phase.process_eof();
+	this.parse_error("expected-doctype-but-got-eof");
+	this.parser.newPhase('beforeHTML');
+	this.parser.phase.process_eof();
 }
 
 p.prototype.processComment = function(data) {
@@ -107,7 +107,7 @@ p.prototype.processDoctype = function(name, publicId, systemId, correct) {
 		}
 	}
 
-	parser.phase = new PHASES.beforeHTML(this.parser, this.tree);
+	this.parser.newPhase('beforeHTML');
 }
 
 p.prototype.processSpaceCharacters = function(data) {
@@ -116,18 +116,18 @@ p.prototype.processSpaceCharacters = function(data) {
 
 p.prototype.processCharacters = function(data) {
 	this.parse_error('expected-doctype-but-got-chars');
-	this.parser.phase = new PHASES.beforeHTML(this.parser, this.tree);
+	this.parser.newPhase('beforeHTML');
 	this.parser.phase.processCharacters(data);
 }
 
 p.prototype.processStartTag = function(name, attributes, self_closing) {
 	this.parse_error('expected-doctype-but-got-start-tag', {name: name});
-	this.parser.phase = new PHASES.beforeHTML(this.parser, this.tree);
+	this.parser.newPhase('beforeHTML');
 	this.parser.phase.processStartTag(name, attributes);
 }
 
 p.prototype.processEndTag = function(name) {
 	this.parse_error('expected-doctype-but-got-end-tag', {name: name});
-	this.parser.phase = new PHASES.beforeHTML(this.parser, this.tree);
+	this.parser.newPhase('beforeHTML');
 	this.parser.phase.processEndTag(name);
 }

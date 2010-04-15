@@ -39,7 +39,7 @@ p.prototype.startTagHead = function(name, attributes) {
 }
 
 p.prototype.startTagTitle = function(name, attributes) {
-	if(this.tree.head_pointer && this.parser.phase == new PHASES.inHead(this.parser, this.tree)) {
+	if(this.tree.head_pointer && this.parser.phase instanceof PHASES.inHead) {
 		var element = this.tree.createElement(name, attributes);
 		this.appendToHead(element);
 		this.tree.open_elements.push(element);
@@ -50,7 +50,7 @@ p.prototype.startTagTitle = function(name, attributes) {
 }
 
 p.prototype.startTagStyle = function(name, attributes) {
-	if(this.tree.head_pointer && this.parser.phase == new PHASES.inHead(this.parser, this.tree)) {
+	if(this.tree.head_pointer && this.parser.phase instanceof PHASES.inHead) {
 		var element = this.tree.createElement(name, attributes);
 		this.appendToHead(element);
 		this.tree.open_elements.push(name, attributes);
@@ -63,7 +63,7 @@ p.prototype.startTagStyle = function(name, attributes) {
 p.prototype.startTagNoscript = function(name, attributes) {
 	// XXX Need to decide whether to implement the scripting disabled case
 	var element = this.tree.createElement(name, attributes);
-	if(this.tree.head_pointer && this.parser.phase == new PHASES.inHead(this.parser, this.tree)) {
+	if(this.tree.head_pointer && this.parser.phase instanceof PHASES.inHead) {
 		this.appendToHead(element);
 	} else {
 		this.tree.open_elements[this.tree.open_elements.length - 1].appendChild(element);
@@ -76,7 +76,7 @@ p.prototype.startTagScript = function(name, attributes) {
 	// XXX Innre HTML case may be wrong
 	var element = this.tree.createElement(name, attribute);
 	element.flags.push('parser-inserted');
-	if(this.tree.head_pointer && this.parser.phase == new PHASES.inHead(this.parser, this.tree)) {
+	if(this.tree.head_pointer && this.parser.phase instanceof PHASES.inHead) {
 		this.appendToHead(element);
 	} else {
 		this.tree.open_elements[this.tree.open_elements.length - 1].appendChild(element);
@@ -86,7 +86,7 @@ p.prototype.startTagScript = function(name, attributes) {
 }
 
 p.prototype.startTagBaseLinkMeta = function(name, attributes) {
-	if(this.tree.head_pointer && this.parser.phase == new PHASES.inHead(this.parser, this.tree)) {
+	if(this.tree.head_pointer && this.parser.phase instanceof PHASES.inHead) {
 		this.createElement(name, attributes);
 		this.appendToHead(element);
 	} else {
@@ -106,7 +106,7 @@ p.prototype.endTagHead = function(name) {
 	} else {
 		this.parse_error('unexpected-end-tag', {name: 'head'});
 	}
-	this.parser.phase = new PHASES.afterHead(this.parser, this.tree);
+	this.parser.newPhase('afterHead');
 }
 
 p.prototype.endTagImplyAfterHead = function(name) {
@@ -130,7 +130,7 @@ p.prototype.anything_else = function() {
 	if(this.tree.open_elements[this.tree.open_elements.length - 1].name == 'head') {
 		endTagHead('head');
 	} else {
-		this.parser.phase = new PHASES.afterHead(this.parser, this.tree);
+		this.parser.newPhase('afterHead');
 	}
 }
 

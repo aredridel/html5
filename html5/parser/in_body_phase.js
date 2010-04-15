@@ -345,7 +345,7 @@ p.prototype.startTagXmp = function(name, attributes) {
 p.prototype.startTagTable = function(name, attributes) {
 	if(this.inScope('p')) this.processEndTag('p');
 	this.tree.insert_element(name, attributes);
-	this.parser.phase = new PHASES.inTable(this.parser, this.tree);
+	this.parser.newPhase('inTable');
 }
 
 p.prototype.startTagVoidFormatting = function(name, attributes) {
@@ -413,9 +413,9 @@ p.prototype.startTagSelect = function(name, attributes) {
 		|| phase instanceof PHASES.inTableBody
 		|| phase instanceof PHASES.inRow
 		|| phase instanceof PHASES.inCell) {
-		this.parser.phase = new PHASES.inSelectInTable(this.parser, this.tree);
+		this.parser.newPhase('inSelectInTable');
 	} else {
-		this.parser.phase = new PHASES.inSelect(this.parser, this.tree);
+		this.parser.newPhase('inSelect');
 	}
 }
 
@@ -448,7 +448,7 @@ p.prototype.startTagForeignContent = function(name, attributes) {
 		// the stack of open elements and acknowledge the token's self-closing flag
 	} else {
 		this.parser.secondary_phase = this.parser.phase;
-		this.parser.phase = new PHASES.inForeignContent(this.parser, this.tree);
+		this.parser.newPhase('inForeignContent');
 	}
 }
 
@@ -475,7 +475,7 @@ p.prototype.endTagBody = function(name) {
 			gotName: this.tree.open_elements[this.tree.open_elements.length - 1].name
 		});
 	}
-	this.parser.phase = new PHASES.afterBody(this.parser, this.tree);
+	this.parser.newPhase('afterBody');
 }
 
 p.prototype.endTagHtml = function(name) {

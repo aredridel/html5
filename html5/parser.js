@@ -62,7 +62,12 @@ exports.Parser = Parser = function HTML5Parser(source, options) {
 		});
 	});
 
+}
 
+Parser.prototype.newPhase = function(name) {
+	sys.debug('new phase: '+name);
+	sys.debug('Buffer: ' +this.tokenizer.buffer.data);
+	this.phase = new PHASES[name](this, this.tree);
 }
 
 Parser.prototype._parse = function(inner_html, encoding, container) {
@@ -96,12 +101,12 @@ Parser.prototype._parse = function(inner_html, encoding, container) {
 		default:
 			this.tokenizer.content_model = Models.PCDATA;
 		}
-		this.phase = new PHASES.beforeHTML(this, this.tree);
+		this.newPhase('beforeHTML');
 		this.phase.insert_html_element();
 		this.reset_insertion_mode();
 	} else {
 		this.inner_html = false;
-		this.phase = new PHASES.initial(this, this.tree);
+		this.newPhase('initial');
 	}
 
 	this.last_phase = null;

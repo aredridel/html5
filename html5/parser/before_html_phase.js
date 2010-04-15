@@ -39,5 +39,5 @@ p.prototype.insert_html_element = function() {
 	var element = this.tree.createElement('html', {});
 	this.tree.open_elements.push(element);
 	this.tree.document.appendChild(element);
-	this.parser.phase = new PHASES.beforeHead(this.parser, this.tree);
+	this.parser.newPhase('beforeHead');
 }

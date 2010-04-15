@@ -21,17 +21,17 @@ p.prototype.processCharacters = function(data) {
 
 p.prototype.startTagBody = function(name, attributes) {
 	this.tree.insert_element(name, attributes);
-	this.parser.phase = new PHASES.inBody(this.parser, this.tree);
+	this.parser.newPhase('inBody');
 }
 
 p.prototype.startTagFrameset = function(name, attributes) {
 	this.tree.insert_element(name, attributes);
-	this.parser.phase = new PHASES.inFrameset(this.parser, this.tree);
+	this.parser.newPhase('inFrameset');
 }
 
 p.prototype.startTagFromHead = function(name, attributes) {
 	this.parse_error("unexpected-start-tag-out-of-my-head", {name: name});
-	this.parser.phase = new PHASES.inHead(this.parser, this.tree);
+	this.parser.newPhase('inHead');
 	this.parser.phase.processStartTag(hame, attributes);
 }
 
@@ -51,5 +51,5 @@ p.prototype.endTagOther = function(name) {
 
 p.prototype.anything_else = function() {
 	this.tree.insert_element('body', {});
-	this.parser.phase = new PHASES.inBody(this.parser, this.tree);
+	this.parser.newPhase('inBody');
 }
