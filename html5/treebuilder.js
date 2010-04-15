@@ -53,6 +53,14 @@ b.prototype.elementInScope = function(name, tableVariant) {
 	// assert false -- should never get here
 }
 
+b.prototype.generateImpliedEndTags = function (exclude) {
+	var name = this.open_elements[this.open_elements.length - 1].name;
+	if(['dd', 'dt', 'li', 'p', 'td', 'th', 'tr'].indexOf(name) != -1 && name != exclude) {
+		this.open_elements.pop();
+		this.generateImpliedEndTags(exclude);
+	}
+}
+
 b.prototype.reconstructActiveFormattingElements = function() {
 	// Within this algorithm the order of steps decribed in the specification
 	// is not quite the same as the order of steps in the code. It should still
