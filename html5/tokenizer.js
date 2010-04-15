@@ -58,9 +58,10 @@ t.prototype.data_state = function(buffer) {
 		this.escapeFlag = false;
 		this.emit('token', {type: 'Characters', data: c});
 	} else if(SPACE_CHARACTERS_R.test(c)) {
-		this.emit('token', {type: 'SpaceCharacters', data: c + buffer.matchWhile(SPACE_CHARACTERS)});
+		this.emit('token', {type: 'SpaceCharacters', data: c + buffer.matchWhile(SPACE_CHARACTERS_R)});
 	} else {
-		this.emit('token', {type: 'SpaceCharacters', data: c + buffer.matchUntil(/[&<>-]/)});
+		this.emit('token', {type: 'Characters', data: c + buffer.matchUntil(/[&<>-]/)});
+		// FIXME: this.lastFourChars stuff
 	}
 	return true;
 }
