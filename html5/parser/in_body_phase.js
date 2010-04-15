@@ -210,7 +210,7 @@ p.prototype.processCharacters = function(data) {
 	// but apparently that doesn't match the real world so we don't do it for
 	// space characters.
 	this.tree.reconstructActiveFormattingElements();
-	this.tree.insertText(data);
+	this.tree.insert_text(data);
 }
 
 p.prototype.startTagProcessInHead = function(name, attributes) {

@@ -27,7 +27,7 @@ p.prototype.process_eof = function() {
 p.prototype.processCharacters = function(data) {
 	var name = this.tree.open_elements[this.tree.open_elements.length - 1].name;
 	if(['title', 'style', 'script', 'noscript'].indexOf(name) != -1) {
-		this.tree.insertText(data);
+		this.tree.insert_text(data);
 	} else {
 		this.anything_else();
 		this.parser.phase.processCharacters(data);

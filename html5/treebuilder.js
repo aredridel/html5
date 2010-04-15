@@ -52,7 +52,7 @@ FakeDomDocument.prototype = {
 }
 
 function FakeDomElement(name) {
-	this.tagName = name;
+	this.name = name;
 	this.children = [];
 }
 
