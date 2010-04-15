@@ -1,10 +1,12 @@
-process.mixin(require('html5/constants'));
+var HTML5 = this.HTML5 = require('html5/constants').HTML5;
+HTML5.TreeBuilder = require('html5/treebuilder').HTML5.TreeBuilder;
+HTML5.Tokenizer = require('html5/tokenizer').HTML5.Tokenizer;
 
-var TreeBuilder = require('html5/treebuilder').TreeBuilder;
-var Tokenizer = require('html5/tokenizer').Tokenizer;
 var Phase = require('html5/parser/phase').Phase;
 
-exports.Parser = Parser = function HTML5Parser(source, options) {
+var sys = require('sys');
+
+HTML5.Parser = Parser = function HTML5Parser(source, options) {
 	this.strict = false;
 	this.errors = [];
 	var phase;
@@ -19,7 +21,7 @@ exports.Parser = Parser = function HTML5Parser(source, options) {
 		return phase;
 	});
 
-	this.tree = TreeBuilder;
+	this.tree = HTML5.TreeBuilder;
 
 	if(options) for(o in options) {
 		this[o] = options[o];
@@ -29,7 +31,7 @@ exports.Parser = Parser = function HTML5Parser(source, options) {
 
 	var that = this;
 
-	new Tokenizer(source, function(tokenizer) {
+	new HTML5.Tokenizer(source, function(tokenizer) {
 		that.tokenizer = tokenizer;
 		that._parse();
 		tokenizer.addListener('token', function(token) {

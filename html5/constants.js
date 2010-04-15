@@ -1,10 +1,12 @@
-exports.CONTENT_MODEL_FLAGS = [
+var HTML5 = this.HTML5 = new Object();
+
+HTML5.CONTENT_MODEL_FLAGS = [
 	'PCDATA',
 	'RCDATA',
 	'CDATA',
 	'PLAINTEXT'
 ];
-exports.SCOPING_ELEMENTS = [
+HTML5.SCOPING_ELEMENTS = [
 	'applet',
 	'button',
 	'caption',
@@ -15,7 +17,7 @@ exports.SCOPING_ELEMENTS = [
 	'td',
 	'th'
 ];
-exports.FORMATTING_ELEMENTS = [
+HTML5.FORMATTING_ELEMENTS = [
 	'a',
 	'b',
 	'big',
@@ -30,7 +32,7 @@ exports.FORMATTING_ELEMENTS = [
 	'tt',
 	'u'
 ];
-exports.SPECIAL_ELEMENTS = [
+HTML5.SPECIAL_ELEMENTS = [
 	'address',
 	'area',
 	'base',
@@ -93,11 +95,11 @@ exports.SPECIAL_ELEMENTS = [
 	'ul',
 	'wbr'
 ];
-exports.SPACE_CHARACTERS_IN = "\t\n\x0B\x0C\x20\r";
-exports.SPACE_CHARACTERS = "[\t\n\x0B\x0C\x20\r]";
-exports.SPACE_CHARACTERS_R = /^[\t\n\x0B\x0C \r]/;
+HTML5.SPACE_CHARACTERS_IN = "\t\n\x0B\x0C\x20\r";
+HTML5.SPACE_CHARACTERS = "[\t\n\x0B\x0C\x20\r]";
+HTML5.SPACE_CHARACTERS_R = /^[\t\n\x0B\x0C \r]/;
 
-exports.TABLE_INSERT_MODE_ELEMENTS = [
+HTML5.TABLE_INSERT_MODE_ELEMENTS = [
 	'table',
 	'tbody',
 	'tfoot',
@@ -105,15 +107,15 @@ exports.TABLE_INSERT_MODE_ELEMENTS = [
 	'tr'
 ];
 
-exports.ASCII_LOWERCASE = 'abcdefghijklmnopqrstuvwxyz';
-exports.ASCII_UPPERCASE = exports.ASCII_LOWERCASE.toUpperCase();
-exports.ASCII_LETTERS = "[a-zA-Z]";
-exports.ASCII_LETTERS_R = /^[a-zA-Z]/;
-exports.DIGITS = '0123456789';
-exports.HEX_DIGITS = exports.DIGITS + 'abcdefABCDEF';
+HTML5.ASCII_LOWERCASE = 'abcdefghijklmnopqrstuvwxyz';
+HTML5.ASCII_UPPERCASE = HTML5.ASCII_LOWERCASE.toUpperCase();
+HTML5.ASCII_LETTERS = "[a-zA-Z]";
+HTML5.ASCII_LETTERS_R = /^[a-zA-Z]/;
+HTML5.DIGITS = '0123456789';
+HTML5.HEX_DIGITS = HTML5.DIGITS + 'abcdefABCDEF';
 
 // Heading elements need to be ordered 
-exports.HEADING_ELEMENTS = [
+HTML5.HEADING_ELEMENTS = [
 	'h1',
 	'h2',
 	'h3',
@@ -122,7 +124,7 @@ exports.HEADING_ELEMENTS = [
 	'h6'
 ];
 
-exports.VOID_ELEMENTS = [
+HTML5.VOID_ELEMENTS = [
 	'base',
 	'link',
 	'meta',
@@ -136,12 +138,12 @@ exports.VOID_ELEMENTS = [
 	'input'
 ];
 
-exports.CDATA_ELEMENTS = [
+HTML5.CDATA_ELEMENTS = [
 	'title',
 	'textarea'
 ];
 
-exports.RCDATA_ELEMENTS = [
+HTML5.RCDATA_ELEMENTS = [
 	'style',
 	'script',
 	'xmp',
@@ -151,7 +153,7 @@ exports.RCDATA_ELEMENTS = [
 	'noscript'
 ];
 
-exports.BOOLEAN_ATTRIBUTES = {
+HTML5.BOOLEAN_ATTRIBUTES = {
 	'global': ['irrelevant'],
 	// Fixme?
 	'style': ['scoped'],
@@ -173,7 +175,7 @@ exports.BOOLEAN_ATTRIBUTES = {
 }
 
 // entitiesWindows1252 has to be _ordered_ and needs to have an index.
-exports.ENTITIES_WINDOWS1252 = [
+HTML5.ENTITIES_WINDOWS1252 = [
 	8364, // 0x80  0x20AC  EURO SIGN
 	65533, // 0x81          UNDEFINED
 	8218, // 0x82  0x201A  SINGLE LOW-9 QUOTATION MARK
@@ -208,7 +210,7 @@ exports.ENTITIES_WINDOWS1252 = [
 	376    // 0x9F  0x0178  LATIN CAPITAL LETTER Y WITH DIAERESIS
 ];
 
-exports.ENTITIES = {
+HTML5.ENTITIES = {
 	'AElig': "\xc3\x86",
 	'AElig;': "\xc3\x86",
 	'AMP': '&',
@@ -574,7 +576,7 @@ exports.ENTITIES = {
 	'zwnj;': "\xe2\x80\x8c"
 }
 
-exports.ENCODINGS = [
+HTML5.ENCODINGS = [
 	'ansi_x3.4-1968',
 	'iso-ir-6',
 	'ansi_x3.4-1986',
@@ -794,7 +796,7 @@ exports.ENCODINGS = [
 	'hz-gb-2312'
 ];
 
-exports.E = {
+HTML5.E = {
 	"null-character":
 		"Null character in input stream, replaced with U+FFFD.",
 	"incorrectly-placed-solidus":
@@ -1042,9 +1044,9 @@ exports.E = {
  		"Unexpected %(name. Expected table content."
 };
 
-exports.Models = {PCDATA: 1, RCDATA: 2, CDATA: 3};
+HTML5.Models = {PCDATA: 1, RCDATA: 2, CDATA: 3};
 
-exports.PHASES = PHASES = {
+HTML5.PHASES = PHASES = {
 	initial: require('html5/parser/initial_phase').Phase, 
 	beforeHTML: require('html5/parser/before_html_phase').Phase,
 	beforeHead: require('html5/parser/before_head_phase').Phase, 
@@ -1067,7 +1069,7 @@ exports.PHASES = PHASES = {
 	inForeignContent: require('html5/parser/in_foreign_content_phase').Phase
 };
 
-exports.TAGMODES = {
+HTML5.TAGMODES = {
 	select: PHASES.inSelect,
 	td: PHASES.inCell,
 	th: PHASES.inCell,

@@ -1,4 +1,6 @@
-exports.TreeBuilder = b = function TreeBuilder() {
+var HTML5 = this.HTML5 = require('html5/constants').HTML5;
+
+this.HTML5.TreeBuilder = b = function TreeBuilder() {
 	this.open_elements = [];
 	this.document = new FakeDomDocument();
 	this.activeFormattingElements = [];
@@ -42,7 +44,7 @@ b.prototype.elementInScope = function(name, tableVariant) {
 	for(var i = this.open_elements.length - 1; i >= 0; i--) {
 		if(this.open_elements[i].name == name) return true
 		else if(this.open_elements[i].name == 'table') return false
-		else if(!tableVariant && SCOPING_ELEMENTS.indexOf(this.open_elements[i].name) != -1) return false
+		else if(!tableVariant && HTML5.SCOPING_ELEMENTS.indexOf(this.open_elements[i].name) != -1) return false
 		else if(this.open_elements[i] == 'html') return false;
 	}
 	// assert false -- should never get here

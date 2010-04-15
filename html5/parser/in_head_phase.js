@@ -1,4 +1,5 @@
 var Phase = require('html5/parser/phase').Phase;
+var HTML5 = require('html5/constants').HTML5;
 
 var start_tag_handlers = {
 	html: 'startTagHtml',
@@ -63,7 +64,7 @@ p.prototype.startTagTitle = function(name, attributes) {
 	} else {
 		this.tree.insert_element(name, attributes);
 	}
-	this.parser.tokenizer.content_model = Models.RCDATA;
+	this.parser.tokenizer.content_model = HTML5.Models.RCDATA;
 }
 
 p.prototype.startTagStyle = function(name, attributes) {
@@ -74,7 +75,7 @@ p.prototype.startTagStyle = function(name, attributes) {
 	} else {
 		this.tree.insert_element(name, attributes);
 	}
-	this.parser.tokenizer.content_model = Models.CDATA;
+	this.parser.tokenizer.content_model = HTML5.Models.CDATA;
 }
 
 p.prototype.startTagNoscript = function(name, attributes) {
@@ -86,7 +87,7 @@ p.prototype.startTagNoscript = function(name, attributes) {
 		this.tree.open_elements[this.tree.open_elements.length - 1].appendChild(element);
 	}
 	this.tree.open_elements.push(element);
-	this.parser.tokenizer.content_model = Models.CDATA;
+	this.parser.tokenizer.content_model = HTML5.Models.CDATA;
 }
 
 p.prototype.startTagScript = function(name, attributes) {
@@ -99,7 +100,7 @@ p.prototype.startTagScript = function(name, attributes) {
 		this.tree.open_elements[this.tree.open_elements.length - 1].appendChild(element);
 	}
 	this.tree.open_elements.push(element);
-	this.parser.tokenizer.content_model = Models.CDATA;
+	this.parser.tokenizer.content_model = HTML5.Models.CDATA;
 }
 
 p.prototype.startTagBaseLinkMeta = function(name, attributes) {

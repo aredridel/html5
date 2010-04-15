@@ -1,8 +1,9 @@
+var HTML5 = this.HTML5 = require('html5/constants').HTML5;
 var events = require('events');
-process.mixin(require('html5/constants'));
 var Buffer = require('html5/buffer').Buffer;
+var Models = HTML5.Models;
 
-exports.Tokenizer = t = function HTML5Tokenizer(input, ready) {
+HTML5.Tokenizer = t = function HTML5Tokenizer(input, ready) {
 	this.content_model = Models.PCDATA;
 	this.state = this.data_state;
 	this.escapeFlag = false;
@@ -57,8 +58,8 @@ t.prototype.data_state = function(buffer) {
 	} else if(c == '>' && this.escapeFlag && (this.content_model == Models.CDATA || this.content_model == Models.RCDATA) && this.lastFourChars.slice(1, 3).join('') == '-->') {
 		this.escapeFlag = false;
 		this.emit('token', {type: 'Characters', data: c});
-	} else if(SPACE_CHARACTERS_R.test(c)) {
-		this.emit('token', {type: 'SpaceCharacters', data: c + buffer.matchWhile(SPACE_CHARACTERS_R)});
+	} else if(HTML5.SPACE_CHARACTERS_R.test(c)) {
+		this.emit('token', {type: 'SpaceCharacters', data: c + buffer.matchWhile(HTML5.SPACE_CHARACTERS_R)});
 	} else {
 		this.emit('token', {type: 'Characters', data: c + buffer.matchUntil(/[&<>-]/)});
 		// FIXME: this.lastFourChars stuff
@@ -84,7 +85,7 @@ t.prototype.tag_open_state = function(buffer) {
 			this.state = this.markup_declaration_state;
 		} else if (data == '/') {
 			this.state = this.close_tag_open_state;
-		} else if (data != 'EOF' && ASCII_LETTERS_R.test(data)) {
+		} else if (data != 'EOF' && HTML5.ASCII_LETTERS_R.test(data)) {
 			this.current_token = {type: 'StartTag', name: data, data: []};
 			this.state = this.tag_name_state;
 		} else if (data == '>') {
@@ -129,7 +130,7 @@ t.prototype.close_tag_open_state = function(buffer) {
 			// FIXME: EOF can occur here, and this is really to peek and see if we have it.
 		}
 
-		if(this.current_token && this.current_token.name.toLowerCase() == chars.substr(0, chars.length - 1).toLowerCase() && new RegExp('[' + SPACE_CHARACTERS_IN + '></]').test(chars.substr(-1))) {
+		if(this.current_token && this.current_token.name.toLowerCase() == chars.substr(0, chars.length - 1).toLowerCase() && new RegExp('[' + HTML5.SPACE_CHARACTERS_IN + '></]').test(chars.substr(-1))) {
 			this.content_model = Models.PCDATA;
 		} else {
 			this.emit('token', {type: 'Characters', data: '</'});
@@ -143,7 +144,7 @@ t.prototype.close_tag_open_state = function(buffer) {
 		this.parse_error("expected-closing-tag-but-got-eof");
 		this.emit('token', {type: 'Characters', data: '</'});
 		this.state = this.data_state
-	} else if (ASCII_LETTERS_R.test(data)) {
+	} else if (HTML5.ASCII_LETTERS_R.test(data)) {
 		this.current_token = {type: 'EndTag', name: data, data: []};
 		this.state = this.tag_name_state;
 	} else if (data == '>') {
@@ -159,13 +160,13 @@ t.prototype.close_tag_open_state = function(buffer) {
 
 t.prototype.tag_name_state = function(buffer) {
 	data = buffer.shift(1);
-	if(SPACE_CHARACTERS_R.test(data)) {
+	if(HTML5.SPACE_CHARACTERS_R.test(data)) {
 		this.state = this.before_attribute_name_state;
 	} else if(data == 'EOF') {
 		this.parse_error('eof-in-tag-name');
 		this.emit_current_token();
-	} else if(ASCII_LETTERS_R.test(data)) {
-		this.current_token.name += data + buffer.matchWhile(ASCII_LETTERS_R);
+	} else if(HTML5.ASCII_LETTERS_R.test(data)) {
+		this.current_token.name += data + buffer.matchWhile(HTML5.ASCII_LETTERS_R);
 	} else if(data == '>') {
 		this.emit_current_token();
 	} else if(data == '/') {
@@ -178,12 +179,12 @@ t.prototype.tag_name_state = function(buffer) {
 
 t.prototype.before_attribute_name_state = function(buffer) {
 	var data = buffer.shift(1);
-	if(SPACE_CHARACTERS_R.test(data)) {
-		buffer.matchWhile(SPACE_CHARACTERS_R);
+	if(HTML5.SPACE_CHARACTERS_R.test(data)) {
+		buffer.matchWhile(HTML5.SPACE_CHARACTERS_R);
 	} else if (data == 'EOF') {
 		this.parse_error("expected-attribute-name-but-got-eof");
 		this.emit_current_token();
-	} else if (ASCII_LETTERS_R.test(data)) {
+	} else if (HTML5.ASCII_LETTERS_R.test(data)) {
 		this.current_token.data.push([data, ""]);
 		this.state = this.attribute_name_state;
 	} else if(data == '>') {
@@ -211,15 +212,15 @@ t.prototype.attribute_name_state = function(buffer) {
 		this.parse_error("eof-in-attribute-name");
 		this.state = this.data_state;
 		emitToken = true;
-	} else if(ASCII_LETTERS_R.test(data)) {
-		this.current_token.data[this.current_token.data.length - 1][0] += data + buffer.matchWhile(ASCII_LETTERS_R);
+	} else if(HTML5.ASCII_LETTERS_R.test(data)) {
+		this.current_token.data[this.current_token.data.length - 1][0] += data + buffer.matchWhile(HTML5.ASCII_LETTERS_R);
 		leavingThisState = false;
 	} else if(data == '>') {
 		// XXX If we emit here the attributes are converted to a dict
 		// without being checked and when the code below runs we error
 		// because data is a dict not a list
 		emitToken = true;
-	} else if(SPACE_CHARACTERS_R.test(data)) {
+	} else if(HTML5.SPACE_CHARACTERS_R.test(data)) {
 		this.state = this.after_attribute_name_state;
 	} else if(data == '/') {
 		if(!process_solidus_in_tag()) {
@@ -255,8 +256,8 @@ t.prototype.attribute_name_state = function(buffer) {
 
 t.prototype.after_attribute_name_state = function(buffer) {
 	var data = buffer.shift(1);
-	if(SPACE_CHARACTERS_R.test(data)) {
-		buffer.matchWhile(SPACE_CHARACTERS_R);
+	if(HTML5.SPACE_CHARACTERS_R.test(data)) {
+		buffer.matchWhile(HTML5.SPACE_CHARACTERS_R);
 	} else if(data == '=') {
 		this.state = this.before_attribute_value_state;
 	} else if(data == '>') {
@@ -264,7 +265,7 @@ t.prototype.after_attribute_name_state = function(buffer) {
 	} else if(data == 'EOF') {
 		this.parse_error("expected-end-of-tag-but-got-eof");
 		this.emit_current_token();
-	} else if(ASCII_LETTERS_R.test(data)) {
+	} else if(HTML5.ASCII_LETTERS_R.test(data)) {
 		this.current_token.data.push([data, ""]);
 		this.state = this.attribute_name_state;
 	} else if(data == '/') {
@@ -278,8 +279,8 @@ t.prototype.after_attribute_name_state = function(buffer) {
 
 t.prototype.before_attribute_value_state = function(buffer) {
 	var data = buffer.shift(1);
-	if(SPACE_CHARACTERS_R.test(data)) {
-		buffer.matchWhile(SPACE_CHARACTERS_R);
+	if(HTML5.SPACE_CHARACTERS_R.test(data)) {
+		buffer.matchWhile(HTML5.SPACE_CHARACTERS_R);
 	} else if(data == '"') {
 		this.state = this.attribute_value_double_quoted_state;
 	} else if(data == '&') {
@@ -333,7 +334,7 @@ t.prototype.attribute_value_single_quoted_state = function(buffer) {
 
 t.prototype.attribute_value_unquoted_state = function(buffer) {
 	var data = buffer.shift(1);
-	if(SPACE_CHARACTERS_R.test(data)) {
+	if(HTML5.SPACE_CHARACTERS_R.test(data)) {
 		this.state = this.before_attribute_name_state;
 	} else if(data == '&') {
 		process_entity_in_attribute('');
@@ -346,14 +347,14 @@ t.prototype.attribute_value_unquoted_state = function(buffer) {
 		this.parse_error("eof-in-attribute-value-no-quotes");
 		this.emit_current_token();
 	} else {
-		this.current_token.data[this.current_token.data.length - 1][1] += data + buffer.matchUntil(SPACE_CHARACTERS + '&<>');
+		this.current_token.data[this.current_token.data.length - 1][1] += data + buffer.matchUntil(HTML5.SPACE_CHARACTERS + '&<>');
 	}
 	return true;
 }
 
 t.prototype.after_attribute_value_state = function(buffer) {
 	var data = buffer.shift(1);
-	if(SPACE_CHARACTERS_R.test(data)) {
+	if(HTML5.SPACE_CHARACTERS_R.test(data)) {
 		this.state = this.before_attribute_value_state;
 	} else if(data == '>') {
 		this.emit_current_token();
@@ -493,7 +494,7 @@ t.prototype.comment_end_state = function(buffer) {
 
 t.prototype.doctype_state = function(buffer) {
 	var data = buffer.shift(1);
-	if(SPACE_CHARACTERS_R.test(data)) {
+	if(HTML5.SPACE_CHARACTERS_R.test(data)) {
 		this.state = this.before_doctype_name_state;
 	} else {
 		this.parse_error("need-space-after-doctype");
