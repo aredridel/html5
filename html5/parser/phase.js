@@ -44,6 +44,14 @@ exports.Phase.prototype = {
 	inScope: function(name) {
 		return this.tree.elementInScope(name);
 	},
+	remove_open_elements_until: function(name, cb) {
+		var finished = false;
+		while(!finished && this.tree.open_elements != 0) {
+			var element = this.tree.open_elements.pop();
+			finished = (!name ? cb(element) : element.name == name);
+		}
+		return element;
+	},
 	startTagHtml: function(name, attributes) {
 		if(this.parser.first_start_tag == false && name == 'html') {
 			this.parse_error('non-html-root')

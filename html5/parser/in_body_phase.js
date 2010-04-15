@@ -525,7 +525,7 @@ p.prototype.endTagHeading = function(name) {
 	for(i in HEADING_ELEMENTS) {
 		var el = HEADING_ELEMENTS[i];
 		if(this.inScope(el)) {
-			this.remove_open_elements_until(function(e) {
+			this.remove_open_elements_until(null, function(e) {
 				return HEADING_ELEMENTS.indexOf(e.name) != -1;
 			});
 		}
@@ -558,7 +558,7 @@ p.prototype.endTagFormatting = function(name) {
 		});
 		
 		if(!furthestBlock) {
-			var element = remove_open_elements_until(function(el) {
+			var element = remove_open_elements_until(null, function(el) {
 				return el == afeElement;
 			});
 			this.tree.activeFormattingElements.splice(this.tree.activeFormattingElements.indexOf(element), 0);
