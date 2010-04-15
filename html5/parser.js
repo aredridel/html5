@@ -30,7 +30,8 @@ exports.Parser = Parser = function HTML5Parser(source, options) {
 
 	var that = this;
 
-	this.tokenizer = new Tokenizer(source, function(tokenizer) {
+	new Tokenizer(source, function(tokenizer) {
+		that.tokenizer = tokenizer;
 		that._parse();
 		tokenizer.addListener('token', function(token) {
 			token = that.normalize_token(token);
