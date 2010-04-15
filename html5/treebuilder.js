@@ -1,8 +1,8 @@
 exports.TreeBuilder = b = function TreeBuilder() {
 	this.open_elements = [];
 	this.document = new FakeDomDocument();
-	this.childNodes = [];
 	this.activeFormattingElements = [];
+	this.Marker = null;
 }
 
 b.prototype.reset = function() {
@@ -21,22 +21,19 @@ b.prototype.insert_element = function(name, attributes, namespace) {
 	return element;
 }
 
-b.prototype.insert_text = function(data, before) {
-	if(before) {
-		this.insert_before(new FakeTextNode(data), before);
+b.prototype.insert_text = function(data, parent) {
+	if(!parent) parent = this.open_elements[this.open_elements.length - 1];
+	if(!this.insert_from_table || (this.insert_from_table && TABLE_INSERT_MODE_ELEMENTS.indexOf(this.open_elements[this.open_elements.length - 1].name) == -1)) {
+		parent.insertText(data);
 	} else {
-		this.appendChild(new FakeTextNode(data));
+		// We hould be in the inTable phase. This means we want to do special
+		// magic element rearranging.
+		// FIXME
+		throw("So very not implemented");
 	}
 }
 
 b.prototype.appendChild = function(node) {
-	if(node instanceof FakeTextNode && this.childNodes.length > 0
-		&& this.childNodes[this.childNodes.length - 1] instanceof FakeTextNode) {
-		this.childNodes[this.childNodes.length - 1].value += node.value;
-	} else {
-		this.childNodes.push(node);
-	}
-	node.parent = this;
 }
 
 b.prototype.elementInScope = function(name, tableVariant) {
@@ -107,8 +104,21 @@ function FakeDomElement(name) {
 }
 
 FakeDomElement.prototype = {
-	appendChild: function(element) {	
-		this.children.push(element);
+	appendChild: function(node) {	
+		if(node instanceof FakeTextNode && this.children.length > 0
+			&& this.children[this.children.length - 1] instanceof FakeTextNode) {
+			this.children[this.children.length - 1].value += node.value;
+		} else {
+			this.children.push(node);
+		}
+		node.parent = this;
+	},
+	insertText: function(data, before) {
+		if(before) {
+			this.insertBefore(new FakeTextNode(data), before);
+		} else {
+			this.appendChild(new FakeTextNode(data));
+		}
 	}
 }
 
