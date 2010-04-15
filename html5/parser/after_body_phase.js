@@ -19,12 +19,12 @@ p.prototype.processComment = function(data) {
 
 p.prototype.processCharacters = function(data) {
 	this.parser_error('unexpected-char-after-body');
-	this.parser.newPhase(PHASES.inBody);
+	this.parser.newPhase('inBody');
 }
 
 p.prototype.processStartTag = function(name, attributes, self_closing) {
 	this.parse_error('unexpected-start-tag-after-body', {name: name});
-	this.parser.newPhase(PHASES.inBody);
+	this.parser.newPhase('inBody');
 	this.parser.phase.processStartTag(name, attributes, self_closing);
 }
 
@@ -38,12 +38,12 @@ p.prototype.endTagHtml = function(name) {
 		// </html>.
 		// Try <!doctype html>X</html>X for instance
 		this.parser.last_phase = this.parser.phase;
-		this.parser.newPhase(PHASES.afterAfterBody);
+		this.parser.newPhase('afterAfterBody');
 	}
 }
 
 p.prototype.endTagOther = function(name) {
 	this.parse_error('unexpected-end-tag-after-body', {name: name});
-	this.parser.newPhase(PHASES.inBody);
+	this.parser.newPhase('inBody');
 	this.parser.phase.processEndTag(name);
 }
