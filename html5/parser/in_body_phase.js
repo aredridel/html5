@@ -1,3 +1,4 @@
+var sys = require('sys');
 var Phase = require('html5/parser/phase').Phase;
 
 var start_tag_handlers = {
@@ -232,6 +233,7 @@ p.prototype.startTagBody = function(name, attributes) {
 }
 
 p.prototype.startTagCloseP = function(name, attributes) {
+	sys.debug('startTagCloseP');
 	if(this.inScope('p')) this.endTag('p');
 	this.tree.insert_element(name, attributes);
 	if(name == 'pre' || name == 'listing') {

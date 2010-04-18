@@ -1,3 +1,5 @@
+var sys = require('sys');
+
 exports.Phase = function Phase(parser, tree) {
 	this.tree = tree;
 	this.parser = parser;
@@ -34,12 +36,16 @@ exports.Phase.prototype = {
 		this.tree.insert_text(data);
 	},
 	processStartTag: function(name, attributes, self_closing) {
-		if(this.start_tag_handlers[name]) 
+		if(this.start_tag_handlers[name]) {
+			sys.debug(this.start_tag_handlers[name])
 			this[this.start_tag_handlers[name]](name, attributes, self_closing);
+		}
 	},
 	processEndTag: function(name) {
-		if(this.end_tag_handlers[name]) 
+		if(this.end_tag_handlers[name]) {
+			sys.debug(this.end_tag_handlers[name])
 			this[this.end_tag_handlers[name]](name);
+		}
 	},
 	inScope: function(name) {
 		return this.tree.elementInScope(name);

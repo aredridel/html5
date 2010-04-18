@@ -46,5 +46,5 @@ for(i in data) {
 	p = new HTML5.Parser(data[i].code);
 	basic_parser_checks(p, data[i]);
 	sys.puts(sys.inspect(p.tree.document, false, null));
-	sys.puts(sys.inspect(p.errors, false, null));
+	//sys.puts(sys.inspect(p.errors, false, null));
 }

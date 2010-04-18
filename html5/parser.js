@@ -38,6 +38,8 @@ HTML5.Parser = Parser = function HTML5Parser(source, options) {
 			token = that.normalize_token(token);
 			var method = 'process' + token.type;
 
+			sys.debug('before ' + method + " " + sys.inspect(token));
+
 			switch(token.type) {
 			case 'Characters':
 			case 'SpaceCharacters':
@@ -56,6 +58,8 @@ HTML5.Parser = Parser = function HTML5Parser(source, options) {
 			default:
 				that.parse_error(token.data, token.datavars)
 			}
+
+			sys.debug('after ' + method + " " + sys.inspect(token));
 		});
 
 		tokenizer.addListener('eof', function() {
