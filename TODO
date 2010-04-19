@@ -1,1 +1,3 @@
 - use the Node Buffer object, and make use of slices
+
+- Use DOM.HTMLDocument rather than DOM.Document
