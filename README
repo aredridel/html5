@@ -1,0 +1,11 @@
+To give it a test, set up your environment:
+
+	export NODE_PATH=lib
+
+and give it a run:
+
+	node tests/test_html5parser.js
+
+That's it for now, integration with a modularized env.js coming.
+
+
