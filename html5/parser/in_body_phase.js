@@ -1,4 +1,4 @@
-var sys = require('sys');
+var HTML5 = require('html5');
 var Phase = require('html5/parser/phase').Phase;
 
 var start_tag_handlers = {
@@ -97,7 +97,8 @@ var start_tag_handlers = {
 	datagrid: 'startTagNew',
 	command: 'startTagNew',
 	math: 'startTagForeignContent',
-	svg: 'startTagForeignContent'
+	svg: 'startTagForeignContent',
+	"-default": 'startTagOther',
 }
 
 var end_tag_handlers = {
@@ -186,6 +187,7 @@ var end_tag_handlers = {
 	footer: 'endTagNew',
 	datagrid: 'endTagNew',
 	command: 'endTagNew',
+	"-default": 'endTagOther',
 }
 
 exports.Phase = p = function InBodyPhase(parser, tree) {
@@ -233,7 +235,7 @@ p.prototype.startTagBody = function(name, attributes) {
 }
 
 p.prototype.startTagCloseP = function(name, attributes) {
-	sys.debug('startTagCloseP');
+	HTML5.debug('startTagCloseP');
 	if(this.inScope('p')) this.endTag('p');
 	this.tree.insert_element(name, attributes);
 	if(name == 'pre' || name == 'listing') {

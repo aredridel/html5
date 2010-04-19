@@ -1,4 +1,4 @@
-var HTML5 = this.HTML5 = require('html5/constants').HTML5;
+var HTML5 = require('html5');
 var events = require('events');
 var Buffer = require('html5/buffer').Buffer;
 var Models = HTML5.Models;

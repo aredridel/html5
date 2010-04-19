@@ -1,11 +1,10 @@
-var HTML5 = require('html5/parser').HTML5;
+var HTML5 = require('html5');
 var assert = require('assert');
 var sys = require('sys');
 
 var data = {
 	trivial: {
 		code: "<html><head><title>Hello!</title></head><body><p>Hi!</p><div>Testing</div></body></html>",
-		errorCount: 1,
 		output: { root: { name: 'html', children: [ 
 			{ name: 'head', children: [ 
 				{ name: 'title' , children: [ 
@@ -22,7 +21,6 @@ var data = {
 	},
 	attr: {
 		code: "<html><head profile='x'><title>Hello!</title></head><body class='test'></body></html>",
-		errorCount: 1
 	},
 	minimal: {
 		code: "<p>Hi!</p>",

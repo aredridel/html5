@@ -1,10 +1,12 @@
 var sys = require('sys');
+var HTML5 = require('html5/parser').HTML5;
+var assert = require('assert');
 
 exports.Phase = function Phase(parser, tree) {
 	this.tree = tree;
 	this.parser = parser;
-	this.end_tag_handlers = {};
-	this.start_tag_handlers = {};
+	this.end_tag_handlers = {"-default": 'endTagOther'};
+	this.start_tag_handlers = {"-default": 'startTagOther'};
 }
 
 exports.Phase.prototype = {
@@ -37,14 +39,18 @@ exports.Phase.prototype = {
 	},
 	processStartTag: function(name, attributes, self_closing) {
 		if(this.start_tag_handlers[name]) {
-			sys.debug(this.start_tag_handlers[name])
+			HTML5.debug(this.start_tag_handlers[name])
 			this[this.start_tag_handlers[name]](name, attributes, self_closing);
+		} else {
+			this[this.start_tag_handlers["-default"]](name, attributes, self_closing);
 		}
 	},
 	processEndTag: function(name) {
 		if(this.end_tag_handlers[name]) {
-			sys.debug(this.end_tag_handlers[name])
+			HTML5.debug(this.end_tag_handlers[name])
 			this[this.end_tag_handlers[name]](name);
+		} else {
+			this[this.end_tag_handlers["-default"]](name);
 		}
 	},
 	inScope: function(name) {

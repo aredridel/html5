@@ -2,12 +2,14 @@ var Phase = require('html5/parser/phase').Phase;
 
 var start_tag_handlers = {
 	html: 'startTagHtml',
-	head: 'startTagHead'
+	head: 'startTagHead',
+	'-default': 'startTagOther',
 }
 
 var end_tag_handlers = {
 	head: 'endTagImplyHead',
-	br: 'endTagImplyHead'
+	br: 'endTagImplyHead',
+	'-default': 'endTagOther',
 }
 
 exports.Phase = p = function (parser, tree) {

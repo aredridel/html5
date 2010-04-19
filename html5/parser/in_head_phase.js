@@ -1,5 +1,5 @@
 var Phase = require('html5/parser/phase').Phase;
-var HTML5 = require('html5/constants').HTML5;
+var HTML5 = require('html5');
 
 var start_tag_handlers = {
 	html: 'startTagHtml',
@@ -10,7 +10,8 @@ var start_tag_handlers = {
 	noscript: 'startTagNoScript',
 	base: 'startTagBase',
 	link: 'startTagLink',
-	meta: 'startTagMeta'
+	meta: 'startTagMeta',
+	"-default": 'startTagOther',
 }
 
 var end_tag_handlers = {
@@ -19,6 +20,7 @@ var end_tag_handlers = {
 	body: 'endTagImplyAfterHead',
 	br: 'endTagImplyAfterHead',
 	title: 'endTagTitleStyleScriptNoscript',
+	"-default": 'endTagOther',
 }
 
 exports.Phase = p = function InHeadPhase(parser, tree) {

@@ -1,7 +1,8 @@
 var Phase = require('html5/parser/phase').Phase;
 
 var start_tag_handlers = {
-	html: 'startTagHtml'
+	html: 'startTagHtml',
+	'-default': 'startTagOther',
 }
 
 exports.Phase = p = function AfterAfterBodyPhase(parser, tree) {

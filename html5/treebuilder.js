@@ -1,8 +1,8 @@
-var HTML5 = this.HTML5 = require('html5/constants').HTML5;
+var HTML5 = require('html5');
 var sys = require('sys');
 var assert = require('assert');
 
-this.HTML5.TreeBuilder = b = function TreeBuilder() {
+HTML5.TreeBuilder = b = function TreeBuilder() {
 	this.open_elements = [];
 	this.document = new FakeDomDocument();
 	this.activeFormattingElements = [];
@@ -22,14 +22,14 @@ b.prototype.insert_element = function(name, attributes, namespace) {
 	element.attributes = attributes;
 	this.open_elements[this.open_elements.length - 1].appendChild(element);
 	this.open_elements.push(element);
-require('sys').debug("inserting " +  name);
-require('sys').debug(arguments.callee.caller);
+	HTML5.debug("inserting " +  name);
+	HTML5.debug(arguments.callee.caller);
 	return element;
 }
 
 b.prototype.insert_text = function(data, parent) {
 	if(!parent) parent = this.open_elements[this.open_elements.length - 1];
-sys.debug("inserting '" + data + "' into " + parent.name);
+HTML5.debug("inserting '" + data + "' into " + parent.name);
 	if(!this.insert_from_table || (this.insert_from_table && TABLE_INSERT_MODE_ELEMENTS.indexOf(this.open_elements[this.open_elements.length - 1].name) == -1)) {
 		parent.insertText(data);
 	} else {
@@ -68,7 +68,7 @@ b.prototype.reconstructActiveFormattingElements = function() {
 	// is not quite the same as the order of steps in the code. It should still
 	// do the same though.
 
-	sys.debug("reconstructActiveFormattingElements with "+sys.inspect(this.activeFormattingElements));
+	HTML5.debug("reconstructActiveFormattingElements with "+sys.inspect(this.activeFormattingElements));
 
 	// Step 1: stop if there's nothing to do
 	if(this.activeFormattingElements.length == 0) return;

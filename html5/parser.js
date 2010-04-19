@@ -1,10 +1,15 @@
-var HTML5 = this.HTML5 = require('html5/constants').HTML5;
-HTML5.TreeBuilder = require('html5/treebuilder').HTML5.TreeBuilder;
-HTML5.Tokenizer = require('html5/tokenizer').HTML5.Tokenizer;
-
-var Phase = require('html5/parser/phase').Phase;
+var HTML5 = this.HTML5 = require('html5');
 
 var sys = require('sys');
+
+HTML5.debug = function(str) {
+	sys.debug("" + new Date().valueOf() + " " + str)
+	for(var i = 0; i <= 100000; i++);
+}
+require('html5/treebuilder');
+require('html5/tokenizer');
+
+var Phase = require('html5/parser/phase').Phase;
 
 HTML5.Parser = Parser = function HTML5Parser(source, options) {
 	this.strict = false;
@@ -38,7 +43,7 @@ HTML5.Parser = Parser = function HTML5Parser(source, options) {
 			token = that.normalize_token(token);
 			var method = 'process' + token.type;
 
-			sys.debug('before ' + method + " " + sys.inspect(token));
+			HTML5.debug('before ' + method + " " + sys.inspect(token));
 
 			switch(token.type) {
 			case 'Characters':
@@ -59,7 +64,7 @@ HTML5.Parser = Parser = function HTML5Parser(source, options) {
 				that.parse_error(token.data, token.datavars)
 			}
 
-			sys.debug('after ' + method + " " + sys.inspect(token));
+			HTML5.debug('after ' + method + " " + sys.inspect(token));
 		});
 
 		tokenizer.addListener('eof', function() {
