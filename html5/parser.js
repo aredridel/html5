@@ -18,8 +18,8 @@ HTML5.Parser = Parser = function HTML5Parser(source, options) {
 
 	this.__defineSetter__('phase', function(p) {
 		phase = p;
-		if(!p) throw("Holy hell");
-		if(!p instanceof Phase) throw("Not a function");
+		if(!p) throw("Can't leave phase undefined");
+		if(!p instanceof Function) throw("Not a function");
 	});
 
 	this.__defineGetter__('phase', function() {
