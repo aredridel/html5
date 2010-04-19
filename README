@@ -1,6 +1,7 @@
-To give it a test, set up your environment:
+To give it a test, set up your environment, including the directory containing 
+the built dom.js from env-js:
 
-	export NODE_PATH=lib
+	export NODE_PATH=lib:../env-js/dist
 
 and give it a run:
 

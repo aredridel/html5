@@ -35,14 +35,15 @@ function basic_parser_checks(p, d) {
 	assert.ok(p);
 	assert.ok(p.tree);
 	assert.ok(p.tree.document);
-	assert.ok(p.tree.document.root);
+	assert.ok(p.tree.document.documentElement);
 	if(d.errorCount) assert.equal(p.errors.length, d.errorCount);
 	// FIXME: circular objects if(d.output) assert.deepEqual(p.tree.document, d.output);
 }
 
 for(i in data) {
+	sys.puts("New test: " + i)
 	p = new HTML5.Parser(data[i].code);
 	basic_parser_checks(p, data[i]);
-	sys.puts(sys.inspect(p.tree.document, false, null));
+	sys.puts(p.tree.document.xml);
 	//sys.puts(sys.inspect(p.errors, false, null));
 }
