@@ -1,6 +1,7 @@
 var HTML5 = require('html5');
 var assert = require('assert');
 var sys = require('sys');
+var events = require('events');
 
 var data = {
 	trivial: {
