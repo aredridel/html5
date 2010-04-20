@@ -42,9 +42,18 @@ function basic_parser_checks(p, d) {
 }
 
 for(i in data) {
-	sys.puts("New test: " + i)
+	//sys.puts("New test: " + i)
 	p = new HTML5.Parser(data[i].code);
 	basic_parser_checks(p, data[i]);
 	sys.puts(p.tree.document.xml);
 	//sys.puts(sys.inspect(p.errors, false, null));
 }
+
+var em = new events.EventEmitter();
+p = new HTML5.Parser(em);
+em.emit('data', '<p>This is a');
+em.emit('data', ' test of the <e');
+setTimeout(function() {
+	em.emit('data', 'm>emergency</em> broadcast system');
+	sys.puts(p.tree.document.xml);
+}, 1000);
