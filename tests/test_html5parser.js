@@ -53,8 +53,6 @@ var em = new events.EventEmitter();
 p = new HTML5.Parser(em);
 em.emit('data', '<p>This is a');
 em.emit('data', ' test of the <e');
-setTimeout(function() {
-	em.emit('data', 'm>emergency</em> broadcast system');
-	em.emit('end', '');
-	sys.puts(p.tree.document.xml);
-}, 1000);
+em.emit('data', 'm>emergency</em> broadcast system');
+em.emit('end', '');
+sys.puts(p.tree.document.xml);
