@@ -1,6 +1,6 @@
 Usage:
 
-	var HTML5 = require('html5').HTML5;
+	var HTML5 = require('html5');
 
 Major kinds of object:
 
