@@ -1,5 +1,6 @@
 var HTML5 = require('html5'),
 	events = require('events'),
+	fs = require('fs'),
 	nodeunit = require('nodeunit');
 
 var data = {
@@ -57,4 +58,28 @@ exports.testParserStreaming = function(test) {
 	em.emit('end', '');
 	test.equals(p.tree.document.xml, "<html><head/><body><p>This is a test of the <em>emergency</em> broadcast system</p></body></html>");
 	test.done();
+}
+
+
+var base = 'testdata/tree-construction/'
+var l = fs.readdirSync(base);
+require('sys').debug(l);
+for(var t in l) {
+	var testname = l[t];
+	if(!testname.match(/\.js$/)) continue;
+	exports[testname] = (function(tn) { 
+		return function(test) {
+			test.expect(1);
+			fs.readFile(base+tn, 'utf8', function(err, data) {
+				if(err) throw(err);
+				var testData = JSON.parse(data);
+				for(var i in testData) {
+					var p = new HTML5.Parser(testData[i].data);
+					require('sys').debug(p.errors);
+					test.equals(p.tree.document.xml, testData[i].document);
+				}
+				test.done();
+			}); 
+		}
+	})(testname);
 }

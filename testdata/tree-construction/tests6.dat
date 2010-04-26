@@ -1,0 +1,196 @@
+#data
+<!doctype html></head> <head>
+#errors
+Unexpected start tag head. Ignored.
+#document
+| <!DOCTYPE html>
+| <html>
+|   <head>
+|   " "
+|   <body>
+
+#data
+<!doctype html></html> <head>
+#errors
+Unexpected start tag head.
+Unexpected start tag head in after body phase.
+Unexpected start tag head. Ignored.
+#document
+| <!DOCTYPE html>
+| <html>
+|   <head>
+|   <body>
+|     " "
+
+#data
+<!doctype html></body><meta>
+#errors
+Unexpected meta element in after body phase.
+#document
+| <!DOCTYPE html>
+| <html>
+|   <head>
+|   <body>
+|     <meta>
+
+#data
+<!doctype HTml><form><div></form><div>
+#errors
+Form end tag ignored.
+Unexpected end of file.
+#document
+| <!DOCTYPE HTml>
+| <html>
+|   <head>
+|   <body>
+|     <form>
+|       <div>
+|         <div>
+
+#data
+<!doctype HTml><title>&amp;</title>
+#errors
+#document
+| <!DOCTYPE HTml>
+| <html>
+|   <head>
+|     <title>
+|       "&"
+|   <body>
+
+#data
+<!doctype HTml><title><!--&amp;--></title>
+#errors
+#document
+| <!DOCTYPE HTml>
+| <html>
+|   <head>
+|     <title>
+|       "<!--&amp;-->"
+|   <body>
+
+#data
+<!doctype>
+#errors
+No space after "doctype"
+Unexpected ">"
+Incorrect doctype
+#document
+| <!DOCTYPE >
+| <html>
+|   <head>
+|   <body>
+
+#data
+<!---x
+#errors
+End of file in comment
+End of file before doctype
+#document
+| <!-- -x -->
+| <html>
+|   <head>
+|   <body>
+
+#data
+<body>
+<div>
+#errors
+Unexpected start tag (body)
+Expected closing tag. Unexpected end of file
+#document-fragment
+div
+#document
+| "
+"
+| <div>
+
+#data
+<frameset></frameset>
+foo
+#errors
+Unexpected start tag (frameset). Expected DOCTYPE.
+Unexpected non-space characters in the after frameset phase. Ignored.
+#document
+| <html>
+|   <head>
+|   <frameset>
+|   "
+"
+
+#data
+<frameset></frameset>
+<noframes>
+#errors
+Unexpected start tag (frameset). Expected DOCTYPE.
+Expected closing tag. Unexpected end of file.
+#document
+| <html>
+|   <head>
+|   <frameset>
+|   "
+"
+|   <noframes>
+
+#data
+<frameset></frameset>
+<div>
+#errors
+Unexpected start tag (frameset). Expected DOCTYPE.
+Unexpected start tag (div) in the after frameset phase. Ignored.
+#document
+| <html>
+|   <head>
+|   <frameset>
+|   "
+"
+
+#data
+<frameset></frameset>
+</html>
+#errors
+Unexpected start tag (frameset). Expected DOCTYPE.
+#document
+| <html>
+|   <head>
+|   <frameset>
+|   "
+"
+
+#data
+<frameset></frameset>
+</div>
+#errors
+Unexpected start tag (frameset). Expected DOCTYPE.
+Unexpected end tag (div) in the after frameset phase. Ignored.
+#document
+| <html>
+|   <head>
+|   <frameset>
+|   "
+"
+
+#data
+<form><form>
+#errors
+Unexpected start tag (form). Expected DOCTYPE.
+Unexpected start tag (form).
+Expected closing tag. Unexpected end of file.
+#document
+| <html>
+|   <head>
+|   <body>
+|     <form>
+
+#data
+<button><button>
+#errors
+Unexpected start tag (button). Expected DOCTYPE.
+Unexpected start tag (button) implies end tag (button).
+Expected closing tag. Unexpected end of file.
+#document
+| <html>
+|   <head>
+|   <body>
+|     <button>
+|     <button>
