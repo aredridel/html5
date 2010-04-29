@@ -10,7 +10,7 @@ exports.readTestData = function(filename) {
 
 
 	function readHeader(line) {
-		//if(line[0] != '#') throw ("Got " + line[0] + " but expected #");
+		if(line[0] != '#') throw ("Got " + line[0] + " but expected #");
 		section = line.slice(1);
 		if(section == 'document') {
 			state = readDocument;
@@ -49,7 +49,6 @@ exports.readTestData = function(filename) {
 		} else if(lines[l] == '') {
 			output.push(current);
 			current = {};
-			state = readHeader;
 		}
 		state(lines[l]);
 	}
