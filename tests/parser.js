@@ -36,16 +36,33 @@ for(var t in l) {
 			var f = require('./support/readTestData')
 			var td = f.readTestData(tn);
 			var tests = 1;
-			for(i in td) {
-				HTML5.debug('testdata', "Data: " + td[i].data);
+			for(var i in td) {
+				HTML5.debug('testdata.data', "Data: " + td[i].data);
 				var p = new HTML5.Parser(td[i].data);
+				var errorsFixed = p.errors.map(function(e) {
+					return HTML5.E[e[0]].replace(/%\(.*?\)/, function(r) {
+						if(e[1]) {
+							return e[1][r.slice(2).slice(0, r.length - 3)];
+						} else {
+							return r;
+						}
+					});
+				});
+
 				if(td[i].errors) {
-					test.equals(p.errors.length, td[i].errors.length);
-					tests += 1;
+					var errorsNoEOF = td[i].errors.filter(function(e) {
+						return !(/end of file|EOF/i.test(e));
+					});
+					//HTML5.debug('testdata.errors', "Expected ", errorsNoEOF);
+					//HTML5.debug('testdata.errors', "Actual ", errorsFixed);
+					test.same(errorsFixed, errorsNoEOF)
+					test.equals(p.errors.length, errorsNoEOF.length);
+					tests += 2;
 				}
 			}
 
 			test.ok(tests > 1);
+			test.expect(tests);
 			test.done();
 		}
 	})(base+testname);
