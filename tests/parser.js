@@ -60,7 +60,7 @@ for(var t in l) {
 					test.same(serialized, td[i].document);
 					test.same(errorsFixed, errorsNoEOF)
 					test.equals(p.errors.length, errorsNoEOF.length);
-					tests += 2;
+					tests += 3;
 				}
 			}
 
