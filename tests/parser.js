@@ -1,7 +1,8 @@
 var HTML5 = require('html5'),
 	events = require('events'),
 	fs = require('fs'),
-	nodeunit = require('nodeunit');
+	nodeunit = require('nodeunit'),
+	serialize = require('./support/serializeTestOutput').serializeTestOutput;
 
 function basic_parser_checks(test, p, d) {
 	test.ok(Boolean(p), 'parser exists');
@@ -55,6 +56,8 @@ for(var t in l) {
 					});
 					//HTML5.debug('testdata.errors', "Expected ", errorsNoEOF);
 					//HTML5.debug('testdata.errors', "Actual ", errorsFixed);
+					var serialized = serialize(p.tree.document);
+					test.same(serialized, td[i].document);
 					test.same(errorsFixed, errorsNoEOF)
 					test.equals(p.errors.length, errorsNoEOF.length);
 					tests += 2;
