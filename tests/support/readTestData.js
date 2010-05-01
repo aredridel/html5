@@ -49,6 +49,7 @@ exports.readTestData = function(filename) {
 		} else if(lines[l] == '') {
 			output.push(current);
 			current = {};
+			continue;
 		}
 		state(lines[l]);
 	}
