@@ -3,8 +3,8 @@ var walker = require('html5').HTML5.TreeWalker;
 
 exports.serializeTestOutput = function(doc) {
 	var s = '';
+	var indent = '';
 	new walker(doc, function(token) {
-		var indent = '';
 		switch(token.type) {
 		case 'StartTag':
 			s += indent + '<' + token.name + ">\n";
