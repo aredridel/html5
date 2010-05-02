@@ -1,3 +1,6 @@
 - Use DOM.HTMLDocument rather than DOM.Document
 
 - Fix adoption agency implementation to not just remove all open elements
+
+- move to a more functional style -- having to call new inBody(blah).method
+  rather than inBody.blah stinks
