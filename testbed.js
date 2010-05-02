@@ -38,6 +38,7 @@ for(var t in l) {
 			HTML5.debug('testdata.data', "Data: " + td[i].data.trimRight());
 			var p = new HTML5.Parser(td[i].data.trimRight());
 			var errorsFixed = p.errors.map(function(e) {
+				if(!HTML5.E[e[0]]) return e;
 				return HTML5.E[e[0]].replace(/%\(.*?\)/, function(r) {
 					if(e[1]) {
 						return e[1][r.slice(2).slice(0, r.length - 3)];
