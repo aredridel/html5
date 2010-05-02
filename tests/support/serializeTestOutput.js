@@ -20,7 +20,7 @@ exports.serializeTestOutput = function(doc) {
 			s += indent + '"' + token.data + '"\n';
 			break;
 		case 'Comment':
-			s += indent + '<!--' + token.data + '-->\n';
+			s += indent + '<!-- ' + token.data + ' -->\n';
 			break;
 		case 'Doctype':
 			s += indent + '<!DOCTYPE ' + token.name + '>\n';
