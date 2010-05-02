@@ -14,7 +14,7 @@ exports.serializeTestOutput = function(doc) {
 			s += indent + '<' + token.name + '>\n';
 			break;
 		case 'EndTag':
-			indent = indent.slice(0, indent.length - 3);
+			indent = indent.slice(2);
 			break;
 		case 'Characters':
 			s += indent + '"' + token.data + '"\n';
