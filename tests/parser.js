@@ -39,7 +39,7 @@ for(var t in l) {
 			var tests = 1;
 			for(var i in td) {
 				HTML5.debug('testdata.data', "Data: " + td[i].data);
-				var p = new HTML5.Parser(td[i].data);
+				var p = new HTML5.Parser(td[i].data.trimRight());
 				var errorsFixed = p.errors.map(function(e) {
 					return HTML5.E[e[0]].replace(/%\(.*?\)/, function(r) {
 						if(e[1]) {

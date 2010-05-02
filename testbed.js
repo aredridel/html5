@@ -34,9 +34,9 @@ for(var t in l) {
 		try {
 			if(process.argv[3] && process.argv[3] != i) continue;
 			sys.puts("Test #" + i + ": ");
-			sys.puts("Input data: " + sys.inspect(td[i].data));
-			HTML5.debug('testdata.data', "Data: " + td[i].data);
-			var p = new HTML5.Parser(td[i].data);
+			sys.puts("Input data: " + sys.inspect(td[i].data.trimRight()));
+			HTML5.debug('testdata.data', "Data: " + td[i].data.trimRight());
+			var p = new HTML5.Parser(td[i].data.trimRight());
 			var errorsFixed = p.errors.map(function(e) {
 				return HTML5.E[e[0]].replace(/%\(.*?\)/, function(r) {
 					if(e[1]) {
