@@ -52,15 +52,12 @@ for(var t in l) {
 				});
 
 				if(td[i].errors) {
-					var errorsNoEOF = td[i].errors.filter(function(e) {
-						return !(/end of file|EOF/i.test(e));
-					});
-					//HTML5.debug('testdata.errors', "Expected ", errorsNoEOF);
+					//HTML5.debug('testdata.errors', "Expected ", td[i].errors);
 					//HTML5.debug('testdata.errors', "Actual ", errorsFixed);
 					var serialized = serialize(p.tree.document);
 					test.same(serialized, td[i].document);
-					test.same(errorsFixed, errorsNoEOF)
-					test.equals(p.errors.length, errorsNoEOF.length);
+					test.same(errorsFixed, td[i].errors)
+					test.equals(p.errors.length, td[i].errors.length);
 					tests += 3;
 				}
 			}

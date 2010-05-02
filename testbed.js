@@ -49,20 +49,16 @@ for(var t in l) {
 			});
 
 		if(td[i].errors) {
-			var errorsNoEOF = td[i].errors.filter(function(e) {
-				return !(/end of file|EOF/i.test(e));
-			});
-			//HTML5.debug('testdata.errors', "Expected ", errorsNoEOF);
+			//HTML5.debug('testdata.errors', "Expected ", td[i].errors);
 			//HTML5.debug('testdata.errors', "Actual ", errorsFixed);
 			var serialized = serialize(p.tree.document);
 			sys.puts("Output : " + sys.inspect(serialized));
 			sys.puts("Check  : " + sys.inspect(td[i].document));
 			assert.deepEqual(serialized, td[i].document);
-			assert.deepEqual(errorsFixed, errorsNoEOF)
-			assert.equal(p.errors.length, errorsNoEOF.length);
+			assert.equal(p.errors.length, td[i].errors.length);
 		}
 		} catch(e) {
-			sys.puts(e);
+                        sys.puts(e.stack + '\n');
 		}
 	}
 }
