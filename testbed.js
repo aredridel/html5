@@ -11,15 +11,6 @@ if(process.argv[4]) {
 	for(var d in debugs) HTML5.enableDebug(debugs[d]);
 }
 
-function basic_parser_checks(test, p, d) {
-	test.ok(Boolean(p), 'parser exists');
-	test.ok(Boolean(p.tree), 'parse tree exists');
-	test.ok(new Boolean(p.tree.document), 'parse tree produced a document');
-	test.ok(Boolean(p.tree.document.documentElement), 'parse tree set the documentElement');
-	test.equals(p.errors.length, d.errorCount);
-	test.equals(p.tree.document.xml, d.output);
-}
-
 var base = 'testdata/tree-construction/'
 var l = fs.readdirSync(base);
 for(var t in l) {
