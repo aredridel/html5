@@ -26,7 +26,6 @@ for(var t in l) {
 			if(process.argv[3] && process.argv[3] != i) continue;
 			sys.puts("Test #" + i + ": ");
 			sys.puts("Input data: " + sys.inspect(td[i].data.trimRight()));
-			HTML5.debug('testdata.data', "Data: " + td[i].data.trimRight());
 			var p = new HTML5.Parser(td[i].data.trimRight());
 			var errorsFixed = p.errors.map(function(e) {
 				if(!HTML5.E[e[0]]) return e;
