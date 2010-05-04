@@ -48,7 +48,7 @@ for(var t in l) {
 			sys.puts("Output : " + serialized);
 			sys.puts("Check  : " + td[i].document);
 			assert.deepEqual(serialized, td[i].document);
-			if(p.errors.length !== td[i].errors.length) {
+			if(td[i].errors && p.errors.length !== td[i].errors.length) {
 				sys.puts("Expected errors: " + sys.inspect(td[i].errors));
 				sys.puts("Actual errors  : " + sys.inspect(p.errors));
 			}
