@@ -38,9 +38,12 @@ for(var t in l) {
 				});
 			});
 
-		if(td[i].errors) {
-			//HTML5.debug('testdata.errors', "Expected ", td[i].errors);
-			//HTML5.debug('testdata.errors', "Actual ", errorsFixed);
+			assert.ok(p.tree);
+			assert.ok(p.tree.document);
+			HTML5.debug('testbed', "parse complete");
+
+			HTML5.debug('testdata.errors', "Expected ", td[i].errors);
+			HTML5.debug('testdata.errors', "Actual ", errorsFixed);
 			var serialized = serialize(p.tree.document);
 			sys.puts("Output : " + serialized);
 			sys.puts("Check  : " + td[i].document);
@@ -49,7 +52,6 @@ for(var t in l) {
 				sys.puts("Expected errors: " + sys.inspect(td[i].errors));
 				sys.puts("Actual errors  : " + sys.inspect(p.errors));
 			}
-		}
 		} catch(e) {
                         sys.puts(e.stack + '\n');
 		}
