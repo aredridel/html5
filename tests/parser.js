@@ -31,15 +31,15 @@ var l = fs.readdirSync(base);
 for(var t in l) {
 	var testname = l[t];
 	if(testname.match(/\.js$/)) continue;
-	exports[base+testname] = (function(tn) {
-		return function(test) {
-			test.expect(1);
-			var f = require('./support/readTestData')
-			var td = f.readTestData(tn);
-			var tests = 1;
-			for(var i in td) {
-				HTML5.debug('testdata.data', "Data: " + td[i].data);
-				var p = new HTML5.Parser(td[i].data.trimRight());
+	var f = require('./support/readTestData')
+	var td = f.readTestData(base+testname);
+	for(var i in td) {
+		exports[base+testname+':'+i] = (function(td) { 
+			return function(test) {
+				var tests = 1;
+				test.expect(1);
+				HTML5.debug('testdata.data', "Data: " + td.data);
+				var p = new HTML5.Parser(td.data.trimRight());
 				var errorsFixed = p.errors.map(function(e) {
 					if(!HTML5.E[e[0]]) return e;
 					return HTML5.E[e[0]].replace(/%\(.*?\)/, function(r) {
@@ -51,20 +51,17 @@ for(var t in l) {
 					});
 				});
 
-				if(td[i].errors) {
-					//HTML5.debug('testdata.errors', "Expected ", td[i].errors);
-					//HTML5.debug('testdata.errors', "Actual ", errorsFixed);
-					var serialized = serialize(p.tree.document);
-					test.same(serialized, td[i].document);
-					test.equals(p.errors.length, td[i].errors.length);
-					//test.same(errorsFixed, td[i].errors)
-					tests += 2;
-				}
-			}
+				var serialized = serialize(p.tree.document);
+				test.same(serialized, td.document);
+				test.equals(p.errors.length, td.errors.length);
+				//test.same(errorsFixed, td.errors)
+				tests += 2;
 
-			test.ok(tests > 1);
-			test.expect(tests);
-			test.done();
-		}
-	})(base+testname);
+				test.ok(tests > 1);
+				test.expect(tests);
+				test.done();
+			 }
+		})(td[i])
+
+	}
 }
