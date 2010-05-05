@@ -1,0 +1,24 @@
+Failing:
+
+	tests1.dat 20 -- end tag didn't fully close
+	tests1.dat 31 -- hits unimplemented code
+	tests1.dat 32 -- misclosed list tag
+	tests1.dat 33 -- optgroup should be ignored outside of select
+	tests1.dat 34 -- bad argument in buffer
+	tests1.dat 36 -- undefined function
+	tests1.dat 51 -- end tag didn't close right, involving aa and attributes
+	tests1.dat 52 -- undefined/null
+	tests1.dat 54 -- missing handler for font
+	tests1.dat 60 -- end tag didn't close right
+	tests1.dat 61 -- undefined/null
+	tests1.dat 62 -- undefined/null
+	tests1.dat 77 -- huge attribute fails
+	tests1.dat 78 -- end tag didn't close right
+	tests1.dat 79 -- end tag didn't close right
+	tests1.dat 80 -- missing handler for a
+	tests1.dat 81 -- end tag didn't close right
+	tests1.dat 84 -- scriptscript>
+	tests1.dat 86 -- endTagTableCell doesn't work right
+	tests1.dat 90 -- missing handler for a
+	tests1.dat 91 -- meta ends up in head
+	
