@@ -52,10 +52,11 @@ for(var t in l) {
 				});
 
 				var serialized = serialize(p.tree.document);
-				test.same(serialized, td.document);
-				test.equals(p.errors.length, td.errors.length);
-				//test.same(errorsFixed, td.errors)
-				tests += 2;
+				test.same(serialized, td.document); tests++;
+				if(td.errors) {
+					test.equals(p.errors.length, td.errors.length); tests++;
+				}
+				//test.same(errorsFixed, td.errors); tests++;
 
 				test.ok(tests > 1);
 				test.expect(tests);
