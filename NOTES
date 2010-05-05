@@ -8,7 +8,6 @@ Failing:
 	tests1.dat 36 -- undefined function
 	tests1.dat 51 -- end tag didn't close right, involving aa and attributes
 	tests1.dat 52 -- undefined/null
-	tests1.dat 54 -- missing handler for font
 	tests1.dat 60 -- end tag didn't close right
 	tests1.dat 61 -- undefined/null
 	tests1.dat 62 -- undefined/null
