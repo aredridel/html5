@@ -9,7 +9,7 @@ Failing:
 	tests1.dat 51 -- end tag didn't close right, involving aa and attributes
 	tests1.dat 52 -- undefined/null
 	tests1.dat 60 -- end tag didn't close right
-	tests1.dat 61 -- undefined/null
+	tests1.dat 61 -- empty data, testbed doesn't parse right
 	tests1.dat 62 -- undefined/null
 	tests1.dat 77 -- huge attribute fails
 	tests1.dat 78 -- end tag didn't close right
