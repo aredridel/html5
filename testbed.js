@@ -26,7 +26,8 @@ for(var t in l) {
 			if(process.argv[3] && process.argv[3] != i) continue;
 			sys.puts("Test #" + i + ": ");
 			sys.puts("Input data: " + sys.inspect(td[i].data.trimRight()));
-			var p = new HTML5.Parser(td[i].data.trimRight());
+			sys.puts("Input document fragment: " + sys.inspect(td[i]['document-fragment']))
+			var p = new HTML5.Parser(td[i].data.trimRight(), td[i]['document-fragment'] ? {inner_html: td[i]['document-fragment'].trimRight()} : {});
 			var errorsFixed = p.errors.map(function(e) {
 				if(!HTML5.E[e[0]]) return e;
 				return HTML5.E[e[0]].replace(/%\(.*?\)/, function(r) {
