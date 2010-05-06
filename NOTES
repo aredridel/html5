@@ -20,3 +20,5 @@ Failing:
 	tests1.dat 90 -- missing handler for a
 	tests1.dat 91 -- meta ends up in head
 	
+
+	tests4.dat * -- No document fragment support yet
