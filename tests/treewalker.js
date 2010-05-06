@@ -12,13 +12,13 @@ exports.testWalker = function(test) {
 	test.same(r, [
 		{ type: 'StartTag', name: 'html', data: {} },
 		{ type: 'StartTag', name: 'head', data: {} },
-		{ type: 'EndTag', name: 'head', data: [] },
+		{ type: 'EndTag', name: 'head' },
 		{ type: 'StartTag', name: 'body', data: {} },
-		{ type: 'StartTag', name: 'p', data: [] },
+		{ type: 'StartTag', name: 'p', data: {} },
 		{ type: 'Characters', data: 'Hi!' },
-		{ type: 'EndTag', name: 'p', data: [] },
-		{ type: 'EndTag', name: 'body', data: [] },
-		{ type: 'EndTag', name: 'html', data: [] },
+		{ type: 'EndTag', name: 'p' },
+		{ type: 'EndTag', name: 'body' },
+		{ type: 'EndTag', name: 'html' },
 	]);
 
 	test.done();
