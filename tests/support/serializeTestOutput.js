@@ -17,6 +17,9 @@ HTML5.debug('serialize', token)
 			break;
 		case 'EmptyTag':
 			s += indent + '<' + token.name + '>\n';
+			for(var i in token.data) {
+				s += indent + "  " + i + '="' + token.data[i] + '"\n'
+			}
 			break;
 		case 'EndTag':
 			indent = indent.slice(2);
