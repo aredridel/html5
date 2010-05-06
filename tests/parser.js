@@ -52,7 +52,7 @@ for(var t in l) {
 					});
 				});
 
-				var serialized = serialize(p.tree.document);
+				var serialized = serialize(p.inner_html ? p.tree.getFragment() : p.tree.document);
 				test.same(serialized, td.document); tests++;
 				if(false && td.errors) {
 					test.equals(p.errors.length, td.errors.length); tests++;

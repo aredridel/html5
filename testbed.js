@@ -45,7 +45,7 @@ for(var t in l) {
 
 			HTML5.debug('testdata.errors', "Expected ", td[i].errors);
 			HTML5.debug('testdata.errors', "Actual ", errorsFixed);
-			var serialized = serialize(p.tree.document);
+			var serialized = serialize(p.inner_html ? p.tree.getFragment() : p.tree.document);
 			sys.puts("Output : " + serialized);
 			sys.puts("Check  : " + td[i].document);
 			assert.deepEqual(serialized, td[i].document);
