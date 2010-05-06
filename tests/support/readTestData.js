@@ -39,7 +39,8 @@ exports.readTestData = function(filename) {
 		if(!current[section]) {
 			current[section] = '';
 		}
-		current[section] += line.slice(2) + "\n";
+		if(line[0] == '|') line = line.slice(2);
+		current[section] += line + "\n";
 	}
 
 	state = readHeader;
