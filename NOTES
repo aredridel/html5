@@ -4,7 +4,6 @@ Failing:
 	tests1.dat 31 -- hits unimplemented code
 	tests1.dat 32 -- misclosed list tag
 	tests1.dat 33 -- optgroup should be ignored outside of select
-	tests1.dat 34 -- bad argument in buffer
 	tests1.dat 36 -- undefined function
 	tests1.dat 51 -- end tag didn't close right, involving aa and attributes
 	tests1.dat 52 -- undefined/null
