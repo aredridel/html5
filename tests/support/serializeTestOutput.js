@@ -11,8 +11,13 @@ exports.serializeTestOutput = function(doc) {
 			s += indent + '<' + token.name + ">\n";
 HTML5.debug('serialize', token)
 			indent += '  ';
+			var a = []
 			for(var i in token.data) {
-				s += indent + i + '="' + token.data[i] + '"\n'
+				a.push(i)
+			}
+			a = a.sort()
+			for(var i in a) {
+				s += indent + a[i] + '="' + token.data[a[i]] + '"\n'
 			}
 			break;
 		case 'EmptyTag':
