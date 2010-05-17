@@ -40,7 +40,7 @@ for(var t in l) {
 				test.expect(1);
 				HTML5.debug('testdata.data', "Data: " + td.data);
 				HTML5.debug('testdata.data', "Fragment: " + td['document-fragment']);
-				var p = new HTML5.Parser(td.data.trimRight(), td['document-fragment'] ? {inner_html: td['document-fragment']} : undefined);
+				var p = new HTML5.Parser(td.data.slice(0, td.data.length -1), td['document-fragment'] ? {inner_html: td['document-fragment']} : undefined);
 				var errorsFixed = p.errors.map(function(e) {
 					if(!HTML5.E[e[0]]) return e;
 					return HTML5.E[e[0]].replace(/%\(.*?\)/, function(r) {
