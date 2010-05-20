@@ -21,7 +21,7 @@ exports.testParserStreaming = function(test) {
 	em.emit('data', ' test of the <e');
 	em.emit('data', 'm>emergency</em> broadcast system');
 	em.emit('end', '');
-	test.equals(p.tree.document.xml, "<html><head/><body><p>This is a test of the <em>emergency</em> broadcast system</p></body></html>");
+	test.equals(serialize(p.tree.document), '<html>\n  <head>\n  <body>\n    <p>\n      "This is a test of the "\n      <em>\n        "emergency"\n      " broadcast system"\n');
 	test.done();
 }
 
