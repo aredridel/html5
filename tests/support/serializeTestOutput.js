@@ -1,5 +1,5 @@
-var dom = require('jsdom/level1/core').dom.level1.core; // Use jsdom dom
 var HTML5 = require('html5');
+var dom = HTML5.DOM;
 var walker = HTML5.TreeWalker;
 
 exports.serializeTestOutput = function(doc) {
