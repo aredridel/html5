@@ -10,15 +10,15 @@ exports.testWalker = function(test) {
 	});
 
 	test.same(r, [
-		{ type: 'StartTag', name: 'html', data: {} },
-		{ type: 'StartTag', name: 'head', data: {} },
-		{ type: 'EndTag', name: 'head' },
-		{ type: 'StartTag', name: 'body', data: {} },
-		{ type: 'StartTag', name: 'p', data: {} },
+		{ type: 'StartTag', name: 'HTML', data: {} },
+		{ type: 'StartTag', name: 'HEAD', data: {} },
+		{ type: 'EndTag', name: 'HEAD' },
+		{ type: 'StartTag', name: 'BODY', data: {} },
+		{ type: 'StartTag', name: 'P', data: {} },
 		{ type: 'Characters', data: 'Hi!' },
-		{ type: 'EndTag', name: 'p' },
-		{ type: 'EndTag', name: 'body' },
-		{ type: 'EndTag', name: 'html' },
+		{ type: 'EndTag', name: 'P' },
+		{ type: 'EndTag', name: 'BODY' },
+		{ type: 'EndTag', name: 'HTML' },
 	]);
 
 	test.done();
