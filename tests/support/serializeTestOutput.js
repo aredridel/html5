@@ -8,7 +8,7 @@ exports.serializeTestOutput = function(doc) {
 	new walker(doc, function(token) {
 		switch(token.type) {
 		case 'StartTag':
-			s += indent + '<' + token.name + ">\n";
+			s += indent + '<' + token.name.toLowerCase() + ">\n";
 HTML5.debug('serialize', token)
 			indent += '  ';
 			var a = []
@@ -21,7 +21,7 @@ HTML5.debug('serialize', token)
 			}
 			break;
 		case 'EmptyTag':
-			s += indent + '<' + token.name + '>\n';
+			s += indent + '<' + token.name.toLowerCase() + '>\n';
 			for(var i in token.data) {
 				s += indent + "  " + i + '="' + token.data[i] + '"\n'
 			}
