@@ -9,7 +9,6 @@ exports.serializeTestOutput = function(doc) {
 		switch(token.type) {
 		case 'StartTag':
 			s += indent + '<' + token.name.toLowerCase() + ">\n";
-HTML5.debug('serialize', token)
 			indent += '  ';
 			var a = []
 			for(var i in token.data) {
