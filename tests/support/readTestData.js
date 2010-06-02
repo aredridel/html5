@@ -1,7 +1,7 @@
 exports.readTestData = function(filename) { 
 	var fs = require('fs');
 
-	var lines = fs.readFileSync(filename).split("\n")
+	var lines = fs.readFileSync(filename, 'utf-8').split("\n")
 
 	var state;
 	var output = []
