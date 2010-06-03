@@ -4,7 +4,7 @@ var HTML5 = require('html5'),
 	sys = require('sys'),
 	fs = require('fs'),
 	assert = require('assert'),
-	serialize = require('./tests/support/serializeTestOutput').serializeTestOutput;
+	serialize = require('../tests/support/serializeTestOutput').serializeTestOutput;
 
 if(process.argv[4]) {
 	var debugs = process.argv[4].split(',');
@@ -18,7 +18,7 @@ for(var t in l) {
 	var testname = l[t];
 	if(testname.match(/\.js$/)) continue;
 	sys.puts("Test file: " + testname);
-	var f = require('./tests/support/readTestData')
+	var f = require('../tests/support/readTestData')
 	var td = f.readTestData(base+testname);
 	var tests = 1;
 	for(var i in td) {
