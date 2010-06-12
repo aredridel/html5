@@ -17,16 +17,16 @@ for(var t in l) {
 	if(process.argv[2] && process.argv[2] != l[t]) continue;
 	var testname = l[t];
 	if(testname.match(/\.js$/)) continue;
-	sys.puts("Test file: " + testname);
+	sys.debug("Test file: " + testname);
 	var f = require('../tests/support/readTestData')
 	var td = f.readTestData(base+testname);
 	var tests = 1;
 	for(var i in td) {
 		try {
 			if(process.argv[3] && process.argv[3] != i) continue;
-			sys.puts("Test #" + i + ": ");
-			sys.puts("Input data: " + sys.inspect(td[i].data.slice(0, td[i].data.length - 1)));
-			if(td[i]['document-fragment']) sys.puts("Input document fragment: " + sys.inspect(td[i]['document-fragment']))
+			sys.debug("Test #" + i + ": ");
+			sys.debug("Input data: " + sys.inspect(td[i].data.slice(0, td[i].data.length - 1)));
+			if(td[i]['document-fragment']) sys.debug("Input document fragment: " + sys.inspect(td[i]['document-fragment']))
 			var p = new HTML5.Parser(td[i].data.slice(0, td[i].data.length - 1), td[i]['document-fragment'] ? {inner_html: td[i]['document-fragment'].slice(0, td[i]['document-fragment'].length - 1)} : {});
 			var errorsFixed = p.errors.map(function(e) {
 				if(!HTML5.E[e[0]]) return e;
@@ -46,15 +46,15 @@ for(var t in l) {
 			HTML5.debug('testdata.errors', "Expected ", td[i].errors);
 			HTML5.debug('testdata.errors', "Actual ", errorsFixed);
 			var serialized = serialize(p.inner_html ? p.tree.getFragment() : p.tree.document);
-			sys.puts("Output : " + serialized);
-			sys.puts("Check  : " + td[i].document);
+			sys.debug("Output : " + serialized);
+			sys.debug("Check  : " + td[i].document);
 			assert.deepEqual(serialized, td[i].document);
 			if(td[i].errors && p.errors.length !== td[i].errors.length) {
-				sys.puts("Expected errors: " + sys.inspect(td[i].errors));
-				sys.puts("Actual errors  : " + sys.inspect(p.errors));
+				sys.debug("Expected errors: " + sys.inspect(td[i].errors));
+				sys.debug("Actual errors  : " + sys.inspect(p.errors));
 			}
 		} catch(e) {
-                        sys.puts(e.stack + '\n');
+                        sys.debug(e.stack + '\n');
 		}
 	}
 }
