@@ -6,11 +6,15 @@
 
 {"description":"Correct Doctype uppercase",
 "input":"<!DOCTYPE HTML>",
-"output":[["DOCTYPE", "HTML", null, null, true]]},
+"output":[["DOCTYPE", "html", null, null, true]]},
 
 {"description":"Correct Doctype mixed case",
 "input":"<!DOCTYPE HtMl>", 
-"output":[["DOCTYPE", "HtMl", null, null, true]]},
+"output":[["DOCTYPE", "html", null, null, true]]},
+
+{"description":"Correct Doctype case with EOF",
+"input":"<!DOCTYPE HtMl", 
+"output":["ParseError", ["DOCTYPE", "html", null, null, false]]},
 
 {"description":"Truncated doctype start",
 "input":"<!DOC>", 
@@ -58,7 +62,7 @@
 
 {"description":"Multiple atts no space",
 "input":"<h a='b'c='d'>",
-"output":[["StartTag", "h", {"a":"b", "c":"d"}]]},
+"output":["ParseError", ["StartTag", "h", {"a":"b", "c":"d"}]]},
 
 {"description":"Repeated attr",
  "input":"<h a='b' a='d'>",
@@ -123,23 +127,27 @@
 
 {"description":"Entity with trailing semicolon (1)",
 "input":"I'm &not;it",
-"output":[["Character","I'm ¬it"]]},
+"output":[["Character","I'm \u00ACit"]]},
 
 {"description":"Entity with trailing semicolon (2)",
 "input":"I'm &notin;",
-"output":[["Character","I'm ∉"]]},
+"output":[["Character","I'm \u2209"]]},
 
 {"description":"Entity without trailing semicolon (1)",
 "input":"I'm &notit",
-"output":[["Character","I'm "], "ParseError", ["Character", "¬it"]]},
+"output":[["Character","I'm "], "ParseError", ["Character", "\u00ACit"]]},
 
 {"description":"Entity without trailing semicolon (2)",
 "input":"I'm &notin",
-"output":[["Character","I'm "], "ParseError", ["Character", "¬in"]]},
+"output":[["Character","I'm "], "ParseError", ["Character", "\u00ACin"]]},
 
 {"description":"Partial entity match at end of file",
 "input":"I'm &no",
 "output":[["Character","I'm "], "ParseError", ["Character", "&no"]]},
+
+{"description":"Non-ASCII character reference name",
+"input":"&\u00AC;",
+"output":["ParseError", ["Character", "&\u00AC;"]]},
 
 {"description":"ASCII decimal entity",
 "input":"&#0036;",
@@ -167,6 +175,22 @@
 
 {"description":"Entity in attribute without semicolon",
 "input":"<h a='&COPY'>",
-"output":["ParseError", ["StartTag", "h", {"a":"©"}]]}
+"output":["ParseError", ["StartTag", "h", {"a":"\u00A9"}]]},
+
+{"description":"Unquoted attribute ending in ampersand",
+"input":"<s o=& t>",
+"output":[["StartTag","s",{"o":"&","t":""}]]},
+
+{"description":"Unquoted attribute at end of tag with final character of &, with tag followed by characters",
+"input":"<a a=a&>foo",
+"output":[["StartTag", "a", {"a":"a&"}], ["Character", "foo"]]},
+
+{"description":"plaintext element",
+ "input":"<plaintext>foobar",
+ "output":[["StartTag","plaintext",{}], ["Character","foobar"]]},
+
+{"description":"Open angled bracket in unquoted attribute value state",
+ "input":"<a a=f<>",
+ "output":["ParseError", ["StartTag", "a", {"a":"f<"}]]}
 
 ]}

@@ -41,7 +41,7 @@ plaintext
 #data
 setting html's innerHTML
 #errors
-XXX innerHTML EOF
+Line: 1 Col: 24 Unexpected EOF in inner html mode.
 #document-fragment
 html
 #document
@@ -52,7 +52,6 @@ html
 #data
 <title>setting head's innerHTML</title>
 #errors
-Unexpected title element that belongs in head.
 #document-fragment
 head
 #document

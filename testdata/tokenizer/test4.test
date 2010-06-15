@@ -1,12 +1,96 @@
 {"tests": [
 
 {"description":"< in attribute name",
-"input":"<z/0  <",
+"input":"<z/0  <>",
 "output":["ParseError", "ParseError", ["StartTag", "z", {"0": "", "<": ""}]]},
 
 {"description":"< in attribute value",
-"input":"<z x=<",
+"input":"<z x=<>",
 "output":["ParseError", ["StartTag", "z", {"x": "<"}]]},
+
+{"description":"= in unquoted attribute value",
+"input":"<z z=z=z>",
+"output":["ParseError", ["StartTag", "z", {"z": "z=z"}]]},
+
+{"description":"= attribute",
+"input":"<z =>",
+"output":["ParseError", ["StartTag", "z", {"=": ""}]]},
+
+{"description":"== attribute",
+"input":"<z ==>",
+"output":["ParseError", "ParseError", ["StartTag", "z", {"=": ""}]]},
+
+{"description":"=== attribute",
+"input":"<z ===>",
+"output":["ParseError", "ParseError", ["StartTag", "z", {"=": "="}]]},
+
+{"description":"==== attribute",
+"input":"<z ====>",
+"output":["ParseError", "ParseError", "ParseError", ["StartTag", "z", {"=": "=="}]]},
+
+{"description":"Allowed \" after ampersand in attribute value",
+"input":"<z z=\"&\">",
+"output":[["StartTag", "z", {"z": "&"}]]},
+
+{"description":"Non-allowed ' after ampersand in attribute value",
+"input":"<z z=\"&'\">",
+"output":["ParseError", ["StartTag", "z", {"z": "&'"}]]},
+
+{"description":"Allowed ' after ampersand in attribute value",
+"input":"<z z='&'>",
+"output":[["StartTag", "z", {"z": "&"}]]},
+
+{"description":"Non-allowed \" after ampersand in attribute value",
+"input":"<z z='&\"'>",
+"output":["ParseError", ["StartTag", "z", {"z": "&\""}]]},
+
+{"description":"Text after bogus character reference",
+"input":"<z z='&xlink_xmlns;'>bar<z>",
+"output":["ParseError",["StartTag","z",{"z":"&xlink_xmlns;"}],["Character","bar"],["StartTag","z",{}]]},
+
+{"description":"Text after hex character reference",
+"input":"<z z='&#x0020; foo'>bar<z>",
+"output":[["StartTag","z",{"z":"  foo"}],["Character","bar"],["StartTag","z",{}]]},
+
+{"description":"Attribute name starting with \"",
+"input":"<foo \"='bar'>",
+"output":["ParseError", ["StartTag", "foo", {"\"": "bar"}]]},
+
+{"description":"Attribute name starting with '",
+"input":"<foo '='bar'>",
+"output":["ParseError", ["StartTag", "foo", {"'": "bar"}]]},
+
+{"description":"Attribute name containing \"",
+"input":"<foo a\"b='bar'>",
+"output":["ParseError", ["StartTag", "foo", {"a\"b": "bar"}]]},
+
+{"description":"Attribute name containing '",
+"input":"<foo a'b='bar'>",
+"output":["ParseError", ["StartTag", "foo", {"a'b": "bar"}]]},
+
+{"description":"Unquoted attribute value containing '",
+"input":"<foo a=b'c>",
+"output":["ParseError", ["StartTag", "foo", {"a": "b'c"}]]},
+
+{"description":"Unquoted attribute value containing \"",
+"input":"<foo a=b\"c>",
+"output":["ParseError", ["StartTag", "foo", {"a": "b\"c"}]]},
+
+{"description":"Double-quoted attribute value not followed by whitespace",
+"input":"<foo a=\"b\"c>",
+"output":["ParseError", ["StartTag", "foo", {"a": "b", "c": ""}]]},
+
+{"description":"Single-quoted attribute value not followed by whitespace",
+"input":"<foo a='b'c>",
+"output":["ParseError", ["StartTag", "foo", {"a": "b", "c": ""}]]},
+
+{"description":"Quoted attribute followed by permitted /",
+"input":"<br a='b'/>",
+"output":[["StartTag","br",{"a":"b"},true]]},
+
+{"description":"Quoted attribute followed by non-permitted /",
+"input":"<bar a='b'/>",
+"output":[["StartTag","bar",{"a":"b"},true]]},
 
 {"description":"CR EOF after doctype name",
 "input":"<!doctype html \r",
@@ -14,7 +98,11 @@
 
 {"description":"CR EOF in tag name",
 "input":"<z\r",
-"output":["ParseError", ["StartTag", "z", {}]]},
+"output":["ParseError"]},
+
+{"description":"Slash EOF in tag name",
+"input":"<z/",
+"output":["ParseError"]},
 
 {"description":"Zero hex numeric entity",
 "input":"&#x0",
@@ -46,7 +134,7 @@
 
 {"description":"Maximum non-BMP numeric entity",
 "input":"&#X10FFFF;",
-"output":[["Character", "\uDBFF\uDFFF"]]},
+"output":["ParseError", ["Character", "\uDBFF\uDFFF"]]},
 
 {"description":"Above maximum numeric entity",
 "input":"&#x110000;",
@@ -106,11 +194,11 @@
 
 {"description":"Permitted slash",
 "input":"<br/>",
-"output":[["StartTag", "br", {}]]},
+"output":[["StartTag","br",{},true]]},
 
 {"description":"Non-permitted slash",
 "input":"<xr/>",
-"output":["ParseError", ["StartTag", "xr", {}]]},
+"output":[["StartTag","xr",{},true]]},
 
 {"description":"Permitted slash but in close tag",
 "input":"</br/>",
@@ -118,19 +206,19 @@
 
 {"description":"Doctype public case-sensitivity (1)",
 "input":"<!DoCtYpE HtMl PuBlIc \"AbC\" \"XyZ\">",
-"output":[["DOCTYPE", "HtMl", "AbC", "XyZ", true]]},
+"output":[["DOCTYPE", "html", "AbC", "XyZ", true]]},
 
 {"description":"Doctype public case-sensitivity (2)",
 "input":"<!dOcTyPe hTmL pUbLiC \"aBc\" \"xYz\">",
-"output":[["DOCTYPE", "hTmL", "aBc", "xYz", true]]},
+"output":[["DOCTYPE", "html", "aBc", "xYz", true]]},
 
 {"description":"Doctype system case-sensitivity (1)",
 "input":"<!DoCtYpE HtMl SyStEm \"XyZ\">",
-"output":[["DOCTYPE", "HtMl", null, "XyZ", true]]},
+"output":[["DOCTYPE", "html", null, "XyZ", true]]},
 
 {"description":"Doctype system case-sensitivity (2)",
 "input":"<!dOcTyPe hTmL sYsTeM \"xYz\">",
-"output":[["DOCTYPE", "hTmL", null, "xYz", true]]},
+"output":[["DOCTYPE", "html", null, "xYz", true]]},
 
 {"description":"U+0000 in lookahead region after non-matching character",
 "input":"<!doc>\u0000",
@@ -140,6 +228,21 @@
 {"description":"U+0000 in lookahead region",
 "input":"<!doc\u0000",
 "output":["ParseError", "ParseError", ["Comment", "doc\uFFFD"]],
+"ignoreErrorOrder":true},
+
+{"description":"U+0080 in lookahead region",
+"input":"<!doc\u0080",
+"output":["ParseError", "ParseError", ["Comment", "doc\u0080"]],
+"ignoreErrorOrder":true},
+
+{"description":"U+FDD1 in lookahead region",
+"input":"<!doc\uFDD1",
+"output":["ParseError", "ParseError", ["Comment", "doc\uFDD1"]],
+"ignoreErrorOrder":true},
+
+{"description":"U+1FFFF in lookahead region",
+"input":"<!doc\uD83F\uDFFF",
+"output":["ParseError", "ParseError", ["Comment", "doc\uD83F\uDFFF"]],
 "ignoreErrorOrder":true},
 
 {"description":"CR followed by U+0000",
@@ -185,7 +288,7 @@
 
 {"description":"Doctype publi",
 "input":"<!DOCTYPE html PUBLI",
-"output":["ParseError", "ParseError", ["DOCTYPE", "html", null, null, false]]},
+"output":["ParseError", ["DOCTYPE", "html", null, null, false]]},
 
 {"description":"Doctype sistem",
 "input":"<!DOCTYPE html SISTEM \"AbC\">",
@@ -193,6 +296,14 @@
 
 {"description":"Doctype sys",
 "input":"<!DOCTYPE html SYS",
-"output":["ParseError", "ParseError", ["DOCTYPE", "html", null, null, false]]}
+"output":["ParseError", ["DOCTYPE", "html", null, null, false]]},
+
+{"description":"Doctype html x>text",
+"input":"<!DOCTYPE html x>text",
+"output":["ParseError", ["DOCTYPE", "html", null, null, false], ["Character", "text"]]},
+
+{"description":"Grave accent in unquoted attribute",
+"input":"<a a=aa`>",
+"output":["ParseError", ["StartTag", "a", {"a":"aa`"}]]}
 
 ]}
