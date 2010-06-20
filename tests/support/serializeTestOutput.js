@@ -8,7 +8,11 @@ exports.serializeTestOutput = function(doc) {
 	new walker(doc, function(token) {
 		switch(token.type) {
 		case 'StartTag':
-			s += indent + '<' + token.name.toLowerCase() + ">\n";
+			var n = '';
+			if(token.namespace) {
+				n = token.namespace + ' ';
+			}
+			s += indent + '<' + n + token.name.toLowerCase() + ">\n";
 			indent += '  ';
 			var a = []
 			for(var i in token.data) {
