@@ -15,12 +15,16 @@ exports.serializeTestOutput = function(doc) {
 			s += indent + '<' + n + token.name.toLowerCase() + ">\n";
 			indent += '  ';
 			var a = []
-			for(var i in token.data) {
-				a.push(i)
+			for(var i = 0; i < token.data.length; i++) {
+				a.push(token.data.item(i))
 			}
-			a = a.sort()
-			for(var i in a) {
-				s += indent + a[i] + '="' + token.data[a[i]] + '"\n'
+			a = a.sort(function(a1, a2) { 
+				if( a1.nodeName < a2.nodeName) return -1
+				if( a1.nodeName > a2.nodeName) return 1;
+				if( a1.nodeName == a2.nodeName) return 0;
+			});
+			for(var i = 0; i < a.length; i++) {
+				s += indent + (a[i].namespace ? a[i].namespace + ' ' : '') + a[i].nodeName + '="' + a[i].nodeValue + '"\n'
 			}
 			break;
 		case 'EmptyTag':
