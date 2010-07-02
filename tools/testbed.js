@@ -55,7 +55,7 @@ for(var t in l) {
 				sys.debug("Actual errors  : " + sys.inspect(p.errors));
 			}
 		} catch(e) {
-                        sys.debug(e.stack + '\n');
+                        sys.debug('error in parsing: ' + e.message + " " + e.stack);
 		}
 	}
 }
