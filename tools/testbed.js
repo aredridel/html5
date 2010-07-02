@@ -28,6 +28,7 @@ for(var t in l) {
 			sys.debug("Input data: " + sys.inspect(td[i].data.slice(0, td[i].data.length - 1)));
 			if(td[i]['document-fragment']) sys.debug("Input document fragment: " + sys.inspect(td[i]['document-fragment']))
 			var p = new HTML5.Parser(td[i].data.slice(0, td[i].data.length - 1), td[i]['document-fragment'] ? {inner_html: td[i]['document-fragment'].slice(0, td[i]['document-fragment'].length - 1)} : {});
+			p.parse();
 			var errorsFixed = p.errors.map(function(e) {
 				if(!HTML5.E[e[0]]) return e;
 				return HTML5.E[e[0]].replace(/%\(.*?\)/, function(r) {

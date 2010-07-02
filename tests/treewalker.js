@@ -3,6 +3,7 @@ exports.testWalker = function(test) {
 	var HTML5 = require('html5');
 
 	var p = new HTML5.Parser('<p>Hi!</p>');
+	p.parse();
 
 	var r = [];
 	var w = new HTML5.TreeWalker(p.tree.document, function(token) {
