@@ -2,8 +2,8 @@ exports.testWalker = function(test) {
 	test.expect(1);
 	var HTML5 = require('html5');
 
-	var p = new HTML5.Parser('<p>Hi!</p>');
-	p.parse();
+	var p = new HTML5.Parser();
+	p.parse('<p>Hi!</p>');
 
 	var r = [];
 	var w = new HTML5.TreeWalker(p.tree.document, function(token) {

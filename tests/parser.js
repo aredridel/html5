@@ -16,7 +16,8 @@ function basic_parser_checks(test, p, d) {
 exports.testParserStreaming = function(test) {
 	test.expect(1);
 	var em = new events.EventEmitter();
-	p = new HTML5.Parser(em);
+	p = new HTML5.Parser();
+	p.parse(em);
 	em.emit('data', '<p>This is a');
 	em.emit('data', ' test of the <e');
 	em.emit('data', 'm>emergency</em> broadcast system');
@@ -40,8 +41,8 @@ for(var t in l) {
 				test.expect(1);
 				HTML5.debug('testdata.data', "Data: " + td.data);
 				HTML5.debug('testdata.data', "Fragment: " + td['document-fragment']);
-				var p = new HTML5.Parser(td.data.slice(0, td.data.length - 1), td['document-fragment'] ? {inner_html: td['document-fragment'].trimRight()} : {});
-				p.parse();
+				var p = new HTML5.Parser(td['document-fragment'] ? {inner_html: td['document-fragment'].trimRight()} : {});
+				p.parse(td.data.slice(0, td.data.length - 1));
 				var errorsFixed = p.errors.map(function(e) {
 					if(!HTML5.E[e[0]]) return e;
 					return HTML5.E[e[0]].replace(/%\(.*?\)/, function(r) {
