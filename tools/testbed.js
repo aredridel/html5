@@ -1,4 +1,5 @@
 require.paths.push('lib');
+require.paths.push('deps/jsdom/lib');
 var HTML5 = require('html5'),
 	events = require('events'),
 	sys = require('sys'),
