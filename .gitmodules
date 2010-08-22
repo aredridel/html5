@@ -1,0 +1,3 @@
+[submodule "tools/ronnjs"]
+	path = tools/ronnjs
+	url = http://github.com/kapouer/ronnjs.git
