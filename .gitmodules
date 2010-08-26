@@ -1,3 +1,3 @@
 [submodule "deps/jsdom"]
 	path = deps/jsdom
-	url = git://github.com/aredridel/jsdom.git
+	url = git://github.com/tmpvar/jsdom.git
