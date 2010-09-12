@@ -1,3 +1,33 @@
+== Example (With jQuery!) ==
+
+var  HTML5 = require('html5'),
+    Script = process.binding('evals').Script,
+       sys = require('sys'),
+        fs = require('fs'),
+     jsdom = require('jsdom'),
+    window = jsdom.createWindow(null, null, {parser: HTML5});
+
+var parser = new HTML5.Parser({document: window.document});
+
+var inputfile = fs.readFileSync('doc/jquery-example.html');
+parser.parse(inputfile);
+
+jsdom.jQueryify(window, 'deps/jquery/dist/jquery.js', function(window, jquery) {
+	Script.runInNewContext('jQuery("p").append("<b>Hi!</b>")', window);
+	sys.puts(window.document.innerHTML);
+
+});
+
+== Interesting features ==
+
+* Streaming parser: You can pass `parser.parse` an `EventEmitter` and the
+  parser will keep adding data as it's received.
+
+* HTML5 parsing algorithm. If you find something this can't parse, I'll want
+  to know about it. It should make sense out of anything a browser can.
+
+== Installation ==
+
 You'll need to initialize git submodules if you're pulling this from my git
 repository. 
 
