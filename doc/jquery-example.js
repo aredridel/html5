@@ -1,7 +1,6 @@
 require.paths.unshift('lib')
 require.paths.unshift('deps/jsdom/lib')
 var  HTML5 = require('html5'),
-       DOM = require('jsdom/level1/core').dom.level1.core,
     Script = process.binding('evals').Script,
        sys = require('sys'),
         fs = require('fs'),
