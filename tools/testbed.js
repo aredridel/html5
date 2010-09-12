@@ -28,8 +28,12 @@ for(var t in l) {
 			sys.debug("Test #" + i + ": ");
 			sys.debug("Input data: " + sys.inspect(td[i].data.slice(0, td[i].data.length - 1)));
 			if(td[i]['document-fragment']) sys.debug("Input document fragment: " + sys.inspect(td[i]['document-fragment']))
-			var p = new HTML5.Parser(td[i]['document-fragment'] ? {inner_html: td[i]['document-fragment'].slice(0, td[i]['document-fragment'].length - 1)} : {});
-			p.parse(td[i].data.slice(0, td[i].data.length - 1), td[i]['document-fragment']);
+			var p = new HTML5.Parser()
+			if(td[i]['document-fragment']) {
+				p.parse_fragment(td[i].data.slice(0, td[i].data.length - 1), td[i]['document-fragment'].slice(0, td[i]['document-fragment'].length - 1))
+			} else {
+				p.parse(td[i].data.slice(0, td[i].data.length - 1));
+			}
 			var errorsFixed = p.errors.map(function(e) {
 				if(!HTML5.E[e[0]]) return e;
 				return HTML5.E[e[0]].replace(/%\(.*?\)/, function(r) {
@@ -46,7 +50,7 @@ for(var t in l) {
 
 			HTML5.debug('testdata.errors', "Expected ", td[i].errors);
 			HTML5.debug('testdata.errors', "Actual ", errorsFixed);
-			var serialized = serialize(p.inner_html ? p.tree.getFragment() : p.document);
+			var serialized = serialize(p.inner_html ? p.fragment : p.document);
 			sys.debug("Output : " + serialized);
 			sys.debug("Tree : " + require('sys').inspect(p));
 			sys.debug("Check  : " + td[i].document);
