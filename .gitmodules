@@ -1,3 +1,6 @@
 [submodule "deps/jsdom"]
 	path = deps/jsdom
 	url = git://github.com/tmpvar/jsdom.git
+[submodule "deps/jquery"]
+	path = deps/jquery
+	url = git://github.com/jquery/jquery.git
