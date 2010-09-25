@@ -16,8 +16,9 @@
 		"nodeunit": ">= 0.0.0"
 	},
 	"main": "./lib/html5",
+	"directories": {
+		"lib": "lib"
+	},
 	"license": "MIT",
 	"description": "HTML5 HTML parser, including support for SVG and MathML foreign content"
 }
-	
-

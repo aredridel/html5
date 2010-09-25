@@ -1,4 +1,4 @@
-require.paths.push('lib')
+require.paths.unshift('lib')
 require.paths.push('.')
 require.paths.push('deps/jsdom/lib')
 require.paths.push('deps/nodeunit/lib')
