@@ -1,15 +1,18 @@
-$PROJECT -- $DESCRIPTION
+HTML5
 ============================================================================
 
 ## Synopsis
 
 An example: 
 
-    code here
+    var HTML5 = require('html5')
+    var parser = new HTML5.Parser()
+    parser.parse(readableStream)
 
-## $PROJECT.$Object
+## HTML5.Parser
 
-Description of `$Object`
+`Parser` is the entrance to the parsing system. Either call `parse` or
+`parseFragment` on it, and it will build a DOM tree.
 
 ### Properties
 
@@ -21,7 +24,8 @@ Description of `$Object`
 
 Emitted when $description
 
-### $PROJECT.$FUNCTION($parameters)
+### HTML5.Parser.parse(readableStream or string)
 
-Description of $FUNCTION
+Parse the parameter given, if a `readableStream` then asynchronously,
+otherwise, immediately.
 
