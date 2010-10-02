@@ -4,3 +4,6 @@
 [submodule "deps/jquery"]
 	path = deps/jquery
 	url = git://github.com/jquery/jquery.git
+[submodule "tools/ronnjs"]
+	path = tools/ronnjs
+	url = http://github.com/kapouer/ronnjs.git
