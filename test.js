@@ -1,6 +1,6 @@
-require.paths.push('lib')
-require.paths.push('.')
-require.paths.push('deps/jsdom/lib')
+require.paths.unshift('lib')
+require.paths.unshift('.')
+require.paths.unshift('deps/jsdom/lib')
 
 var testrunner = require('testrunner');
 var args = process.ARGV.slice(2);
