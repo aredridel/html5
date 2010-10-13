@@ -16,7 +16,7 @@ if(process.argv[3]) {
 }
 
 p.on('end', function() {
-	console.log(p.document.innerHTML)
+	console.log(HTML5.serialize(p.document, null, {lowercase: true}))
 })
 
 p.parse(inp);
