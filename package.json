@@ -1,0 +1,24 @@
+{
+	"name": "html5",
+	"version": "v0.2.4",
+	"author": {
+		"name": "Aria Stewart",
+		"email": "aredridel@nbtsc.org",
+		"url": "http://dinhe.net/~aredridel/"
+	},
+	"url": "http://dinhe.net/~aredridel/projects/js/html5/",
+	"repository" : [
+		{ "type":"git", "url":"git://github.com/aredridel/html5.git" },
+		{ "type":"git", "url":"http://theinternetco.net/~aredridel/projects/js/html5.git" }
+	],
+	"dependencies": {
+		"jsdom": ">= 0.1.3",
+		"nodeunit": ">= 0.0.0"
+	},
+	"main": "./lib/html5",
+	"directories": {
+		"lib": "lib"
+	},
+	"license": "MIT",
+	"description": "HTML5 HTML parser, including support for SVG and MathML foreign content"
+}

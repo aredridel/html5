@@ -1,5 +1,5 @@
-require.paths.push('lib');
-require.paths.push('deps/jsdom/lib');
+require.paths.unshift('lib');
+require.paths.unshift('deps/jsdom/lib');
 var HTML5 = require('html5'),
 	events = require('events'),
 	sys = require('sys'),
