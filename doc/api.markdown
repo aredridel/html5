@@ -61,6 +61,12 @@ target is null or undefined, then return the serialization as a string.
 
 `options` is an optional object to control the output:
 
+### lowercase
+
+Default `true`.
+
+Use lowercase tag names.
+
 ### minimize_boolean_attributes
 
 Default `true`.
