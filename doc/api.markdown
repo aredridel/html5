@@ -39,15 +39,11 @@ Will use a TreeWalker to walk a tree, taking the stream of tokens and emitting
 `Parser` is the entrance to the parsing system. Either call `parse` or
 `parseFragment` on it, and it will build a DOM tree.
 
-### Properties
+### Event: 'done'`
 
-* `$property` of `$Object`
+`function() { }`
 
-### Event: '$Event'
-
-`function($prototype) { }`
-
-Emitted when $description
+Emitted when done parsing.
 
 ### HTML5.Parser.parse(readableStream or string)
 
