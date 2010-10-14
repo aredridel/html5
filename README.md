@@ -35,6 +35,8 @@ Interesting features
 Installation
 -------------
 
+Use `npm`, or to use the git checkout, read on.
+
 You'll need to initialize git submodules if you're pulling this from my git
 repository. 
 
