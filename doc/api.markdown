@@ -15,26 +15,26 @@ An example:
 
 Major kinds of object:
 
-	HTML5.Parser
+	Parser
 
 Parses tokens into a DOM tree
 
-	HTML5.Tokenizer
+	Tokenizer
 
 Parses textual input into a stream of tokens
 
-	HTML5.TreeWalker
+	TreeWalker
 
 Walks a DOM tree and emits a stream of tokens
 
 Major functions:
 
-	HTML5.serialize(sourcetree, target, options)
+	serialize(sourcetree, target, options)
 
 Will use a TreeWalker to walk a tree, taking the stream of tokens and emitting
 'data' events to target, passing a string each time.
 
-## HTML5.Parser
+## Parser
 
 `Parser` is the entrance to the parsing system. Either call `parse` or
 `parseFragment` on it, and it will build a DOM tree.
