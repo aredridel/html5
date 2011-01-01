@@ -1,11 +1,12 @@
 require.paths.unshift('lib')
 require.paths.unshift('.')
 require.paths.unshift('deps/jsdom/lib')
+require.paths.unshift('deps/nodeunit/lib')
 
-var testrunner = require('testrunner');
+var reporter = require('nodeunit').reporters.default;
 var args = process.ARGV.slice(2);
 if(args.length > 0) {
-	testrunner.run(args);
+	reporter.run(args);
 } else {
-	testrunner.run(['tests'])
+	reporter.run(['tests'])
 }
