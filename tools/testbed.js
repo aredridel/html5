@@ -52,7 +52,7 @@ for(var t in l) {
 			HTML5.debug('testdata.errors', "Actual ", errorsFixed);
 			var serialized = serialize(p.inner_html ? p.fragment : p.document);
 			sys.debug("Output : " + serialized);
-			sys.debug("Tree : " + require('sys').inspect(p));
+			//sys.debug("Tree : " + require('sys').inspect(p));
 			sys.debug("Check  : " + td[i].document);
 			assert.deepEqual(serialized, td[i].document);
 			if(td[i].errors && p.errors.length !== td[i].errors.length) {
