@@ -16,8 +16,7 @@ if(process.argv[3]) {
 }
 
 p.on('end', function() {
-	console.log(HTML5.serialize(p.document, null, {lowercase: true,
-quote_attr_values: false}))
+	console.log(require('../tests/support/serializeTestOutput').serializeTestOutput(p.document))
 })
 
 p.parse(inp);
