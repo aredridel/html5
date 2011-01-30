@@ -50,8 +50,8 @@ for(var t in l) {
 	var f = require('../../tests/support/readTestData')
 	var td = f.readTestData(base+testname);
 	for(var i in td) {
-		app.get('/'+testname+':'+i, (function(td) { 
-			tests.push(testname + ':' + i)
+		app.get('/'+testname+'-'+i, (function(td) { 
+			tests.push(testname + '-' + i)
 			return function(req, res) {
 				HTML5.debug('testdata.data', "Data: " + td.data);
 				HTML5.debug('testdata.data', "Fragment: " + td['document-fragment']);
