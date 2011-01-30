@@ -26,6 +26,16 @@ app.configure('production', function(){
   app.use(express.errorHandler()); 
 });
 
+var toHTML = function(str) {
+	return str.replace(/&/gm, "&amp;")
+		.replace(/</gm, "&lt;")
+		.replace(/>/gm, "&gt;")
+		.replace(/ /gm, "&nbsp;")
+		.replace(/\t/gm, "&nbsp;&nbsp;&nbsp;")
+		.replace(/\n/gm, "<br>")
+	return str
+}
+
 // Routes
 
 var fs = require('fs');
@@ -57,7 +67,8 @@ for(var t in l) {
 						p: p,
 						serialized: serialized,
 						td: td,
-						title: 'Output of ' + testname
+						title: 'Output of ' + testname,
+						toHTML: toHTML
 					}
 				})
 				return

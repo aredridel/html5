@@ -1,5 +1,13 @@
 h1 Output
+- if(serialized != td.document) {
+  p.fail Fail!
+- } else {
+  p.success Success!
+- }
 table
   tr
-    td= serialized
-    td= td.document
+    th Actual
+    th Expected
+  tr
+    td!= toHTML(serialized)
+    td!= toHTML(td.document)
