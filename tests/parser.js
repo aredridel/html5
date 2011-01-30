@@ -32,6 +32,7 @@ var l = fs.readdirSync(base);
 for(var t in l) {
 	var testname = l[t];
 	if(testname.match(/\.js$/)) continue;
+	if(fs.statSync(base+testname).isDirectory()) continue;
 	var f = require('./support/readTestData')
 	var td = f.readTestData(base+testname);
 	for(var i in td) {

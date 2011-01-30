@@ -18,6 +18,7 @@ for(var t in l) {
 	if(process.argv[2] && process.argv[2] != l[t]) continue;
 	var testname = l[t];
 	if(testname.match(/\.js$/)) continue;
+        if(fs.statSync(base+testname).isDirectory()) continue;
 	sys.debug("Test file: " + testname);
 	var f = require('../tests/support/readTestData')
 	var td = f.readTestData(base+testname);
