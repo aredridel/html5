@@ -68,7 +68,7 @@ for(var t in l) {
 						p: p,
 						serialized: serialized,
 						td: td,
-						title: 'Output of ' + testname,
+						title: 'Output',
 						toHTML: toHTML
 					}
 				})
