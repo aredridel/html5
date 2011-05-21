@@ -26,6 +26,7 @@ Example (With jQuery!)
                 sys.puts(window.document.innerHTML);
 
         });
+
 Interesting features
 --------------------
 
@@ -40,16 +41,14 @@ Installation
 
 Use `npm`, or to use the git checkout, read on.
 
-You'll need to initialize git submodules if you're pulling this from my git
-repository. 
+You'll need to fetch dependencies or initialize git submodules if you're
+pulling this from my git repository. 
+
+	npm install
+
+or
 
 	git submodules init
-
-To give it a test, set up your environment, including the directory containing the built dom.js from jsdom:
-
-	export NODE_PATH=lib:deps/jsdom/lib
-
-Or copy the contents of the jsdom lib directory to ~/.node_libraries/
 
 and give it a run:
 
