@@ -6,5 +6,5 @@ var args = process.ARGV.slice(2);
 if(args.length > 0) {
 	reporter.run(args);
 } else {
-	reporter.run(['tests'])
+	reporter.run(['test'])
 }
