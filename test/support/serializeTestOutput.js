@@ -1,4 +1,4 @@
-var HTML5 = require('html5');
+var HTML5 = require('../../lib/html5');
 var dom = HTML5.DOM;
 var walker = HTML5.TreeWalker;
 
