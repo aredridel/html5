@@ -1,9 +1,10 @@
 {
 	"name": "html5",
-	"version": "v0.2.16",
+	"version": "v0.3.0",
 	"author": {
 		"name": "Aria Stewart",
 		"email": "aredridel@nbtsc.org",
+		"github": "aredridel",
 		"url": "http://dinhe.net/~aredridel/"
 	},
 	"url": "http://dinhe.net/~aredridel/projects/js/html5/",
@@ -11,6 +12,24 @@
 		{ "type":"git", "url":"git://github.com/aredridel/html5.git" },
 		{ "type":"git", "url":"http://theinternetco.net/~aredridel/projects/js/html5.git" }
 	],
+	"contributors": [
+		{
+			"name": "Aria Stewart",
+			"email": "aredridel@nbtsc.org",
+			"github": "aredridel",
+			"url": "http://dinhe.net/~aredridel/"
+		},
+		{
+			"name": "Arthur Taylor",
+			"github": "codders"
+		}
+	],
+	"maintainers": [{
+		"name": "Aria Stewart",
+		"email": "aredridel@nbtsc.org",
+		"github": "aredridel",
+		"url": "http://dinhe.net/~aredridel/"
+	}],
 	"dependencies": {
 		"jsdom": ">= 0.2.0",
 		"vows": ">= 0.0.0"
