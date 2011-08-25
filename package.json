@@ -32,7 +32,7 @@
 	}],
 	"dependencies": {
 		"jsdom": ">= 0.2.0",
-		"vows": ">= 0.0.0"
+		"vows": ">= 0.5.11"
 	},
 	"engines": {
 		"npm": ">= 1.0",
