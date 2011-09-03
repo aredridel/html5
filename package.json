@@ -42,6 +42,9 @@
 	"directories": {
 		"lib": "lib"
 	},
+	"scripts": {
+		"test": "vows --spec"
+	},
 	"license": "MIT",
 	"description": "HTML5 HTML parser, including support for SVG and MathML foreign content"
 }
