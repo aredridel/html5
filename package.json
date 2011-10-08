@@ -1,50 +1,59 @@
 {
-	"name": "html5",
-	"version": "v0.3.2",
-	"author": {
-		"name": "Aria Stewart",
-		"email": "aredridel@nbtsc.org",
-		"github": "aredridel",
-		"url": "http://dinhe.net/~aredridel/"
-	},
-	"url": "http://dinhe.net/~aredridel/projects/js/html5/",
-	"repository" : [
-		{ "type":"git", "url":"git://github.com/aredridel/html5.git" },
-		{ "type":"git", "url":"http://theinternetco.net/~aredridel/projects/js/html5.git" }
-	],
-	"contributors": [
-		{
-			"name": "Aria Stewart",
-			"email": "aredridel@nbtsc.org",
-			"github": "aredridel",
-			"url": "http://dinhe.net/~aredridel/"
-		},
-		{
-			"name": "Arthur Taylor",
-			"github": "codders"
-		}
-	],
-	"maintainers": [{
-		"name": "Aria Stewart",
-		"email": "aredridel@nbtsc.org",
-		"github": "aredridel",
-		"url": "http://dinhe.net/~aredridel/"
-	}],
-	"dependencies": {
-		"jsdom": ">= 0.2.0",
-		"vows": ">= 0.5.11"
-	},
-	"engines": {
-		"npm": ">= 1.0",
-		"node": ">= 0.4.7"
-	},
-	"main": "./lib/html5/index.js",
-	"directories": {
-		"lib": "lib"
-	},
-	"scripts": {
-		"test": "vows --spec"
-	},
-	"license": "MIT",
-	"description": "HTML5 HTML parser, including support for SVG and MathML foreign content"
+  "name": "html5",
+  "version": "v0.3.2",
+  "author": {
+    "name": "Aria Stewart",
+    "email": "aredridel@nbtsc.org",
+    "github": "aredridel",
+    "url": "http://dinhe.net/~aredridel/"
+  },
+  "url": "http://dinhe.net/~aredridel/projects/js/html5/",
+  "repository": [
+    {
+      "type": "git",
+      "url": "git://github.com/aredridel/html5.git"
+    },
+    {
+      "type": "git",
+      "url": "http://theinternetco.net/~aredridel/projects/js/html5.git"
+    }
+  ],
+  "contributors": [
+    {
+      "name": "Aria Stewart",
+      "email": "aredridel@nbtsc.org",
+      "github": "aredridel",
+      "url": "http://dinhe.net/~aredridel/"
+    },
+    {
+      "name": "Arthur Taylor",
+      "github": "codders"
+    }
+  ],
+  "maintainers": [
+    {
+      "name": "Aria Stewart",
+      "email": "aredridel@nbtsc.org",
+      "github": "aredridel",
+      "url": "http://dinhe.net/~aredridel/"
+    }
+  ],
+  "dependencies": {
+    "jsdom": ">= 0.2.0",
+    "vows": ">= 0.5.11",
+    "opts": "~1.2.1"
+  },
+  "engines": {
+    "npm": ">= 1.0",
+    "node": ">= 0.4.7"
+  },
+  "main": "./lib/html5/index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "vows --spec"
+  },
+  "license": "MIT",
+  "description": "HTML5 HTML parser, including support for SVG and MathML foreign content"
 }
