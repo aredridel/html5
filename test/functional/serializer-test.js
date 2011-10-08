@@ -1,6 +1,6 @@
 var vows = require('vows')
 var assert = require('assert')
-var HTML5 = require('../lib/html5')
+var HTML5 = require('../../lib/html5')
 
 vows.describe('serializer').addBatch({
 	'Test Serializer': {

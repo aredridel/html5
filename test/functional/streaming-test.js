@@ -1,8 +1,8 @@
-var HTML5 = require('../lib/html5'),
+var HTML5 = require('../../lib/html5'),
 	events = require('events'),
 	vows = require('vows'),
 	assert = require('assert'),
-	serialize = require('./support/serializeTestOutput').serializeTestOutput;
+	serialize = require('../lib/serializeTestOutput').serializeTestOutput;
 
 var suite = vows.describe('streaming')
 

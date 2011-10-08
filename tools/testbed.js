@@ -5,7 +5,7 @@ var HTML5 = require('html5'),
 	sys = require('sys'),
 	fs = require('fs'),
 	assert = require('assert'),
-	serialize = require('../tests/support/serializeTestOutput').serializeTestOutput;
+	serialize = require('../test/lib/serializeTestOutput').serializeTestOutput;
 
 if(process.argv[4]) {
 	var debugs = process.argv[4].split(',');

@@ -1,14 +1,14 @@
-var HTML5 = require('../lib/html5'),
+var HTML5 = require('../../lib/html5'),
 	events = require('events'),
 	fs = require('fs'),
 	vows = require('vows'),
 	assert = require('assert'),
-	serialize = require('./support/serializeTestOutput').serializeTestOutput;
+	serialize = require('../lib/serializeTestOutput').serializeTestOutput;
 
 var suite = vows.describe('tree-construction')
 
-var support = require('./support/readTestData')
-var base = 'testdata/tree-construction/'
+var support = require('../lib/readTestData')
+var base = 'test/data/tree-construction/'
 var testList = fs.readdirSync(base);
 for(var t in testList) {
 	var testname = testList[t];
