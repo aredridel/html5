@@ -54,4 +54,4 @@ and give it a run:
 
 	node test.js
 
-Git repository at http://theinternetco.net/~aredridel/projects/js/html5/.git/
+Git repository at http://dinhe.net/~aredridel/projects/js/html5.git/
