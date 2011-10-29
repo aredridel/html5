@@ -1,6 +1,4 @@
-require.paths.push('lib');
-require.paths.push('deps/jsdom/lib');
-var HTML5 = require('html5'),
+var HTML5 = require('../lib/html5'),
 	events = require('events'),
 	sys = require('sys'),
 	fs = require('fs'),
@@ -16,7 +14,7 @@ if(process.argv[3]) {
 }
 
 p.on('end', function() {
-	console.log(require('../tests/support/serializeTestOutput').serializeTestOutput(p.document))
+	console.log(require('../test/lib/serializeTestOutput').serializeTestOutput(p.document))
 })
 
 p.parse(inp);
