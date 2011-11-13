@@ -1,9 +1,6 @@
 [submodule "node_modules/jsdom"]
 	path = node_modules/jsdom
 	url = git://github.com/tmpvar/jsdom.git
-[submodule "deps/jquery"]
-	path = deps/jquery
-	url = git://github.com/jquery/jquery.git
 [submodule "tools/ronnjs"]
 	path = tools/ronnjs
 	url = http://github.com/kapouer/ronnjs.git
