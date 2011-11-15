@@ -1,6 +1,4 @@
-require.paths.unshift('lib');
-require.paths.unshift('deps/jsdom/lib');
-var HTML5 = require('html5'),
+var HTML5 = require('../lib/html5'),
 	events = require('events'),
 	sys = require('sys'),
 	fs = require('fs'),
@@ -12,7 +10,7 @@ if(process.argv[4]) {
 	for(var d in debugs) HTML5.enableDebug(debugs[d]);
 }
 
-var base = 'testdata/tree-construction/'
+var base = __dirname + '/../data/tree-construction/'
 var l = fs.readdirSync(base);
 for(var t in l) {
 	if(process.argv[2] && process.argv[2] != l[t]) continue;
@@ -20,7 +18,7 @@ for(var t in l) {
 	if(testname.match(/\.js$/)) continue;
         if(fs.statSync(base+testname).isDirectory()) continue;
 	sys.debug("Test file: " + testname);
-	var f = require('../tests/support/readTestData')
+	var f = require('../test/lib/readTestData')
 	var td = f.readTestData(base+testname);
 	var tests = 1;
 	for(var i in td) {
