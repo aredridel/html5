@@ -1,6 +1,5 @@
 var HTML5 = require('../lib/html5'),
 	events = require('events'),
-	sys = require('sys'),
 	fs = require('fs'),
 	assert = require('assert')
 
