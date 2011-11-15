@@ -46,12 +46,10 @@ pulling this from my git repository.
 
 	npm install
 
-or
-
-	git submodules init
-
 and give it a run:
 
-	node test.js
+	npm test
+
+(At time of this writing, 1800 tests pass)
 
 Git repository at http://dinhe.net/~aredridel/projects/js/html5.git/

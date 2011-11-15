@@ -52,7 +52,7 @@
     "lib": "lib"
   },
   "scripts": {
-    "test": "vows --spec"
+    "test": "tap test/functional"
   },
   "license": "MIT",
   "description": "HTML5 HTML parser, including support for SVG and MathML foreign content"
