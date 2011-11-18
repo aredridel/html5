@@ -53,7 +53,11 @@ for(var i in testList) {
 					t.equal(serialized, td.document, "Document matches example data")
                     t.ok("No exception");
                 } catch(e) {
-                    t.notOK("Exception thrown: " + e)
+                    if(logdata) {
+                        throw e
+                    } else {
+                        t.fail("Exception thrown: " + e)
+                    }
                 }
                 t.end()
             })
