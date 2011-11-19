@@ -22,6 +22,13 @@ if(typeof process.argv[3] != 'undefined') {
     var skipToTestNumber = false
 }
 
+if(typeof process.argv[4] != 'undefined') {
+    var debugs = process.argv[4].split(',')
+    for(var i in debugs) {
+        HTML5.enableDebug(debugs[i])
+    }
+}
+
 for(var i in testList) {
 	var testname = testList[i];
 
