@@ -45,27 +45,19 @@ for(var i in testList) {
                 if(skipToTestNumber && skipToTestNumber != i) return;
             }
             test(testname+':'+i, function(t) {
-                try {
-                    var p = new HTML5.Parser()
-                    if(logdata) {
-                        console.log("Input: " + td.data)
-                        console.log("Expected: " + td.document)
-                    }
-                    if(td['document-fragment']) {
-                        p.parse_fragment(td.data.slice(0, td.data.length - 1), td['document-fragment'].trimRight())
-                    } else {
-                        p.parse(td.data.slice(0, td.data.length - 1));
-                    }
-                    var serialized = serialize(p.inner_html ? p.tree.getFragment() : p.tree.document);
-					t.equal(serialized, td.document, "Document matches example data")
-                    t.ok("No exception");
-                } catch(e) {
-                    if(logdata) {
-                        throw e
-                    } else {
-                        t.fail("Exception thrown: " + e)
-                    }
+                var p = new HTML5.Parser()
+                if(logdata) {
+                    console.log("Input: " + td.data)
+                    console.log("Expected: " + td.document)
                 }
+                if(td['document-fragment']) {
+                    p.parse_fragment(td.data.slice(0, td.data.length - 1), td['document-fragment'].trimRight())
+                } else {
+                    p.parse(td.data.slice(0, td.data.length - 1));
+                }
+                var serialized = serialize(p.inner_html ? p.tree.getFragment() : p.tree.document);
+                t.equal(serialized, td.document, "Document matches example data")
+                t.ok("No exception");
                 t.end()
             })
 		})(testData[i])
