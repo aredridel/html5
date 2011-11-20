@@ -112,14 +112,6 @@
 "input": "\u007F",
 "output": ["ParseError", ["Character", "\u007F"]]},
 
-{"description": "Invalid Unicode character U+D800",
-"input": "\uD800",
-"output": ["ParseError", ["Character", "\uD800"]]},
-
-{"description": "Invalid Unicode character U+DFFF",
-"input": "\uDFFF",
-"output": ["ParseError", ["Character", "\uDFFF"]]},
-
 {"description": "Invalid Unicode character U+FDD0",
 "input": "\uFDD0",
 "output": ["ParseError", ["Character", "\uFDD0"]]},
