@@ -13,10 +13,13 @@ exports.readTestData = function(filename) {
 		if(line[0] != '#') throw ("Got " + line[0] + " but expected #");
 		section = line.slice(1);
 		if(section == 'document') {
+			current[section] = '';
 			state = readDocument;
 		} else if(section == 'errors') {
+			current[section] = [];
 			state = readArray;
 		} else {
+			current[section] = '';
 			state = readString;
 		}
 	}
@@ -29,16 +32,10 @@ exports.readTestData = function(filename) {
 	}
 
 	function readString(line) {
-		if(!current[section]) {
-			current[section] = '';
-		}
 		current[section] += line + "\n";
 	}
 
 	function readDocument(line) {
-		if(!current[section]) {
-			current[section] = '';
-		}
 		if(line[0] == '|') line = line.slice(2);
 		current[section] += line + "\n";
 	}
@@ -47,7 +44,7 @@ exports.readTestData = function(filename) {
 	for(var l in lines) {
 		if(lines[l][0] == '#') {
 			state = readHeader;
-		} else if(lines[l] == '' && section != 'data') {
+		} else if(lines[l] == '') {
 			output.push(current);
 			current = {};
 			continue;
@@ -55,7 +52,7 @@ exports.readTestData = function(filename) {
 		state(lines[l]);
 	}
 
-	if(current['data']) output.push(current);
+	if(Object.keys(current).length > 0) output.push(current);
 
 	return output;
 }
