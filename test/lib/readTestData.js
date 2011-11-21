@@ -44,7 +44,7 @@ exports.readTestData = function(filename) {
 	for(var l in lines) {
 		if(lines[l][0] == '#') {
 			state = readHeader;
-		} else if(lines[l] == '') {
+		} else if(lines[l] == '' && section !== 'data') {
 			output.push(current);
 			current = {};
 			continue;
