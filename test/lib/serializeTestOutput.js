@@ -39,7 +39,7 @@ exports.serializeTestOutput = function(doc) {
 				if( a1.nodeName == a2.nodeName) return 0;
 			});
 			for(var i = 0; i < a.length; i++) {
-				s += indent + (a[i].namespace ? a[i].namespace + ' ' : '') + a[i].nodeName + '="' + a[i].nodeValue + '"\n'
+				s += indent + '  ' + (a[i].namespace ? a[i].namespace + ' ' : '') + a[i].nodeName + '="' + a[i].nodeValue + '"\n'
 			}
 			break;
 		case 'EndTag':
