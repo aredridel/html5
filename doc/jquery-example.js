@@ -2,7 +2,7 @@ require.paths.unshift('lib')
 require.paths.unshift('deps/jsdom/lib')
 var  HTML5 = require('html5'),
     Script = process.binding('evals').Script,
-       sys = require('sys'),
+      util = require('util'),
         fs = require('fs'),
      jsdom = require('jsdom'),
     window = jsdom.createWindow(null, null, {parser: HTML5, document: new jsdom.dom.level1.core.Document()});

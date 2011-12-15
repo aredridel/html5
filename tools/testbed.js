@@ -1,6 +1,6 @@
 var HTML5 = require('../lib/html5'),
 	events = require('events'),
-	sys = require('sys'),
+	util = require('util'),
 	fs = require('fs'),
 	assert = require('assert'),
 	serialize = require('../test/lib/serializeTestOutput').serializeTestOutput;
@@ -17,16 +17,16 @@ for(var t in l) {
 	var testname = l[t];
 	if(testname.match(/\.js$/)) continue;
         if(fs.statSync(base+testname).isDirectory()) continue;
-	sys.debug("Test file: " + testname);
+	util.debug("Test file: " + testname);
 	var f = require('../test/lib/readTestData')
 	var td = f.readTestData(base+testname);
 	var tests = 1;
 	for(var i in td) {
 		try {
 			if(process.argv[3] && process.argv[3] != i) continue;
-			sys.debug("Test #" + i + ": ");
-			sys.debug("Input data: " + sys.inspect(td[i].data.slice(0, td[i].data.length - 1)));
-			if(td[i]['document-fragment']) sys.debug("Input document fragment: " + sys.inspect(td[i]['document-fragment']))
+			util.debug("Test #" + i + ": ");
+			util.debug("Input data: " + util.inspect(td[i].data.slice(0, td[i].data.length - 1)));
+			if(td[i]['document-fragment']) util.debug("Input document fragment: " + util.inspect(td[i]['document-fragment']))
 			var p = new HTML5.Parser()
 			if(td[i]['document-fragment']) {
 				p.parse_fragment(td[i].data.slice(0, td[i].data.length - 1), td[i]['document-fragment'].slice(0, td[i]['document-fragment'].length - 1))
@@ -50,16 +50,16 @@ for(var t in l) {
 			HTML5.debug('testdata.errors', "Expected ", td[i].errors);
 			HTML5.debug('testdata.errors', "Actual ", errorsFixed);
 			var serialized = serialize(p.inner_html ? p.fragment : p.document);
-			sys.debug("Output : " + serialized);
-			//sys.debug("Tree : " + require('sys').inspect(p));
-			sys.debug("Check  : " + td[i].document);
+			util.debug("Output : " + serialized);
+			//util.debug("Tree : " + require('util').inspect(p));
+			util.debug("Check  : " + td[i].document);
 			assert.deepEqual(serialized, td[i].document);
 			if(td[i].errors && p.errors.length !== td[i].errors.length) {
-				sys.debug("Expected errors: " + sys.inspect(td[i].errors));
-				sys.debug("Actual errors  : " + sys.inspect(p.errors));
+				util.debug("Expected errors: " + util.inspect(td[i].errors));
+				util.debug("Actual errors  : " + util.inspect(p.errors));
 			}
 		} catch(e) {
-                        sys.debug('error in parsing: ' + e.message + " " + e.stack);
+                        util.debug('error in parsing: ' + e.message + " " + e.stack);
 		}
 	}
 }
