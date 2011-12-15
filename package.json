@@ -53,7 +53,7 @@
     "lib": "lib"
   },
   "scripts": {
-    "test": "tap test/functional"
+    "test": "PATH=$PATH:`npm bin` tap test/functional"
   },
   "license": "MIT",
   "description": "HTML5 HTML parser, including support for SVG and MathML foreign content"
