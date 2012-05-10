@@ -43,7 +43,7 @@ var base = '../../testdata/tree-construction/'
 var l = fs.readdirSync(base);
 var tests = []
 var HTML5 = require('../../lib/html5')
-serialize = require('../../tests/support/serializeTestOutput').serializeTestOutput;
+var serialize = require('../../tests/support/serializeTestOutput').serializeTestOutput;
 for(var t in l) {
 	var testname = l[t];
 	if(testname.match(/\.js$/)) continue;
