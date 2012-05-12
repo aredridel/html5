@@ -35,14 +35,18 @@ function doTest(testName) {
 		var input = fs.readFileSync(testName+'/input.html', 'utf-8');
 		var document = fs.readFileSync(testName+'/result.tree', 'utf-8');
 
-		var p = new HTML5.Parser()
-		if(testData['document-fragment']) {
-			p.parse_fragment(input.slice(0, input.length - 1), testData['document-fragment'].trimRight())
-		} else {
-			p.parse(input.slice(0, input.length - 1));
+		try {
+			var p = new HTML5.Parser()
+			if(testData['document-fragment']) {
+				p.parse_fragment(input.slice(0, input.length - 1), testData['document-fragment'].trimRight())
+			} else {
+				p.parse(input.slice(0, input.length - 1));
+			}
+			var serialized = serialize(p.inner_html ? p.tree.getFragment() : p.tree.document);
+			t.equal(serialized, document, "Document '"+testName+"' matches example data" + (todo ? " #TODO There are still edge cases that need help!" : ""))
+		} catch (e) {
+			t.fail(e.message + " in document '" + testName + "'" + (todo ? " #TODO There are still edge cases that need help!" : ""))
 		}
-		var serialized = serialize(p.inner_html ? p.tree.getFragment() : p.tree.document);
-		t.equal(serialized, document, (todo ? "TODO " : "") + "Document matches example data")
 		t.end()
 	})
 }
