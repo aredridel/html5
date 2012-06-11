@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 var HTML5 = require('../lib/html5'),
 	events = require('events'),
 	fs = require('fs'),
