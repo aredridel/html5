@@ -1,2 +1,5 @@
 *.swp
 node_modules
+doc/api.html
+doc/index.html
+doc/node-html5.3
