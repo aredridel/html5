@@ -1,9 +1,0 @@
-[submodule "node_modules/jsdom"]
-	path = node_modules/jsdom
-	url = git://github.com/tmpvar/jsdom.git
-[submodule "tools/ronnjs"]
-	path = tools/ronnjs
-	url = http://github.com/kapouer/ronnjs.git
-[submodule "node_modules/nodeunit"]
-	path = node_modules/nodeunit
-	url = git://github.com/caolan/nodeunit.git
