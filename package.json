@@ -43,7 +43,8 @@
     "opts": "~1.2.1",
     "tap": "~0.1.0",
     "bench": "~0.3.3",
-    "async": "~0.1.18"
+    "async": "~0.1.18",
+    "html5-entities": "~0.5.0"
   },
   "devDependencies": {
     "ronn": "~0.3.8"
