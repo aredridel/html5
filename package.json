@@ -41,12 +41,12 @@
   "dependencies": {
     "jsdom": ">= 0.2.0",
     "opts": "~1.2.1",
-    "tap": "~0.1.0",
-    "bench": "~0.3.3",
     "async": "~0.1.18",
     "html5-entities": "~0.5.0"
   },
   "devDependencies": {
+    "tap": "~0.1.0",
+    "bench": "~0.3.3",
     "ronn": "~0.3.8"
   },
   "engines": {
