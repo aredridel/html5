@@ -3,7 +3,6 @@
 var HTML5 = require('../../lib/html5'),
 	events = require('events'),
 	fs = require('fs'),
-	async = require('async'),
 	test = require('tap').test,
 	serialize = require('../lib/serializeTestOutput').serializeTestOutput;
 
