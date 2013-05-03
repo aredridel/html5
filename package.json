@@ -1,6 +1,6 @@
 {
   "name": "html5",
-  "version": "v0.3.12",
+  "version": "v0.3.13",
   "author": {
     "name": "Aria Stewart",
     "email": "aredridel@nbtsc.org",
@@ -44,7 +44,7 @@
     "html5-entities": "~0.5.0"
   },
   "devDependencies": {
-    "tap": "~0.4.0",
+    "tap_": "~0.4.0",
     "bench": "~0.3.3",
     "ronn": "~0.3.8"
   },
