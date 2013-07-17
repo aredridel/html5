@@ -3,7 +3,7 @@
 var HTML5 = require('../../lib/html5'),
 	events = require('events'),
 	fs = require('fs'),
-	test = require('tap').test,
+	test = require('tape'),
 	serialize = require('../lib/serializeTestOutput').serializeTestOutput;
 
 var base = __dirname + '/../../data/tree-construction/'

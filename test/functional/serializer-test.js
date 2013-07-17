@@ -1,4 +1,4 @@
-var test = require('tap').test
+var test = require('tape');
 var HTML5 = require('../../lib/html5')
 
 test('Serializer', function(t) {

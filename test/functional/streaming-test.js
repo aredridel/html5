@@ -1,6 +1,6 @@
 var HTML5 = require('../../lib/html5'),
 	events = require('events'),
-	test = require('tap').test,
+	test = require('tape'),
 	serialize = require('../lib/serializeTestOutput').serializeTestOutput;
 
 test('Streamed data', function(t) {

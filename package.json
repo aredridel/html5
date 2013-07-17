@@ -44,7 +44,7 @@
     "html5-entities": "~0.5.0"
   },
   "devDependencies": {
-    "tap": "~0.4.0",
+    "tape": "~1.0.4",
     "bench": "~0.3.3",
     "ronn": "~0.3.8"
   },
@@ -57,7 +57,7 @@
     "lib": "lib"
   },
   "scripts": {
-    "test": "PATH=$PATH:`npm bin` tap test/functional"
+    "test": "PATH=$PATH:`npm bin` tape `find test -name '*-test.js'`"
   },
   "license": "MIT",
   "description": "HTML5 HTML parser, including support for SVG and MathML foreign content"
