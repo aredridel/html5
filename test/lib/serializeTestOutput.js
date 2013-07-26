@@ -52,7 +52,11 @@ exports.serializeTestOutput = function(doc) {
 			s += indent + '<!-- ' + token.data + ' -->\n';
 			break;
 		case 'Doctype':
-			s += indent + '<!DOCTYPE ' + token.name + '>\n';
+			s += indent + '<!DOCTYPE ' + token.name;
+			if (token.publicId || token.systemId) {
+				s += ' "' + token.publicId + '" "' + token.systemId + '"';
+			}
+			s += '>\n';
 			break;
 		}
 	});
