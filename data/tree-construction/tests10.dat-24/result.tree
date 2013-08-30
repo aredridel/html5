@@ -6,5 +6,5 @@
     xml:lang="en"
     <svg svg>
       <svg g>
-        xlink href="foo"
-        xml lang="en"
+        xlink:href="foo"
+        xml:lang="en"

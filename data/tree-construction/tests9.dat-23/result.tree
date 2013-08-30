@@ -4,4 +4,4 @@
   <body>
     xlink:href="foo"
     <math math>
-      xlink href="foo"
+      xlink:href="foo"
