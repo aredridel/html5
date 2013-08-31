@@ -6,5 +6,5 @@
     xml:lang="en"
     <math math>
       <math mi>
-        xlink href="foo"
-        xml lang="en"
+        xlink:href="foo"
+        xml:lang="en"

@@ -4,4 +4,4 @@
   <body>
     xlink:href="foo"
     <svg svg>
-      xlink href="foo"
+      xlink:href="foo"
