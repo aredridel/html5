@@ -8,16 +8,11 @@
     "url": "http://dinhe.net/~aredridel/"
   },
   "url": "http://dinhe.net/~aredridel/projects/js/html5/",
-  "repository": [
+  "repository": 
     {
       "type": "git",
-      "url": "git://github.com/aredridel/html5.git"
-    },
-    {
-      "type": "git",
-      "url": "http://theinternetco.net/~aredridel/projects/js/html5.git"
+      "url": "https://github.com/aredridel/html5"
     }
-  ],
   "contributors": [
     {
       "name": "Aria Stewart",
