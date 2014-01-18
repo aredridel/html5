@@ -50,7 +50,7 @@
 	"invalid-character-in-attribute-name":
 		"Invalid character in attribute name.",
 	"duplicate-attribute":
-		"Dropped duplicate attribute on tag.",
+		"Dropped duplicate attribute '{name}' on tag.",
 	"expected-end-of-tag-but-got-eof":
 		"Unexpected end of file. Expected = or end of tag.",
 	"expected-attribute-value-but-got-eof":
@@ -128,11 +128,11 @@
 	"obsolete-doctype":
 		"Obsolete doctype. Expected <!DOCTYPE html>.",
 	"expected-doctype-but-got-chars":
-		"Unexpected non-space characters. Expected DOCTYPE.",
+		"Non-space characters found without seeing a doctype first. Expected e.g. <!DOCTYPE html>.",
 	"expected-doctype-but-got-start-tag":
-		"Unexpected start tag ({name}). Expected DOCTYPE.",
+		"Start tag seen without seeing a doctype first. Expected e.g. <!DOCTYPE html>.",
 	"expected-doctype-but-got-end-tag":
-		"Unexpected end tag ({name}). Expected DOCTYPE.",
+		"End tag seen without seeing a doctype first. Expected e.g. <!DOCTYPE html>.",
 	"end-tag-after-implied-root":
 		"Unexpected end tag ({name}) after the (implied) root element.",
 	"expected-named-closing-tag-but-got-eof":
