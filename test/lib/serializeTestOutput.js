@@ -20,7 +20,7 @@ exports.serializeTestOutput = function(doc) {
 				if (node.namespaceURI in foreignNamespaces) {
 					ns = foreignNamespaces[node.namespaceURI] + ' ';
 				}
-				s += indent + '<' + ns + node.nodeName.toLowerCase() + ">\n";
+				s += indent + '<' + ns + node.localName + ">\n";
 				indent += '  ';
 				var attrs = [];
 				for (var i = 0; i < node.attributes.length; i++) {
@@ -32,7 +32,7 @@ exports.serializeTestOutput = function(doc) {
 					if ( a1.nodeName == a2.nodeName) return 0;
 				});
 				for (var i = 0; i < attrs.length; i++) {
-					s += indent + (attrs[i].namespaceURI ? attrs[i].namespaceURI + ':' : '') + attrs[i].nodeName + '="' + attrs[i].nodeValue + '"\n';
+					s += indent + attrs[i].nodeName + '="' + attrs[i].nodeValue + '"\n';
 				}
 				for (var child = 0; child < node.childNodes.length; child++) {
 					walk(node.childNodes[child]);
