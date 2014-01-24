@@ -7,7 +7,8 @@ var JSDOMParser = require('../../lib/jsdom/JSDOMParser').JSDOMParser,
 	serialize = require('../lib/serializeTestOutput').serializeTestOutput,
 	jsdom = require('jsdom');
 
-var domImplementation = new jsdom.dom.level3.core.DOMImplementation();
+var core = jsdom.browserAugmentation(jsdom.dom.level3.core);
+var domImplementation = new core.DOMImplementation();
 var base = __dirname + '/../../data/tree-construction/';
 var testList = fs.readdirSync(base);
 
@@ -32,7 +33,7 @@ function doTest(testName) {
 
 		try {
 			var doc  = domImplementation.createDocument(null, null, null);
-			var p = new JSDOMParser(doc);
+			var p = new JSDOMParser(doc, core);
 			p.scriptingEnabled = true;
 			p.errorHandler = {error: function(){}}
 			if (testData['document-fragment']) {
