@@ -52,7 +52,7 @@
   },
   "engines": {
     "npm": ">= 1.0",
-    "node": ">= 0.4.7"
+    "node": ">= 0.8.0"
   },
   "main": "./lib/html5/index.js",
   "directories": {
