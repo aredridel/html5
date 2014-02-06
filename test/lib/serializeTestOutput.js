@@ -4,7 +4,7 @@ var foreignNamespaces = {
 };
 
 exports.serializeTestOutput = function(doc) {
-	var s = '';
+	var lines = [];
 	var indent = '';
 
 	function walk(node) {
@@ -20,7 +20,7 @@ exports.serializeTestOutput = function(doc) {
 				if (node.namespaceURI in foreignNamespaces) {
 					ns = foreignNamespaces[node.namespaceURI] + ' ';
 				}
-				s += indent + '<' + ns + node.localName + ">\n";
+				lines.push(indent + '<' + ns + node.localName + ">");
 				indent += '  ';
 				var attrs = [];
 				for (var i = 0; i < node.attributes.length; i++) {
@@ -32,7 +32,7 @@ exports.serializeTestOutput = function(doc) {
 					if ( a1.nodeName == a2.nodeName) return 0;
 				});
 				for (var i = 0; i < attrs.length; i++) {
-					s += indent + attrs[i].nodeName + '="' + attrs[i].nodeValue + '"\n';
+					lines.push(indent + attrs[i].nodeName + '="' + attrs[i].nodeValue + '"');
 				}
 				for (var child = 0; child < node.childNodes.length; child++) {
 					walk(node.childNodes[child]);
@@ -40,22 +40,22 @@ exports.serializeTestOutput = function(doc) {
 				indent = indent.slice(2);
 				break;
 			case node.TEXT_NODE:
-				s += indent + '"' + node.nodeValue + '"\n';
+				lines.push(indent + '"' + node.nodeValue + '"');
 				break;
 			case node.COMMENT_NODE:
-				s += indent + '<!-- ' + node.nodeValue + ' -->\n';
+				lines.push(indent + '<!-- ' + node.nodeValue + ' -->');
 				break;
 			case node.DOCUMENT_TYPE_NODE:
-				s += indent + '<!DOCTYPE ' + node.nodeName;
+				var ids = '';
 				if (node.publicId || node.systemId) {
-					s += ' "' + node.publicId + '" "' + node.systemId + '"';
+					ids = ' "' + node.publicId + '" "' + node.systemId + '"';
 				}
-				s += '>\n';
+				lines.push(indent + '<!DOCTYPE ' + node.nodeName + ids + '>');
 				break;
 		}
 	}
 
 	walk(doc);
 
-	return s;
+	return lines.join('\n');
 };
