@@ -1,6 +1,12 @@
-var foreignNamespaces = {
+var elementNamespaces = {
 	"http://www.w3.org/2000/svg": 'svg',
 	"http://www.w3.org/1998/Math/MathML": 'math'
+};
+
+var attributeNamespaces = {
+	"http://www.w3.org/1999/xlink": 'xlink',
+	"http://www.w3.org/XML/1998/namespace": 'xml',
+	"http://www.w3.org/2000/xmlns/": 'xmlns'
 };
 
 exports.serializeTestOutput = function(doc) {
@@ -16,11 +22,11 @@ exports.serializeTestOutput = function(doc) {
 				}
 				break;
 			case node.ELEMENT_NODE:
-				var ns = '';
-				if (node.namespaceURI in foreignNamespaces) {
-					ns = foreignNamespaces[node.namespaceURI] + ' ';
+				var elementNsDecorator = '';
+				if (node.namespaceURI in elementNamespaces) {
+					elementNsDecorator = elementNamespaces[node.namespaceURI] + ' ';
 				}
-				lines.push(indent + '<' + ns + node.localName + ">");
+				lines.push(indent + '<' + elementNsDecorator + node.localName + ">");
 				indent += '  ';
 				var attrs = [];
 				for (var i = 0; i < node.attributes.length; i++) {
@@ -32,7 +38,11 @@ exports.serializeTestOutput = function(doc) {
 					if ( a1.nodeName == a2.nodeName) return 0;
 				});
 				for (var i = 0; i < attrs.length; i++) {
-					lines.push(indent + attrs[i].nodeName + '="' + attrs[i].nodeValue + '"');
+					var attrNsDecorator = '';
+					if (attrs[i].namespaceURI in attributeNamespaces) {
+						attrNsDecorator = attributeNamespaces[attrs[i].namespaceURI] + ' ';
+					}
+					lines.push(indent + attrNsDecorator + attrs[i].localName + '="' + attrs[i].nodeValue + '"');
 				}
 				for (var child = 0; child < node.childNodes.length; child++) {
 					walk(node.childNodes[child]);
