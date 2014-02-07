@@ -141,6 +141,8 @@
 		"Unexpected start tag head in existing head. Ignored.",
 	"unexpected-end-tag":
 		"Unexpected end tag ({name}). Ignored.",
+	"unexpected-implied-end-tag":
+		"End tag {name} implied, but there were open elements.",
 	"unexpected-start-tag-out-of-my-head":
 		"Unexpected start tag ({name}) that can be in head. Moved.",
 	"unexpected-start-tag":
