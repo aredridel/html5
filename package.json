@@ -1,6 +1,6 @@
 {
   "name": "html5",
-  "version": "v0.4.0",
+  "version": "v0.4.1",
   "author": {
     "name": "Aria Stewart",
     "email": "aredridel@nbtsc.org",
@@ -54,7 +54,7 @@
     "npm": ">= 1.0",
     "node": ">= 0.8.0"
   },
-  "main": "./lib/html5/index.js",
+  "main": "./lib/index.js",
   "directories": {
     "lib": "lib"
   },
