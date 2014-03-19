@@ -4,7 +4,7 @@ HTML5 Parser for node.js
 
 Example (With jQuery!) 
 ----------------------
-
+```js
         /* Before you run this, run:
               (cd deps/jquery; rake)
         */
@@ -25,7 +25,7 @@ Example (With jQuery!)
                 util.puts(window.document.innerHTML);
 
         });
-
+```
 Interesting features
 --------------------
 
