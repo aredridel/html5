@@ -62,5 +62,8 @@
     "test": "PATH=$PATH:`npm bin` tape `find test -name '*-test.js'`"
   },
   "license": "MIT",
-  "description": "HTML5 HTML parser, including support for SVG and MathML foreign content"
+  "description": "HTML5 HTML parser, including support for SVG and MathML foreign content",
+  "devDependencies": {
+    "ronn": "~0.4.0"
+  }
 }
