@@ -1,5 +1,6 @@
 {
   "name": "html5",
+  "description": "HTML5 HTML parser, including support for SVG and MathML foreign content",
   "version": "v0.4.1",
   "author": {
     "name": "Aria Stewart",
@@ -39,16 +40,16 @@
     }
   ],
   "dependencies": {
-    "opts": "~1.2.1",
-    "html5-entities": "~0.5.0"
+    "opts": "^1.2.1",
+    "html5-entities": "^0.5.0"
   },
   "optionalDependencies": {
     "jsdom": ">= 0.9.0"
   },
   "devDependencies": {
-    "tape": "~1.0.4",
-    "bench": "~0.3.3",
-    "ronn": "~0.3.8"
+    "tape": "^1.0.4",
+    "bench": "^0.3.3",
+    "ronn": "^0.4.0"
   },
   "engines": {
     "npm": ">= 1.0",
@@ -61,9 +62,5 @@
   "scripts": {
     "test": "PATH=$PATH:`npm bin` tape `find test -name '*-test.js'`"
   },
-  "license": "MIT",
-  "description": "HTML5 HTML parser, including support for SVG and MathML foreign content",
-  "devDependencies": {
-    "ronn": "~0.4.0"
-  }
+  "license": "MIT"
 }
