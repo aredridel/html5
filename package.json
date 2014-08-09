@@ -34,11 +34,9 @@
     }
   ],
   "dependencies": {
+    "jsdom": "^1.0.0",
     "opts": "^1.2.1",
     "html5-entities": "^0.5.0"
-  },
-  "optionalDependencies": {
-    "jsdom": ">= 0.9.0"
   },
   "devDependencies": {
     "tape": "^1.0.4",
