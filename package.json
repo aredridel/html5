@@ -16,12 +16,6 @@
     },
   "contributors": [
     {
-      "name": "Aria Stewart",
-      "email": "aredridel@nbtsc.org",
-      "github": "aredridel",
-      "url": "http://dinhe.net/~aredridel/"
-    },
-    {
       "name": "Arthur Taylor",
       "github": "codders"
     },
@@ -60,7 +54,7 @@
     "lib": "lib"
   },
   "scripts": {
-    "test": "PATH=$PATH:`npm bin` tape `find test -name '*-test.js'`"
+    "test": "tape `find test -name '*-test.js'`"
   },
   "license": "MIT"
 }
