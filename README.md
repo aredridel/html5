@@ -3,30 +3,26 @@ HTML5 Parser for node.js
 
 [![Build Status](https://travis-ci.org/aredridel/html5.svg?branch=master)](https://travis-ci.org/aredridel/html5)
 
-Example (With jQuery!) 
-----------------------
-```js
-        /* Before you run this, run:
-              (cd deps/jquery; rake)
-        */
-        var  HTML5 = require('html5'),
-            Script = process.binding('evals').Script,
-              util = require('util'),
-                fs = require('fs'),
-             jsdom = require('jsdom'),
-            window = jsdom.jsdom(null, null, {parser: HTML5}).createWindow()
+Examples
+--------
 
-        var parser = new HTML5.Parser({document: window.document});
+A simple example:
 
-        var inputfile = fs.readFileSync('doc/jquery-example.html');
-        parser.parse(inputfile);
+```javascript
+var HTML5 = require('html5');
+var jsdom = require('jsdom');
+var core = jsdom.browserAugmentation(jsdom.level(3));
 
-        jsdom.jQueryify(window, __dirname + '/deps/jquery/dist/jquery.js', function(window, jquery) {
-                Script.runInNewContext('jQuery("p").append("<b>Hi!</b>")', window);
-                util.puts(window.document.innerHTML);
+var impl = new core.DOMImplementation();
+var document = impl.createDocument();
+var parser = new HTML5.JSDOMParser(document, core);
 
-        });
+parser.parse('<p>I am a very small HTML document</p>');
+
+console.log(document.getElementsByTagName("p")[0].innerHTML);
 ```
+
+
 Interesting features
 --------------------
 
@@ -49,7 +45,5 @@ pulling this from my git repository.
 and give it a run:
 
 	npm test
-
-(At time of this writing, 1800 tests pass)
 
 Git repository at http://dinhe.net/~aredridel/projects/js/html5.git/
