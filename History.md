@@ -1,3 +1,13 @@
+v1.0.5
+=============
+
+* Publish the correctly merged version of v1.0.4
+
+v1.0.4
+=============
+
+* Bump the version of html5-entities to 1.0.0
+
 v1.0.3
 =============
 
