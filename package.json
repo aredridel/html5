@@ -35,7 +35,7 @@
   ],
   "dependencies": {
     "opts": "^1.2.1",
-    "html5-entities": "^0.5.0"
+    "html5-entities": "^1.0.0"
   },
   "optionalDependencies": {
     "jsdom": "^0.11.0"
