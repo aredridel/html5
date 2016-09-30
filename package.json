@@ -41,7 +41,7 @@
     "jsdom": "^0.11.0"
   },
   "devDependencies": {
-    "tape": "^1.0.4",
+    "tape": "^4.6.2",
     "bench": "^0.3.3",
     "ronn": "^0.4.0"
   },
