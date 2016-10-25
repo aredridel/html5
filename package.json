@@ -38,7 +38,7 @@
     "html5-entities": "^1.0.0"
   },
   "optionalDependencies": {
-    "jsdom": "^0.11.0"
+    "jsdom": "^9.8.1"
   },
   "devDependencies": {
     "tape": "^1.0.4",
