@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "tape": "^1.0.4",
-    "bench": "^0.3.3",
+    "bench": "^0.3.6",
     "ronn": "^0.4.0"
   },
   "engines": {
