@@ -34,7 +34,7 @@
     }
   ],
   "dependencies": {
-    "opts": "^1.2.1",
+    "opts": "^1.2.4",
     "html5-entities": "^1.0.0"
   },
   "optionalDependencies": {
