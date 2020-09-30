@@ -26,7 +26,7 @@ console.log(document.getElementsByTagName("p")[0].innerHTML);
 Interesting features
 --------------------
 
-* Streaming parser: You can pass `parser.parse` an `EventEmitter` and the
+* Streaming parser: You can use this pass `parser.parse` as an `EventEmitter` and the
   parser will keep adding data as it's received.
 
 * HTML5 parsing algorithm. If you find something this can't parse, I'll want
